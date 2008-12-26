@@ -5,19 +5,21 @@
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 		<script type="text/javascript" src="jquery-latest.pack.js"></script>
 		<script type="text/javascript" src="jquery.hotkeys-0.7.8-packed.js"></script>
-		<script type="text/javascript" src="twoot.js"></script>
-		<link href="styles/hud-black/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="jquery.maskedinput-1.2.1.pack.js"></script>
+    <script type="text/javascript" src="twoot.js"></script>
+    <link href="styles/multiline/style.css" rel="stylesheet" type="text/css" />
 </head>
-<body> 
+<body>
 	<div class="tweets">
 		<div id="alert"><p></p></div>
 		<ul class="tweet_list"></ul>
 	</div> 
 	<div id="message_entry">
-		<form id="status_entry" method="post">
-			<label for="status">What are you doing? <div id="status_count">140</div></label>
-			<input type="text" name="status" onBlur="updateStatusCount()" onChange="updateStatusCount()" onKeyPress="updateStatusCount()" maxlength="140" id="status" />
-			<input type="submit" id="send" value="Send" />
+		<form id="status_entry" method="post", name="status_entry">
+			<input type="submit" id="send" value="Update" />
+      <label id="count" for="status" class="normal">140</label>
+			<textarea name="status" maxlength="140" id="status"
+			  onKeyUp="charCountdown()"/>
 		</form>
 	</div>
 </body>
