@@ -78,3 +78,10 @@ input#status:focus, input#status:active, a:focus, a:active
 label {
 	display:block;
 }
+
+label.normal {
+  color: black;
+}
+label.warning {
+  color: red;
+}
