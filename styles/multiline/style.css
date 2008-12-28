@@ -41,6 +41,21 @@ a.user {
 	font-weight:bold;
 	text-decoration:none;
 }
+a.reply {
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  background-color: #ccc;
+  float: right;
+}
+a.favorite {
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  background-color: #ccc;
+  float: right;
+}
+
 span.time {
 	color: #666;
 }

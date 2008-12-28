@@ -27,8 +27,13 @@ jQuery.fn.reverse = function() {
 				 	  relative_time(item.created_at) + '</span> '+
 				 	'<a class="user" href="http://twitter.com/' + 
 				 	  item.user.screen_name + '">' +
-				 	item.user.screen_name + '</a>' +
-				 	'<div class="tweet_text">' +
+				 	item.user.screen_name + '</a> ' +
+				 	'<a class="favorite" href="javascript:createFavorite(' + 
+				 	  item.id + ')">&nbsp;&#10029;&nbsp;</a>' +
+          '<a class="reply" href="javascript:replyTo(\'' +
+            item.user.screen_name + '\',' + item.id +
+            ')">&nbsp;@&nbsp;</a>' +
+          '<div class="tweet_text">' +
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
 
 					// Don't want Growl notifications? Comment out the following method call
@@ -112,6 +117,10 @@ function replyTo(screen_name, msg_id) {
 	$("#status").focus();
 	$("#status").caret(start.length, start.length);
 	return;
+}
+
+function createFavorite(id) {
+  $.post('http://twitter.com/favorites/create/' + id + '.json');
 }
 
 function setStatus(status_text) {
