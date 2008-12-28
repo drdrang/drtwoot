@@ -28,14 +28,19 @@ jQuery.fn.reverse = function() {
 				 	'<a class="user" href="http://twitter.com/' + 
 				 	  item.user.screen_name + '">' +
 				 	item.user.screen_name + '</a> ' +
-				 	'<a class="favorite" href="javascript:createFavorite(' + 
-				 	  item.id + ')">&nbsp;&#10029;&nbsp;</a>' +
+				 	'<a class="favorite" href="javascript:toggleFavorite(' + 
+				 	  item + ')">&nbsp;&#10029;&nbsp;</a>' +
           '<a class="reply" href="javascript:replyTo(\'' +
             item.user.screen_name + '\',' + item.id +
             ')">&nbsp;@&nbsp;</a>' +
           '<div class="tweet_text">' +
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
 
+          // Change the class if it's a favorite
+          if (item.favorited == 'true') {
+            item.filter("a.favorite").color('yellow');
+          }
+            
 					// Don't want Growl notifications? Comment out the following method call
 					fluid.showGrowlNotification({
 						title: item.user.name + " @" + item.user.screen_name,
@@ -119,8 +124,15 @@ function replyTo(screen_name, msg_id) {
 	return;
 }
 
-function createFavorite(id) {
-  $.post('http://twitter.com/favorites/create/' + id + '.json');
+function toggleFavorite(item) {
+  if (item.favorited == "true") {
+    $.post('http://twitter.com/favorites/destroy/' + item.id + '.json');
+    star = item.filter('a.favorite').color('white');
+  }
+  else {
+    $.post('http://twitter.com/favorites/create/' + item.id + '.json');
+    star = item.filter('a.favorite').color('yellow');
+  }
 }
 
 function setStatus(status_text) {
