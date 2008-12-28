@@ -25,8 +25,8 @@ jQuery.fn.reverse = function() {
 				 	  item.user.profile_image_url + '" alt="' + item.user.name + '" />' +
 				 	'<span class="time" title="' + item.created_at + '">' +
 				 	  relative_time(item.created_at) + '</span> '+
-				 	'<a class="user" href="javascript:replyTo(\'' + 
-				 	  item.user.screen_name + '\',' + item.id + ')">' +
+				 	'<a class="user" href="http://twitter.com/' + 
+				 	  item.user.screen_name + '">' +
 				 	item.user.screen_name + '</a>' +
 				 	'<div class="tweet_text">' +
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
