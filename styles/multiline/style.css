@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; }
 a { text-decoration: none; color: blue; }
 a:hover { text-decoration: underline; }
-body { font: 16px/1.5 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
+body { font: 16px/1.4 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
 
 /* Alert message */
 #alert {
@@ -25,7 +25,7 @@ body { font: 16px/1.5 'Lucida Grande', sans-serif; color: #333; background-color
 
 /*Tweet styles*/
 .tweet_list li:nth-child(even), .tweet_list li:nth-child(odd) {
-	padding: 0.2em 0.4em 0.2em 60px; /* The 72px left margin is to allow room for the profile image */
+	padding: 0.2em 0.4em 0.2em 60px; /* The 60px left margin is to allow room for the profile image */
 	margin:0;
 	min-height: 52px; /* To make sure short messages don't cut off profile image */
 	word-wrap: break-word; 
@@ -44,16 +44,24 @@ a.user {
 a.reply {
   font-weight: bold;
   text-decoration: none;
-  color: blue;
-  background-color: #ccc;
+  color: black;
   float: right;
+  width: 2em;
+  text-align: center;
+  margin-top: -0.2em;
+  margin-right: -0.4em;
+  padding-top: .2em;
 }
 a.favorite {
   font-weight: bold;
   text-decoration: none;
-  color: white;
-  background-color: #ccc;
+  color: black;
   float: right;
+  width: 2em;
+  text-align: center;
+  margin-top: -0.2em;
+  margin-right: -0.4em;
+  padding-top: .2em;
 }
 
 span.time {

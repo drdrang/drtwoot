@@ -29,16 +29,16 @@ jQuery.fn.reverse = function() {
 				 	  item.user.screen_name + '">' +
 				 	item.user.screen_name + '</a> ' +
 				 	'<a class="favorite" href="javascript:toggleFavorite(' + 
-				 	  item.id + ')">&nbsp;&#10029;&nbsp;</a>' +
+				 	  item.id + ')">&#10029;</a>' +
           '<a class="reply" href="javascript:replyTo(\'' +
             item.user.screen_name + '\',' + item.id +
-            ')">&nbsp;@&nbsp;</a>' +
+            ')">@</a>' +
           '<div class="tweet_text">' +
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
 
           // Change the class if it's a favorite
           if (item.favorited) {
-            $('#msg-' + item.id + ' a.favorite').css('color', 'yellow');
+            $('#msg-' + item.id + ' a.favorite').css('color', 'red');
           }
             
 					// Don't want Growl notifications? Comment out the following method call
@@ -129,11 +129,11 @@ function toggleFavorite(id) {
     function(data){
       if (data.favorited) {
         $.post('http://twitter.com/favorites/destroy/' + id + '.json');
-        $('#msg-' + id + ' a.favorite').css('color', 'white');
+        $('#msg-' + id + ' a.favorite').css('color', 'black');
       }
       else {
         $.post('http://twitter.com/favorites/create/' + id + '.json');
-        $('#msg-' + id + ' a.favorite').css('color', 'yellow');
+        $('#msg-' + id + ' a.favorite').css('color', 'red');
       }
     }
   );
