@@ -7,7 +7,7 @@ Twoot is a customizable minimal twitter client for WebKit-based SSBs. It is base
 
 The code seems to work only with Fluid. In Safari, only one tweet appears.
 
-My customization adds a multiline status input field, proper @replies, and favoriting.
+My customization adds a multiline status input field, proper @replies, favoriting, and paging back and forth through the tweet history.
 
 .. image:: http://www.leancrew.com/all-this/images/twoot-favorite.png
 
