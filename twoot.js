@@ -4,6 +4,7 @@
  * */
 var LAST_UPDATE;
 var MSG_ID;
+var PAGE = 1;
 
 //Reverse collection
 jQuery.fn.reverse = function() {
@@ -12,10 +13,10 @@ jQuery.fn.reverse = function() {
 
 
 (function($) {
- $.fn.gettweets = function(o){
+ $.fn.gettweets = function(){
  	return this.each(function(){
 		 var list = $('ul.tweet_list').prependTo(this);
-		 var url = 'http://twitter.com/statuses/friends_timeline.json' + getSinceParameter();
+		 var url = 'http://twitter.com/statuses/friends_timeline.json?page=' + PAGE + getSinceParameter();
 		 
 		 $.getJSON(url, function(data){
 			 $.each(data.reverse(), function(i, item) { 
@@ -38,10 +39,21 @@ jQuery.fn.reverse = function() {
           '<div class="tweet_text">' +
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
 
-          // Change the class if it's a favorite
+          // Change the class if it's a favorite.
           if (item.favorited) {
             $('#msg-' + item.id + ' a.favorite').css('color', 'red');
           }
+          
+          // Hide the Newer link if we're on the first page.
+          if (PAGE == 1) {
+            $("#newer").css("visibility", "hidden");
+          }
+          else {
+            $("#newer").css("visibility", "visible");
+          }
+          
+          // The Older link is always visible after the tweets are shown.
+          $("#older").css("visibility", "visible");
             
 					// Don't want Growl notifications? Comment out the following method call
 					fluid.showGrowlNotification({
@@ -98,7 +110,7 @@ function getSinceParameter() {
 	if(LAST_UPDATE == null) {
 		return "";
 	} else {
-		return "?since=" + LAST_UPDATE;
+		return "&since=" + LAST_UPDATE;
 	}
 }
 
@@ -139,6 +151,30 @@ function toggleFavorite(id) {
       }
     }
   );
+}
+
+function olderPage() {
+  PAGE = PAGE + 1;
+  LAST_UPDATE = null;
+  // Hide the paging links before removing the messages. They're made
+  // visible again by gettweets().
+  $("#older").css('visibility','hidden');
+  $("#newer").css('visibility','hidden');
+  $("ul.tweet_list li[id^=msg]").remove();
+  refreshMessages();
+}
+
+function newerPage() {
+  if (PAGE > 1) {
+    PAGE = PAGE - 1;
+    LAST_UPDATE = null;
+    // Hide the paging links before removing the messages. They're made
+    // visible again by gettweets().
+    $("#older").css('visibility','hidden');
+    $("#newer").css('visibility','hidden');
+    $("ul.tweet_list li[id^=msg]").remove();
+    refreshMessages();
+  }
 }
 
 function setStatus(status_text) {

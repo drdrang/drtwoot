@@ -12,7 +12,12 @@
 <body>
 	<div class="tweets">
 		<div id="alert"><p></p></div>
-		<ul class="tweet_list"></ul>
+		<ul class="tweet_list">
+		  <li>
+		    <a id="older" href="javascript:olderPage()">Older Tweets</a>
+		    <a id="newer" href="javascript:newerPage()">Newer Tweets</a>
+	    </li>
+		</ul>
 	</div> 
 	<div id="message_entry">
 		<form id="status_entry" method="post", name="status_entry">

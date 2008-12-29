@@ -104,3 +104,20 @@ label.normal {
 label.warning {
   color: red;
 }
+
+a#older {
+  margin-top: 15px;
+  margin-left: -50px;
+  float: left;
+  font-weight: bold;
+  text-decoration: none;
+  visibility: hidden;  /*This is later controlled by JavaScript.*/
+}
+
+a#newer {
+  margin-top: 15px;
+  float: right;
+  font-weight: bold;
+  text-decoration: none;
+  visibility: hidden;  /*This is later controlled by JavaScript.*/
+}
