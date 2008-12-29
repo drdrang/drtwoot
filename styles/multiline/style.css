@@ -48,9 +48,7 @@ a.reply {
   float: right;
   width: 2em;
   text-align: center;
-  margin-top: -0.2em;
   margin-right: -0.4em;
-  padding-top: .2em;
 }
 a.favorite {
   font-weight: bold;
@@ -59,9 +57,7 @@ a.favorite {
   float: right;
   width: 2em;
   text-align: center;
-  margin-top: -0.2em;
   margin-right: -0.4em;
-  padding-top: .2em;
 }
 
 span.time {
