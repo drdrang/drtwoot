@@ -29,7 +29,7 @@ jQuery.fn.reverse = function() {
 				 	  item.user.screen_name + '">' +
 				 	item.user.screen_name + '</a> ' +
 				 	'<a class="favorite" href="javascript:toggleFavorite(' + 
-				 	  item + ')">&nbsp;&#10029;&nbsp;</a>' +
+				 	  item.id + ')">&nbsp;&#10029;&nbsp;</a>' +
           '<a class="reply" href="javascript:replyTo(\'' +
             item.user.screen_name + '\',' + item.id +
             ')">&nbsp;@&nbsp;</a>' +
@@ -37,8 +37,8 @@ jQuery.fn.reverse = function() {
 				 	item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/[&lt;]+[3]/g, "<tt class='heart'>&#x2665;</tt>") + '</div></li>');
 
           // Change the class if it's a favorite
-          if (item.favorited == 'true') {
-            item.filter("a.favorite").color('yellow');
+          if (item.favorited) {
+            $('#msg-' + item.id + ' a.favorite').css('color', 'yellow');
           }
             
 					// Don't want Growl notifications? Comment out the following method call
@@ -124,15 +124,19 @@ function replyTo(screen_name, msg_id) {
 	return;
 }
 
-function toggleFavorite(item) {
-  if (item.favorited == "true") {
-    $.post('http://twitter.com/favorites/destroy/' + item.id + '.json');
-    star = item.filter('a.favorite').color('white');
-  }
-  else {
-    $.post('http://twitter.com/favorites/create/' + item.id + '.json');
-    star = item.filter('a.favorite').color('yellow');
-  }
+function toggleFavorite(id) {
+  $.getJSON("http://twitter.com/statuses/show/" + id + ".json", 
+    function(data){
+      if (data.favorited) {
+        $.post('http://twitter.com/favorites/destroy/' + id + '.json');
+        $('#msg-' + id + ' a.favorite').css('color', 'white');
+      }
+      else {
+        $.post('http://twitter.com/favorites/create/' + id + '.json');
+        $('#msg-' + id + ' a.favorite').css('color', 'yellow');
+      }
+    }
+  );
 }
 
 function setStatus(status_text) {
