@@ -1,15 +1,15 @@
 
-Twoot is a customizable minimal twitter client for WebKit-based SSBs. It is based on jQuery_, Fluid_ and some basic HTML and CSS. The idea is to provide a native-looking application that is easy to customize to your specific needs. The twitter javascript code is sinspired by the `SeaOfClouds tweet code`_.
+Twoot is a customizable minimal twitter client for WebKit-based SSBs. It is based on jQuery_, Fluid_ and some basic HTML and CSS. The idea is to provide a native-looking application that is easy to customize to your specific needs. The twitter javascript code is inspired by the `SeaOfClouds tweet code`_.
 
 .. _jQuery: http://jquery.com/
 .. _Fluid: http://fluidapp.com/
 .. _SeaOfClouds tweet code: http://tweet.seaofclouds.com/
 
-The code has only been tested with Fluid, but should work in Safari and other WebKit-based browsers (including the iPhone I guess).
+The code seems to work only with Fluid. In Safari, only one tweet appears.
 
-.. image:: http://www.peterkrantz.com/wp-content/uploads/2008/10/twoot-hud.png
-.. image:: http://www.peterkrantz.com/wp-content/uploads/2008/08/screenshot.gif
-.. image:: http://www.peterkrantz.com/wp-content/uploads/2008/10/twoot-hud-black-avatars.jpg
+My customization adds a multiline status input field, proper @replies, and favoriting.
+
+.. image:: http://www.leancrew.com/all-this/images/twoot-favorite.png
 
 Installation
 ------------
