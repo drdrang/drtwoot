@@ -28,9 +28,11 @@ jQuery.fn.reverse = function() {
 				 	'<a class="user" href="http://twitter.com/' + 
 				 	  item.user.screen_name + '">' +
 				 	item.user.screen_name + '</a> ' +
-				 	'<a class="favorite" href="javascript:toggleFavorite(' + 
+				 	'<a class="favorite" title="Toggle favorite status" '+
+				 	  'href="javascript:toggleFavorite(' + 
 				 	  item.id + ')">&#10029;</a>' +
-          '<a class="reply" href="javascript:replyTo(\'' +
+          '<a class="reply" title="Reply to this" ' +
+            'href="javascript:replyTo(\'' +
             item.user.screen_name + '\',' + item.id +
             ')">@</a>' +
           '<div class="tweet_text">' +
