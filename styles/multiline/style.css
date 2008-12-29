@@ -116,6 +116,7 @@ a#older {
 
 a#newer {
   margin-top: 15px;
+  margin-right: 5px;
   float: right;
   font-weight: bold;
   text-decoration: none;
