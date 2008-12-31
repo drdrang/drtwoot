@@ -138,16 +138,16 @@ function replyTo(screen_name, msg_id) {
   return;
 }
 
-function toggleFavorite(id) {
-  $.getJSON("http://twitter.com/statuses/show/" + id + ".json", 
+function toggleFavorite(msgid) {
+  $.getJSON("http://twitter.com/statuses/show/" + msgid + ".json", 
     function(data){
       if (data.favorited) {
-        $.post('http://twitter.com/favorites/destroy/' + id + '.json');
-        $('#msg-' + id + ' a.favorite').css('color', 'black');
+        $.post('http://twitter.com/favorites/destroy/' + msgid + '.json', {id:msgid});
+        $('#msg-' + msgid + ' a.favorite').css('color', 'black');
       }
       else {
-        $.post('http://twitter.com/favorites/create/' + id + '.json');
-        $('#msg-' + id + ' a.favorite').css('color', 'red');
+        $.post('http://twitter.com/favorites/create/' + msgid + '.json', {id:msgid});
+        $('#msg-' + msgid + ' a.favorite').css('color', 'red');
       }
     }
   );
