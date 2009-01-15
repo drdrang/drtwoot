@@ -53,6 +53,7 @@ a.reply, a.favorite, a.retweet {
 
 span.time {
 	color: #666;
+	font-size: 75%
 }
 #message_entry {
 	background-color: #e8e8e8;
