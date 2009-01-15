@@ -86,7 +86,7 @@ function relative_time(time_value) {
     return 'a minute ago';
   } else if(delta < (45*60)) {
     return (parseInt(delta / 60)).toString() + ' minutes ago';
-  } else if(delta < (90*60)) {
+  } else if(delta < (75*60)) {
     return 'an hour ago';
   } else if(delta < (120*60)) {
     return 'over an hour ago';
