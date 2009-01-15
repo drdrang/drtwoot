@@ -9,7 +9,7 @@ The code seems to work only with Fluid. In Safari, only one tweet appears.
 
 My customization adds a multiline status input field, proper @replies, favoriting, and paging back and forth through the tweet history.
 
-.. image:: http://www.leancrew.com/all-this/images/twoot-favorite.png
+.. image:: http://www.leancrew.com/all-this/images/twoot-retweet.png
 
 Installation
 ------------

@@ -60,6 +60,16 @@ a.favorite {
   margin-right: -0.4em;
 }
 
+a.retweet {
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  float: right;
+  width: 2em;
+  text-align: center;
+  margin-right: -0.4em;
+}
+
 span.time {
 	color: #666;
 }

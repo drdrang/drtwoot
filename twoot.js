@@ -29,6 +29,8 @@ jQuery.fn.reverse = function() {
           '<a class="user" href="http://twitter.com/' + 
             item.user.screen_name + '">' +
           item.user.screen_name + '</a> ' +
+          '<a class="retweet" title="Retweet" ' +
+            'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
           '<a class="favorite" title="Toggle favorite status" '+
             'href="javascript:toggleFavorite(' + 
             item.id + ')">&#10029;</a>' +
@@ -135,20 +137,32 @@ function replyTo(screen_name, msg_id) {
   $("#status").val(start);
   $("#status").focus();
   $("#status").caret(start.length, start.length);
-  return;
+  charCountdown();
 }
 
-function toggleFavorite(msgid) {
-  $.getJSON("http://twitter.com/statuses/show/" + msgid + ".json", 
+function toggleFavorite(msg_id) {
+  $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
       if (data.favorited) {
-        $.post('http://twitter.com/favorites/destroy/' + msgid + '.json', {id:msgid});
-        $('#msg-' + msgid + ' a.favorite').css('color', 'black');
+        $.post('http://twitter.com/favorites/destroy/' + msg_id + '.json', {id:msg_id});
+        $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
       }
       else {
-        $.post('http://twitter.com/favorites/create/' + msgid + '.json', {id:msgid});
-        $('#msg-' + msgid + ' a.favorite').css('color', 'red');
+        $.post('http://twitter.com/favorites/create/' + msg_id + '.json', {id:msg_id});
+        $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
       }
+    }
+  );
+}
+
+function retweet(msg_id) {
+  $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
+    function(data){
+      start = '♺ @' + data.user.screen_name + ': ' + data.text;
+      $("#status").val(start);
+      $("#status").focus();
+      $("#status").caret(start.length, start.length);
+      charCountdown();
     }
   );
 }
