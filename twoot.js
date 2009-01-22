@@ -42,7 +42,7 @@ jQuery.fn.reverse = function() {
             item.user.screen_name + '\',' + item.id +
             ')">@</a>' +
           '<div class="tweet_text">' +
-          item.text.replace(/(\w+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') + '</div></li>');
+          item.text.replace(/(http:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') + '</div></li>');
 
           // Change the class if it's a favorite.
           if (item.favorited) {
