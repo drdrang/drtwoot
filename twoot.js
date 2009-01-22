@@ -22,8 +22,11 @@ jQuery.fn.reverse = function() {
        $.each(data.reverse(), function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
           list.prepend('<li id="msg-' + item.id + '">' +
-          '<img class="profile_image" height="48" src="' + 
-            item.user.profile_image_url + '" alt="' + item.user.name + '" />' +
+          '<a href="http://twitter.com/account/profile_image/' +
+          item.user.screen_name +
+          '"><img class="profile_image" height="48" width="48" src="' + 
+          item.user.profile_image_url +
+          '" alt="' + item.user.name + '" /></a>' +
           '<span class="time" title="' + item.created_at + '">' +
             relative_time(item.created_at) + '</span> '+
           '<a class="user" href="http://twitter.com/' + 
