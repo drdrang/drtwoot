@@ -21,6 +21,12 @@ jQuery.fn.reverse = function() {
      $.getJSON(url, function(data){
        $.each(data.reverse(), function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
+          if (item.in_reply_to_status_id == null) {
+            inReplyText = '';
+            }
+          else {
+            inReplyText = ' in reply to <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
+          }
           list.prepend('<li id="msg-' + item.id + '">' +
           '<a href="http://twitter.com/account/profile_image/' +
           item.user.screen_name +
@@ -42,7 +48,9 @@ jQuery.fn.reverse = function() {
             item.user.screen_name + '\',' + item.id +
             ')">@</a>' +
           '<div class="tweet_text">' +
-          item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') + '</div></li>');
+          item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') +
+          '<span class="info"> via ' + item.source + inReplyText + '</span>' +
+           '</div></li>');
 
           // Change the class if it's a favorite.
           if (item.favorited) {
@@ -271,6 +279,7 @@ $(document).ready(function(){
 
 function setBottomMargin() {
   $("div.tweets").css("margin-bottom", $("#message_entry").height() + parseInt($("#message_entry").css("border-top-width")));
+  $("#message_entry").css("bottom", "0");
 }
 
 $(window).load(setBottomMargin);
