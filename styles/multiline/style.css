@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; }
 a { text-decoration: none; color: blue; }
 a:hover { text-decoration: underline; }
-body { font: 16px/1.4 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
+body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
 
 /* Alert message */
 #alert {
