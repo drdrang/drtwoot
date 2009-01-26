@@ -39,7 +39,7 @@ jQuery.fn.reverse = function() {
             item.user.screen_name + '">' +
           item.user.screen_name + '</a> ' +
           '<a class="retweet" title="Retweet" ' +
-            'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
+            'href="javascript:retweet(' + item.id + ')">&#9986;</a>' +
           '<a class="favorite" title="Toggle favorite status" '+
             'href="javascript:toggleFavorite(' + 
             item.id + ')">&#10029;</a>' +
@@ -169,9 +169,10 @@ function toggleFavorite(msg_id) {
 }
 
 function retweet(msg_id) {
+  MSG_ID = msg_id;
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
-      start = 'RT @' + data.user.screen_name + ': ' + data.text;
+      start = '✂ @' + data.user.screen_name + ': ' + data.text;
       $("#status").val(start);
       $("#status").focus();
       $("#status").caret(start.length, start.length);
@@ -205,7 +206,7 @@ function newerPage() {
 }
 
 function setStatus(status_text) {
-  if (status_text[0] == "@" && MSG_ID) {
+  if (status_text.indexOf("@") != -1 && MSG_ID) {
     $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
