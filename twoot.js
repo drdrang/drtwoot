@@ -25,7 +25,7 @@ jQuery.fn.reverse = function() {
             inReplyText = '';
             }
           else {
-            inReplyText = ' in reply to <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
+            inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
           }
           list.prepend('<li id="msg-' + item.id + '">' +
           '<a href="http://twitter.com/account/profile_image/' +
