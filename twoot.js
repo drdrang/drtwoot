@@ -372,5 +372,5 @@ function setBottomMargin() {
   $("#message_entry").css("bottom", "0");
 }
 
-$(window).load(setBottomMargin);
+$(document).load(setBottomMargin);
 $(window).scroll(setBottomMargin);
