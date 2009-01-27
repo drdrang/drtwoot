@@ -281,7 +281,7 @@ function setStatus(status_text) {
     MSG_ID = '';
   }
   else {
-    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot" }, function(data) { refreshStatusField(); }, "json" );
+    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot" }, function(data) { getFriends(); }, "json" );
   }
   return;
 }
@@ -291,7 +291,6 @@ function refreshStatusField() {
   refreshMessages('friends');
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
-  // added by Dr. Drang to reset char count
   $("#count").removeClass("warning");
   $("#count").addClass("normal");
   $("#count").html("140");
