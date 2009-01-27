@@ -10,6 +10,8 @@ When you run it the first time, you'll probably have to give it your Twitter use
 
 # Use #
 
+<img class="ss" src="http://www.leancrew.com/all-this/images/drtwoot-basic.png" />
+
 With Dr. Twoot, you can view
 
 * your friends' timeline
