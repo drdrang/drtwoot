@@ -3,6 +3,25 @@ a { text-decoration: none; color: blue; }
 a:hover { text-decoration: underline; }
 body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
 
+/* Top control bar */
+#controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 2em;
+  background-color: #00f;
+}
+
+#controls table {
+  width: 100%;
+  color: white;
+  text-align: center;
+  height: 1em;
+	margin-top: 3px;
+}
+
 /* Alert message */
 #alert {
 	position: fixed;
@@ -21,6 +40,10 @@ body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color
 	text-align:center;
 	height: 1em;
 	margin-top: 3px;
+}
+
+div.tweets {
+  margin-top: 2em;
 }
 
 /*Tweet styles*/
