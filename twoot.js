@@ -7,7 +7,7 @@ var MSG_ID;
 var PAGE = 1;
 var URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
            'replies': ' http://twitter.com/statuses/replies.json',
-           'directs': 'http://twitter.com/direct_messages.json',
+           'mine': 'http://twitter.com/statuses/user_timeline.json',
            'favorites': 'http://twitter.com/favorites.json'};
 
 //Reverse collection
@@ -24,7 +24,6 @@ jQuery.fn.reverse = function() {
      if (tweet_type == 'friends'){
        url += getSinceParameter();
      }
-     
      $.getJSON(url, function(data){
        $.each(data.reverse(), function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
@@ -187,16 +186,16 @@ function getReplies() {
   return;
 }
 
-function getDirects() {
-  $("#older").attr('href', "javascript:olderPage('directs')");
-  $("#newer").attr('href', "javascript:newerPage('directs')");
+function getMine() {
+  $("#older").attr('href', "javascript:olderPage('mine')");
+  $("#newer").attr('href', "javascript:newerPage('mine')");
   $("#older").css('visibility','hidden');
   $("#newer").css('visibility','hidden');
   $("ul.tweet_list li[id^=msg]").remove();
   LAST_UPDATE = null;
   PAGE = 1;
   showAlert("Getting direct messages...");
-  $(".tweets").gettweets('directs');
+  $(".tweets").gettweets('mine');
   $("#alert").fadeOut(2000);
   return;
 }
@@ -333,7 +332,7 @@ $(document).ready(function(){
     });
 
     //set timer to reload friends timeline, if showing, every 3 minutes
-    window.setInterval("refreshFriends()", 65*1000);
+    window.setInterval("refreshFriends()", 3*60*1000);
 
     //set timer to recalc timestamps every 60 secs
     window.setInterval("recalcTime()", 60000);
