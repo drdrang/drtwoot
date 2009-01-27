@@ -5,6 +5,10 @@
 var LAST_UPDATE;
 var MSG_ID;
 var PAGE = 1;
+var URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
+           'replies': ' http://twitter.com/statuses/replies.json',
+           'directs': 'http://twitter.com/direct_messages.json',
+           'favorites': 'http://twitter.com/favorites.json'};
 
 //Reverse collection
 jQuery.fn.reverse = function() {
@@ -13,10 +17,13 @@ jQuery.fn.reverse = function() {
 
 
 (function($) {
- $.fn.gettweets = function(){
+ $.fn.gettweets = function(tweet_type){
   return this.each(function(){
      var list = $('ul.tweet_list').prependTo(this);
-     var url = 'http://twitter.com/statuses/friends_timeline.json?page=' + PAGE + getSinceParameter();
+     var url = URL[tweet_type] + '?page=' + PAGE;
+     if (tweet_type == 'friends'){
+       url += getSinceParameter();
+     }
      
      $.getJSON(url, function(data){
        $.each(data.reverse(), function(i, item) { 
@@ -137,9 +144,27 @@ function showAlert(message) {
 
 
 function refreshMessages() {
-  showAlert("Getting new tweets...");
-  $(".tweets").gettweets();
+  if (LAST_UPDATE) {
+    showAlert("Getting new tweets...");
+    $(".tweets").gettweets('friends');
+    LAST_UPDATE = new Date().toGMTString(); 
+    $("#alert").fadeOut(2000);
+  }
+  return;
+}
+
+function getFriends() {
+  LAST_UPDATE = null;
+  showAlert("Getting friends timeline...");
+  $(".tweets").gettweets('friends');
   LAST_UPDATE = new Date().toGMTString(); 
+  $("#alert").fadeOut(2000);
+  return;
+}
+
+function getReplies() {
+  showAlert("Getting @replies...");
+  $(".tweets").gettweets('replies');
   $("#alert").fadeOut(2000);
   return;
 }
@@ -253,7 +278,7 @@ function charCountdown() {
 $(document).ready(function(){
 
     //get the user's messages
-    refreshMessages();
+    getFriends();
 
     //add event capture to form submit
     $("#status_entry").submit(function() {
@@ -262,7 +287,7 @@ $(document).ready(function(){
     });
 
     //set timer to reload messages every 3 minutes
-    window.setInterval("refreshMessages()", 3*60*1000);
+    window.setInterval("refreshMessages()", 65*1000);
 
     //set timer to recalc timestamps every 60 secs
     window.setInterval("recalcTime()", 60000);

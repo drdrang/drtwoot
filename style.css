@@ -11,15 +11,22 @@ body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color
   z-index: 5;
   width: 100%;
   height: 2em;
-  background-color: #00f;
+  background-color: #e8e8e8;
+  font-size: 80%;
+  font-weight: bold;
 }
 
 #controls table {
   width: 100%;
-  color: white;
+  color: black;
   text-align: center;
   height: 1em;
 	margin-top: 3px;
+}
+
+#controls a {
+  text-decoration: none;
+  color: black;
 }
 
 /* Alert message */
