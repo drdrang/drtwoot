@@ -9,6 +9,7 @@ var URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
            'replies': ' http://twitter.com/statuses/replies.json',
            'mine': 'http://twitter.com/statuses/user_timeline.json',
            'favorites': 'http://twitter.com/favorites.json'};
+var UID;
 
 //Reverse collection
 jQuery.fn.reverse = function() {
@@ -63,6 +64,16 @@ jQuery.fn.reverse = function() {
           // Change the class if it's a favorite.
           if (item.favorited) {
             $('#msg-' + item.id + ' a.favorite').css('color', 'red');
+          }
+          
+          // Set the visibility of the delete and reply buttons.
+          if (item.user.id == UID) {
+            $('#msg-' + item.id + ' a.delete').css("display", "inline");
+            $('#msg-' + item.id + ' a.reply').css("display", "none");
+          }
+          else {
+            $('#msg-' + item.id + ' a.delete').css("display", "none");
+            $('#msg-' + item.id + ' a.reply').css("display", "inline");
           }
           
           // Hide the Newer link if we're on the first page.
@@ -331,6 +342,10 @@ $(document).ready(function(){
 
     //get the user's messages
     getFriends();
+    
+    // Get the user's ID.
+    $.getJSON(URL['mine'], function(data){UID = data[0].user.id;return;});
+    
 
     //add event capture to form submit
     $("#status_entry").submit(function() {
