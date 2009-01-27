@@ -281,14 +281,13 @@ function setStatus(status_text) {
     MSG_ID = '';
   }
   else {
-    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot" }, function(data) { getFriends(); }, "json" );
+    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot" }, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
 
 function refreshStatusField() {
-  //maybe show some text below field with last message sent?
-  refreshMessages('friends');
+  getFriends();   // switch to friends timeline after posting
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
   $("#count").removeClass("warning");
