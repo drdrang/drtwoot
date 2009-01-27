@@ -73,7 +73,7 @@ a.user {
 	font-weight:bold;
 	text-decoration:none;
 }
-a.reply, a.favorite, a.retweet {
+a.reply, a.favorite, a.retweet, a.delete {
   font-weight: bold;
   text-decoration: none;
   color: black;

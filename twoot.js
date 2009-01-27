@@ -53,6 +53,8 @@ jQuery.fn.reverse = function() {
             'href="javascript:replyTo(\'' +
             item.user.screen_name + '\',' + item.id +
             ')">@</a>' +
+          '<a class="delete" title="Delete" ' +
+            'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
           '<div class="tweet_text">' +
           item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') +
           '<span class="info">' + inReplyText + ' via ' + item.source + '</span>' +
@@ -213,6 +215,13 @@ function getFavorites() {
   $("#alert").fadeOut(2000);
   return;
 }
+
+function deleteTweet(msg_id) {
+  $.post('http://twitter.com/statuses/destroy/' + msg_id + '.json', {id:msg_id});
+  getFriends();
+  return;
+}
+      
 
 function replyTo(screen_name, msg_id) {
   MSG_ID = msg_id;
