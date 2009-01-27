@@ -143,28 +143,74 @@ function showAlert(message) {
 }
 
 
-function refreshMessages() {
+function refreshMessages(tweet_type) {
+  showAlert("Refreshing...");
+  $(".tweets").gettweets(tweet_type);
+  LAST_UPDATE = new Date().toGMTString();
+  $("#alert").fadeOut(2000);
+  return;
+}
+
+function refreshFriends(){
   if (LAST_UPDATE) {
-    showAlert("Getting new tweets...");
-    $(".tweets").gettweets('friends');
-    LAST_UPDATE = new Date().toGMTString(); 
-    $("#alert").fadeOut(2000);
+    refreshMessages('friends');
   }
   return;
 }
 
 function getFriends() {
+  $("#older").attr('href', "javascript:olderPage('friends')");
+  $("#newer").attr('href', "javascript:newerPage('friends')");
+  $("#older").css('visibility','hidden');
+  $("#newer").css('visibility','hidden');
+  $("ul.tweet_list li[id^=msg]").remove();
   LAST_UPDATE = null;
+  PAGE = 1;
   showAlert("Getting friends timeline...");
   $(".tweets").gettweets('friends');
-  LAST_UPDATE = new Date().toGMTString(); 
+  LAST_UPDATE = new Date().toGMTString();
   $("#alert").fadeOut(2000);
   return;
 }
 
 function getReplies() {
+  $("#older").attr('href', "javascript:olderPage('replies')");
+  $("#newer").attr('href', "javascript:newerPage('replies')");
+  $("#older").css('visibility','hidden');
+  $("#newer").css('visibility','hidden');
+  $("ul.tweet_list li[id^=msg]").remove();
+  LAST_UPDATE = null;
+  PAGE = 1;
   showAlert("Getting @replies...");
   $(".tweets").gettweets('replies');
+  $("#alert").fadeOut(2000);
+  return;
+}
+
+function getDirects() {
+  $("#older").attr('href', "javascript:olderPage('directs')");
+  $("#newer").attr('href', "javascript:newerPage('directs')");
+  $("#older").css('visibility','hidden');
+  $("#newer").css('visibility','hidden');
+  $("ul.tweet_list li[id^=msg]").remove();
+  LAST_UPDATE = null;
+  PAGE = 1;
+  showAlert("Getting direct messages...");
+  $(".tweets").gettweets('directs');
+  $("#alert").fadeOut(2000);
+  return;
+}
+
+function getFavorites() {
+  $("#older").attr('href', "javascript:olderPage('favorites')");
+  $("#newer").attr('href', "javascript:newerPage('favorites')");
+  $("#older").css('visibility','hidden');
+  $("#newer").css('visibility','hidden');
+  $("ul.tweet_list li[id^=msg]").remove();
+  LAST_UPDATE = null;
+  PAGE = 1;
+  showAlert("Getting favorites...");
+  $(".tweets").gettweets('favorites');
   $("#alert").fadeOut(2000);
   return;
 }
@@ -206,27 +252,27 @@ function retweet(msg_id) {
   );
 }
 
-function olderPage() {
-  PAGE = PAGE + 1;
+function olderPage(tweet_type) {
+  PAGE += 1;
   LAST_UPDATE = null;
   // Hide the paging links before removing the messages. They're made
   // visible again by gettweets().
   $("#older").css('visibility','hidden');
   $("#newer").css('visibility','hidden');
   $("ul.tweet_list li[id^=msg]").remove();
-  refreshMessages();
+  refreshMessages(tweet_type);
 }
 
-function newerPage() {
+function newerPage(tweet_type) {
   if (PAGE > 1) {
-    PAGE = PAGE - 1;
+    PAGE -= 1
     LAST_UPDATE = null;
     // Hide the paging links before removing the messages. They're made
     // visible again by gettweets().
     $("#older").css('visibility','hidden');
     $("#newer").css('visibility','hidden');
     $("ul.tweet_list li[id^=msg]").remove();
-    refreshMessages();
+    refreshMessages(tweet_type);
   }
 }
 
@@ -243,7 +289,7 @@ function setStatus(status_text) {
 
 function refreshStatusField() {
   //maybe show some text below field with last message sent?
-  refreshMessages();
+  refreshMessages('friends');
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
   // added by Dr. Drang to reset char count
@@ -286,14 +332,11 @@ $(document).ready(function(){
       return false;
     });
 
-    //set timer to reload messages every 3 minutes
-    window.setInterval("refreshMessages()", 65*1000);
+    //set timer to reload friends timeline, if showing, every 3 minutes
+    window.setInterval("refreshFriends()", 65*1000);
 
     //set timer to recalc timestamps every 60 secs
     window.setInterval("recalcTime()", 60000);
-
-    //Bind r key to request new messages
-    $(document).bind('keydown', {combi:'r', disableInInput: true}, refreshMessages);
 
 });
 

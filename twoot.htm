@@ -13,10 +13,10 @@
   <div id="controls">
     <table>
       <tr>
-        <td><a href="javascript:refreshMessages()">Friends</a></td>
-        <td>@Replies</td>
-        <td>Messages</td>
-        <td>Favorites</td>
+        <td><a href="javascript:getFriends()">Friends</a></td>
+        <td><a href="javascript:getReplies()">@Replies</a></td>
+        <td><a href="javascript:getDirects()">Directs</a></td>
+        <td><a href="javascript:getFavorites()">Favorites</a></td>
       </tr>
     </table>
   </div>
@@ -24,8 +24,8 @@
 		<div id="alert"><p></p></div>
 		<ul class="tweet_list">
 		  <li>
-		    <a id="older" href="javascript:olderPage()">Older Tweets</a>
-		    <a id="newer" href="javascript:newerPage()">Newer Tweets</a>
+		    <a id="older" href="javascript:olderPage('friends')">Older Tweets</a>
+		    <a id="newer" href="javascript:newerPage('friends')">Newer Tweets</a>
 	    </li>
 		</ul>
 	</div> 
