@@ -207,7 +207,7 @@ function getMine() {
   $("ul.tweet_list li[id^=msg]").remove();
   LAST_UPDATE = null;
   PAGE = 1;
-  showAlert("Getting direct messages...");
+  showAlert("Getting my timeline...");
   $(".tweets").gettweets('mine');
   $("#alert").fadeOut(2000);
   return;
