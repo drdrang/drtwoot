@@ -46,7 +46,7 @@ jQuery.fn.reverse = function() {
             item.user.screen_name + '">' +
           item.user.screen_name + '</a> ' +
           '<a class="retweet" title="Retweet" ' +
-            'href="javascript:retweet(' + item.id + ')">&#9986;</a>' +
+            'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
           '<a class="favorite" title="Toggle favorite status" '+
             'href="javascript:toggleFavorite(' + 
             item.id + ')">&#10029;</a>' +
@@ -262,7 +262,7 @@ function retweet(msg_id) {
   MSG_ID = msg_id;
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
-      start = '✂ @' + data.user.screen_name + ': ' + data.text;
+      start = 'RT @' + data.user.screen_name + ': ' + data.text;
       $("#status").val(start);
       $("#status").focus();
       $("#status").caret(start.length, start.length);
