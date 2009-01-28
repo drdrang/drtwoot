@@ -297,7 +297,7 @@ function newerPage(tweet_type) {
 
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
-    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
+    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "drtwoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
   else {
