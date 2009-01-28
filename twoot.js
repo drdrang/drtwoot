@@ -193,7 +193,7 @@ function getReplies() {
   $("ul.tweet_list li[id^=msg]").remove();
   LAST_UPDATE = null;
   PAGE = 1;
-  showAlert("Getting @replies...");
+  showAlert("Getting replies...");
   $(".tweets").gettweets('replies');
   $("#alert").fadeOut(2000);
   return;
