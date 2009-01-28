@@ -11,7 +11,8 @@ body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color
   z-index: 5;
   width: 100%;
   height: 2em;
-  background-color: #e8e8e8;
+  background-color: #e5e5e5;
+  border-bottom: solid 2px #bebebe;
   font-size: 80%;
   font-weight: bold;
 }
@@ -102,7 +103,7 @@ span.info {
 	bottom: 0; left: 0;
 	z-index: 10;
 	width:100%;
-	border-top: solid 2px #bebebe
+	border-top: solid 2px #bebebe;
 }
 form {
 	margin: 0.4em 0.5em;
