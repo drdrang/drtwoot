@@ -40,8 +40,10 @@ jQuery.fn.reverse = function() {
           '"><img class="profile_image" height="48" width="48" src="' + 
           item.user.profile_image_url +
           '" alt="' + item.user.name + '" /></a>' +
-          '<span class="time" title="' + item.created_at + '">' +
-            relative_time(item.created_at) + '</span> '+
+          '<a class="time" title="' + item.created_at + '" ' +
+            'href="http://twitter.com/' + item.user.screen_name + '/statuses/' +
+            item.id +'">' +
+            relative_time(item.created_at) + '</a> '+
           '<a class="user" href="http://twitter.com/' + 
             item.user.screen_name + '">' +
           item.user.screen_name + '</a> ' +

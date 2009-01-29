@@ -84,7 +84,7 @@ a.reply, a.favorite, a.retweet, a.delete {
   margin-right: -0.4em;
 }
 
-span.time {
+a.time {
 	color: #666;
 	font-size: 75%;
 }
