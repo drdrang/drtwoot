@@ -12,22 +12,30 @@ When you run it the first time, you'll probably have to give it your Twitter use
 
 <img class="ss" src="http://www.leancrew.com/all-this/images/drtwoot-basic.png" />
 
-With Dr. Twoot, you can view
+The Dr. Twoot feature list:
 
-* your friends' timeline
-* your timeline
-* replies to you
-* your favorites
-
-You can also
-
-* reply to tweets
-* delete your own tweets
-* add tweets to your favorites list
-* remove tweets from your favorites list
-* retweet with one click
-* page through older tweets
-
+* It updates automatically every three minutes.
+* From the toolbar at the top, you can:
+    * view your friends' timeline;
+    * view your own timeline;
+    * view replies to you; and
+    * view your favorite tweets.
+* Each tweet has buttons that let you:
+    * reply, if the tweet is from someone else (**@**);
+    * delete, if the tweet is from you (**⌫**);
+    * add it to your favorites list (**★** changes to red);
+    * delete it from your favorites list (**★** changes back to black); and
+    * retweet it (**♺**).
+* Less obviously, each tweet has links to:
+    * the full-sized user picture (click the thumbnail);
+    * the tweet itself on twitter.com (click the timestamp);
+    * the user's timeline (click the user name);
+    * the Twitter client used to write the tweet (click the name of the client); and
+    * the tweet it's replying to or retweeting, when appropriate (click the user name after "re").
+* The message area at the bottom has a character countdown that:
+    * turns red when your within 20 of the 140-character limit; and
+    * changes to "Twoosh!" when you're tweet hits exactly 140 characters.
+* Links at the bottom of the list of tweets (not visible in the screenshot) let you page backward and forward through the tweet history.
 # Customization #
 
 The style can be changed pretty easily by editing the `style.css` file. Functionality can be added/altered by editing `twoot.js`. Dr. Twoot, like Twoot before it, makes heavy use of the jQuery library.
