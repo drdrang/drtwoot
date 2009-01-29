@@ -303,7 +303,7 @@ function setStatus(status_text) {
     MSG_ID = '';
   }
   else {
-    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "twoot" }, function(data) { refreshStatusField(); }, "json" );
+    $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "drtwoot" }, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
