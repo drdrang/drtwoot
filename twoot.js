@@ -134,7 +134,7 @@ function relative_time(time_value) {
 
 //get all span.time and recalc from title attribute
 function recalcTime() {
-  $('span.time').each( 
+  $('a.time').each( 
       function() {
         $(this).text(relative_time($(this).attr("title")));
       }
