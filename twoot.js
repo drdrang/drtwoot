@@ -158,10 +158,10 @@ function showAlert(message) {
 
 
 function refreshMessages(tweet_type) {
-  showAlert("Refreshing...");
+  // showAlert("Refreshing...");
   $(".tweets").gettweets(tweet_type);
   LAST_UPDATE = new Date().toGMTString();
-  $("#alert").fadeOut(2000);
+  // $("#alert").fadeOut(2000);
   return;
 }
 
