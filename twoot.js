@@ -10,6 +10,7 @@ var URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
            'mine': 'http://twitter.com/statuses/user_timeline.json',
            'favorites': 'http://twitter.com/favorites.json'};
 var UID;
+var TWEETTYPE;
 
 //Reverse collection
 jQuery.fn.reverse = function() {
@@ -172,7 +173,7 @@ function refreshFriends(){
   return;
 }
 
-function getFriends() {
+function getType(type){
   $("#older").attr('href', "javascript:olderPage('friends')");
   $("#newer").attr('href', "javascript:newerPage('friends')");
   $("#older").css('visibility','hidden');
@@ -180,62 +181,20 @@ function getFriends() {
   $("ul.tweet_list li[id^=msg]").remove();
   LAST_UPDATE = null;
   PAGE = 1;
-  showAlert("Getting friends timeline...");
-  $(".tweets").gettweets('friends');
-  LAST_UPDATE = new Date().toGMTString();
+  TWEETTYPE = type;
+  showAlert("Getting " + type + "…");
+  $(".tweets").gettweets(type);
   $("#alert").fadeOut(2000);
-  return;
-}
-
-function getReplies() {
-  $("#older").attr('href', "javascript:olderPage('replies')");
-  $("#newer").attr('href', "javascript:newerPage('replies')");
-  $("#older").css('visibility','hidden');
-  $("#newer").css('visibility','hidden');
-  $("ul.tweet_list li[id^=msg]").remove();
-  LAST_UPDATE = null;
-  PAGE = 1;
-  showAlert("Getting replies...");
-  $(".tweets").gettweets('replies');
-  $("#alert").fadeOut(2000);
-  return;
-}
-
-function getMine() {
-  $("#older").attr('href', "javascript:olderPage('mine')");
-  $("#newer").attr('href', "javascript:newerPage('mine')");
-  $("#older").css('visibility','hidden');
-  $("#newer").css('visibility','hidden');
-  $("ul.tweet_list li[id^=msg]").remove();
-  LAST_UPDATE = null;
-  PAGE = 1;
-  showAlert("Getting my timeline...");
-  $(".tweets").gettweets('mine');
-  $("#alert").fadeOut(2000);
-  return;
-}
-
-function getFavorites() {
-  $("#older").attr('href', "javascript:olderPage('favorites')");
-  $("#newer").attr('href', "javascript:newerPage('favorites')");
-  $("#older").css('visibility','hidden');
-  $("#newer").css('visibility','hidden');
-  $("ul.tweet_list li[id^=msg]").remove();
-  LAST_UPDATE = null;
-  PAGE = 1;
-  showAlert("Getting favorites...");
-  $(".tweets").gettweets('favorites');
-  $("#alert").fadeOut(2000);
+  if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
 function deleteTweet(msg_id) {
   $.post('http://twitter.com/statuses/destroy/' + msg_id + '.json', {id:msg_id});
-  getFriends();
+  getType(TWEETTYPE);
   return;
 }
       
-
 function replyTo(screen_name, msg_id) {
   MSG_ID = msg_id;
   start = '@' + screen_name + ' ';
@@ -309,7 +268,8 @@ function setStatus(status_text) {
 }
 
 function refreshStatusField() {
-  getFriends();   // switch to friends timeline after posting
+  if (TWEETTYPE == 'friends') refreshMessages('friends');
+  else getType('friends');
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
   $("#count").removeClass("warning");
@@ -343,7 +303,7 @@ function charCountdown() {
 $(document).ready(function(){
 
     //get the user's messages
-    getFriends();
+    getType('friends');
     
     // Get the user's ID.
     $.getJSON(URL['mine'], function(data){UID = data[0].user.id;return;});
