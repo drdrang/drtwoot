@@ -60,7 +60,7 @@ jQuery.fn.reverse = function() {
             'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
           '<div class="tweet_text">' +
           item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') +
-          '<span class="info">' + inReplyText + ' via ' + item.source + '</span>' +
+          '<span class="info">' + ' via ' + item.source + inReplyText + '</span>' +
            '</div></li>');
 
           // Change the class if it's a favorite.
