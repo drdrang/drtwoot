@@ -191,7 +191,7 @@ function getType(type){
 
 function deleteTweet(msg_id) {
   $.post('http://twitter.com/statuses/destroy/' + msg_id + '.json', {id:msg_id});
-  getType(TWEETTYPE);
+  $("#msg-" + msg_id).css('display', 'none');
   return;
 }
       
@@ -268,7 +268,8 @@ function setStatus(status_text) {
 }
 
 function refreshStatusField() {
-  if (TWEETTYPE == 'friends') refreshMessages('friends');
+  var stayTypes = ['friends', 'mine'];
+  if (stayTypes.indexOf(TWEETTYPE) != -1) refreshMessages(TWEETTYPE);
   else getType('friends');
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
