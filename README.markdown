@@ -6,7 +6,7 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 Download the files into a folder on your computer. Launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
-When you run it the first time, you'll probably have to give it your Twitter username and password. If you save those in you Keychain, you won't have to enter them again.
+When you run it the first time, you'll probably have to give it your Twitter username and password. If you save those in your Keychain, you won't have to enter them again.
 
 # Use #
 
