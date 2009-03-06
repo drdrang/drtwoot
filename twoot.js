@@ -165,7 +165,7 @@ function refreshMessages(tweet_type) {
   $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
   // $("#alert").fadeOut(2000);
-  window.scroll(0,$('div.tweets').height());
+  window.scroll(0,10000); //$('div.tweets').height());
   return;
 }
 
@@ -189,7 +189,6 @@ function getType(type){
   $(".tweets").gettweets();
   $("#alert").fadeOut(2000);
   if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
-  window.scroll(0,500);
   return;
 }
 
