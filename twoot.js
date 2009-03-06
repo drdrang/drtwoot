@@ -22,14 +22,14 @@ jQuery.fn.reverse = function() {
 }; 
 
 
-(function($) {
- $.fn.gettweets = function(){
+$.fn.gettweets = function(type){
   return this.each(function(){
-     var list = $('ul.tweet_list').appendTo(this);
-     var url = BASE_URL['friends'] + '?count=' + COUNT;
-     url += getSinceParameter();
-     $.getJSON(url, function(data){
-       $.each(data.reverse(), function(i, item) { 
+    var bigStream = [];
+    var list = $('ul.tweet_list').appendTo(this);
+    var url = BASE_URL[type] + '?count=' + COUNT;
+    url += getSinceParameter();
+    $.getJSON(url, function(data){
+      $.each(data.reverse(), function(i, item){
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
           if (item.in_reply_to_status_id == null) {
             inReplyText = '';
@@ -81,31 +81,12 @@ jQuery.fn.reverse = function() {
             $('#msg-' + item.id + ' a.reply').css("display", "inline");
           }
           
-          // Hide the Newer link if we're on the first page.
-          if (PAGE == 1) {
-            $("#newer").css("visibility", "hidden");
-          }
-          else {
-            $("#newer").css("visibility", "visible");
-          }
-          
-          // The Older link is always visible after the tweets are shown.
-          $("#older").css("visibility", "visible");
-            
-          // Don't want Growl notifications? Comment out the following method call
-          fluid.showGrowlNotification({
-            title: item.user.name + " @" + item.user.screen_name,
-            description: item.text,
-            priority: 2,
-            icon: item.user.profile_image_url
-          });
+        }  // if
+      }); // each
+    }); // getJSON
+  }); // this.each
+};  // gettweets
 
-          }  // if
-         }); // each
-       }); // getJSON
-     }); // this.each
- };  // gettweets
-})(jQuery);
 
 
 function relative_time(time_value) {
@@ -155,14 +136,16 @@ function getSinceParameter() {
 
 
 function refreshMessages() {
-  $(".tweets").gettweets();
+  $(".tweets").gettweets('replies');
+  $(".tweets").gettweets('friends');
   LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
 
 function getStream(){
-  $(".tweets").gettweets();
+  $(".tweets").gettweets('friends');
+  $(".tweets").gettweets('replies');
   LAST_UPDATE = new Date().toGMTString();
   return;
 }
