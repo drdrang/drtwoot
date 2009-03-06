@@ -53,7 +53,7 @@ body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color
 }
 
 div.tweets {
-  margin-top: 2em;
+/*  margin-top: 2em;*/
 }
 
 /*Tweet styles*/
@@ -61,11 +61,14 @@ div.tweets {
 	padding: 0.2em 0.4em 0.2em 60px; /* The 60px left margin is to allow room for the profile image */
 	margin:0;
 	min-height: 52px; /* To make sure short messages don't cut off profile image */
-	word-wrap: break-word; 
+	word-wrap: break-word;
+/*  border-top: solid 1px #aaa;*/
 }
+
 .tweet_list li:nth-child(even) {
-	background-color: #e6edfa;
+	background-color: #f6f9fa;
 }
+
 img.profile_image {
 	float:left;
 	margin: 3px auto 2px -54px; /* Negative margin places the profile image in the space created by the padding in .tweet_list li */
@@ -104,6 +107,7 @@ span.info {
 	z-index: 10;
 	width:100%;
 	border-top: solid 2px #bebebe;
+/*  display: none;*/
 }
 form {
 	margin: 0.4em 0.5em;
