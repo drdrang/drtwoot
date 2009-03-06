@@ -161,17 +161,9 @@ function refreshMessages() {
 }
 
 
-function getType(type){
-  $("#older").attr('href', "javascript:olderPage('friends')");
-  $("#newer").attr('href', "javascript:newerPage('friends')");
-  $("#older").css('visibility','hidden');
-  $("#newer").css('visibility','hidden');
-  $("ul.tweet_list li[id^=msg]").remove();
-  LAST_UPDATE = null;
-  PAGE = 1;
-  TWEETTYPE = type;
+function getStream(){
   $(".tweets").gettweets();
-  if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
+  LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
@@ -266,8 +258,8 @@ function charCountdown() {
 // set up basic stuff for first load
 $(document).ready(function(){
 
-    //get the user's messages
-    getType('friends');
+    //get the messages
+    getStream();
     
     // Get the user's ID.
     $.getJSON(BASE_URL['mine'], function(data){UID = data[0].user.id;return;});
