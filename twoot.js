@@ -157,7 +157,6 @@ function getSinceParameter() {
 function refreshMessages() {
   $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
-  window.scroll(0,10000); //$('div.tweets').height());
   return;
 }
 
@@ -219,30 +218,6 @@ function retweet(msg_id) {
   );
 }
 
-function olderPage(tweet_type) {
-  PAGE += 1;
-  LAST_UPDATE = null;
-  // Hide the paging links before removing the messages. They're made
-  // visible again by gettweets().
-  $("#older").css('visibility','hidden');
-  $("#newer").css('visibility','hidden');
-  $("ul.tweet_list li[id^=msg]").remove();
-  refreshMessages();
-}
-
-function newerPage(tweet_type) {
-  if (PAGE > 1) {
-    PAGE -= 1
-    LAST_UPDATE = null;
-    // Hide the paging links before removing the messages. They're made
-    // visible again by gettweets().
-    $("#older").css('visibility','hidden');
-    $("#newer").css('visibility','hidden');
-    $("ul.tweet_list li[id^=msg]").remove();
-    refreshMessages();
-  }
-}
-
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
     $.post("http://twitter.com/statuses/update.json", { status: status_text, source: "drtwoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
@@ -257,10 +232,13 @@ function setStatus(status_text) {
 function refreshStatusField() {
   refreshMessages();
   $("#status").val("");
-  $('html').animate({scrollTop:0}, 'fast'); 
   $("#count").removeClass("warning");
   $("#count").addClass("normal");
   $("#count").html("140");
+  // Scroll down to the bottom after posting. Have to use a delay
+  // or the scroll will happen before the tweet is added to the list.
+  // The extra 200 pixels is a kluge.
+  window.setTimeout("window.scrollTo(0, $('div.tweets').height()+200)", 2*1000);
   return;
 }
 
@@ -301,7 +279,7 @@ $(document).ready(function(){
       return false;
     });
 
-    //set timer to reload friends timeline, if showing, every 3 minutes
+    //set timer to reload timeline, every 3 minutes
     window.setInterval("refreshMessages()", 3*60*1000);
 
     //set timer to recalc timestamps every 60 secs
