@@ -9,10 +9,9 @@ var INITIAL_COUNT = 200;
 var LAST_UPDATE;
 var MSG_ID;
 var PAGE = 1;
-var URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
-           'replies': ' http://twitter.com/statuses/replies.json',
-           'mine': 'http://twitter.com/statuses/user_timeline.json',
-           'favorites': 'http://twitter.com/favorites.json'};
+var BASE_URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
+                'replies': 'http://twitter.com/statuses/replies.json',
+                'directs': 'http://twitter.com/direct_messages.json'};
 var UID;
 var TWEETTYPE;
 
@@ -149,7 +148,7 @@ function recalcTime() {
 
 function getSinceParameter() {
   if(LAST_UPDATE == null) {
-    return "";
+    return "&since=" + INITIAL_UPDATE;
   } else {
     return "&since=" + LAST_UPDATE;
   }
