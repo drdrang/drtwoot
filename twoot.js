@@ -25,11 +25,11 @@ jQuery.fn.reverse = function() {
 (function($) {
  $.fn.gettweets = function(){
   return this.each(function(){
-     var list = $('ul.tweet_list').prependTo(this);
+     var list = $('ul.tweet_list').appendTo(this);
      var url = BASE_URL['friends'] + '?count=' + COUNT;
      url += getSinceParameter();
      $.getJSON(url, function(data){
-       $.each(data.reverse(), function(i, item) { 
+       $.each(data, function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
           if (item.in_reply_to_status_id == null) {
             inReplyText = '';
