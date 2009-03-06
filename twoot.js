@@ -165,6 +165,7 @@ function refreshMessages(tweet_type) {
   $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
   // $("#alert").fadeOut(2000);
+  window.scroll(0,$('div.tweets').height());
   return;
 }
 
@@ -188,6 +189,7 @@ function getType(type){
   $(".tweets").gettweets();
   $("#alert").fadeOut(2000);
   if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
+  window.scroll(0,500);
   return;
 }
 
@@ -327,14 +329,14 @@ $(document).ready(function(){
 });
 
 
-// Reset the top margin of the tweet list so the status entry stuff
-// doesn't cover the earlies tweet. This has to be done after the size of
+// Reset the bottom margin of the tweet list so the status entry stuff
+// doesn't cover the last tweet. This has to be done after the size of
 // the #message_entry div is known (load) and whenever the text size is
 // changed in the browser (scroll).
 
-function setTopMargin() {
-  $("div.tweets").css("margin-top", $("#message_entry").height() + parseInt($("#message_entry").css("border-bottom-width")));
+function setBottomMargin() {
+  $("div.tweets").css("margin-bottom", $("#message_entry").height() + parseInt($("#message_entry").css("border-top-width")));
 }
 
-$(document).load(setTopMargin);
-$(window).scroll(setTopMargin);
+$(document).load(setBottomMargin);
+$(window).scroll(setBottomMargin);
