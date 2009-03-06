@@ -29,7 +29,7 @@ jQuery.fn.reverse = function() {
      var url = BASE_URL['friends'] + '?count=' + COUNT;
      url += getSinceParameter();
      $.getJSON(url, function(data){
-       $.each(data, function(i, item) { 
+       $.each(data.reverse(), function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
           if (item.in_reply_to_status_id == null) {
             inReplyText = '';
@@ -37,7 +37,7 @@ jQuery.fn.reverse = function() {
           else {
             inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
           }
-          list.prepend('<li id="msg-' + item.id + '">' +
+          list.append('<li id="msg-' + item.id + '">' +
           '<a href="http://twitter.com/account/profile_image/' +
           item.user.screen_name +
           '"><img class="profile_image" height="48" width="48" src="' + 
@@ -327,15 +327,14 @@ $(document).ready(function(){
 });
 
 
-// Reset the bottom margin of the tweet list so the status entry stuff
-// doesn't cover the last tweet. This has to be done after the size of
+// Reset the top margin of the tweet list so the status entry stuff
+// doesn't cover the earlies tweet. This has to be done after the size of
 // the #message_entry div is known (load) and whenever the text size is
 // changed in the browser (scroll).
 
-function setBottomMargin() {
-  $("div.tweets").css("margin-bottom", $("#message_entry").height() + parseInt($("#message_entry").css("border-top-width")));
-  $("#message_entry").css("bottom", "0");
+function setTopMargin() {
+  $("div.tweets").css("margin-top", $("#message_entry").height() + parseInt($("#message_entry").css("border-bottom-width")));
 }
 
-$(document).load(setBottomMargin);
-$(window).scroll(setBottomMargin);
+$(document).load(setTopMargin);
+$(window).scroll(setTopMargin);
