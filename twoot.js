@@ -2,6 +2,10 @@
  * The Twitter request code is based on the jquery tweet extension by http://tweet.seaofclouds.com/
  *
  * */
+var NOW = new Date();
+var THEN = new Date(NOW.getTime() - 12*60*60*1000);
+var INITIAL_UPDATE = escape(THEN.toGMTString());
+var INITIAL_COUNT = 200;
 var LAST_UPDATE;
 var MSG_ID;
 var PAGE = 1;
