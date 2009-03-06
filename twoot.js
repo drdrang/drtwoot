@@ -5,15 +5,16 @@
 var NOW = new Date();
 var THEN = new Date(NOW.getTime() - 12*60*60*1000);
 var INITIAL_UPDATE = escape(THEN.toGMTString());
-var INITIAL_COUNT = 200;
+var COUNT = 200;
 var LAST_UPDATE;
 var MSG_ID;
 var PAGE = 1;
 var BASE_URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
                 'replies': 'http://twitter.com/statuses/replies.json',
-                'directs': 'http://twitter.com/direct_messages.json'};
+                'directs': 'http://twitter.com/direct_messages.json',
+                'mine'   : 'http://twitter.com/statuses/user_timeline.json'};
 var UID;
-var TWEETTYPE;
+// var TWEETTYPE;
 
 //Reverse collection
 jQuery.fn.reverse = function() {
@@ -22,13 +23,11 @@ jQuery.fn.reverse = function() {
 
 
 (function($) {
- $.fn.gettweets = function(tweet_type){
+ $.fn.gettweets = function(){
   return this.each(function(){
      var list = $('ul.tweet_list').prependTo(this);
-     var url = URL[tweet_type] + '?page=' + PAGE;
-     if (tweet_type == 'friends'){
-       url += getSinceParameter();
-     }
+     var url = BASE_URL['friends'] + '?count=' + COUNT;
+     url += getSinceParameter();
      $.getJSON(url, function(data){
        $.each(data.reverse(), function(i, item) { 
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
@@ -163,7 +162,7 @@ function showAlert(message) {
 
 function refreshMessages(tweet_type) {
   // showAlert("Refreshing...");
-  $(".tweets").gettweets(tweet_type);
+  $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
   // $("#alert").fadeOut(2000);
   return;
@@ -186,7 +185,7 @@ function getType(type){
   PAGE = 1;
   TWEETTYPE = type;
   showAlert("Getting " + type + "…");
-  $(".tweets").gettweets(type);
+  $(".tweets").gettweets();
   $("#alert").fadeOut(2000);
   if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
   return;
@@ -310,7 +309,7 @@ $(document).ready(function(){
     getType('friends');
     
     // Get the user's ID.
-    $.getJSON(URL['mine'], function(data){UID = data[0].user.id;return;});
+    $.getJSON(BASE_URL['mine'], function(data){UID = data[0].user.id;return;});
     
 
     //add event capture to form submit
