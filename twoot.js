@@ -153,28 +153,14 @@ function getSinceParameter() {
   }
 }
 
-function showAlert(message) {
-  $("#alert p").text(message);
-  $("#alert").fadeIn("fast");
-  return;
-}
 
-
-function refreshMessages(tweet_type) {
-  // showAlert("Refreshing...");
+function refreshMessages() {
   $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
-  // $("#alert").fadeOut(2000);
   window.scroll(0,10000); //$('div.tweets').height());
   return;
 }
 
-function refreshFriends(){
-  if (LAST_UPDATE) {
-    refreshMessages('friends');
-  }
-  return;
-}
 
 function getType(type){
   $("#older").attr('href', "javascript:olderPage('friends')");
@@ -185,9 +171,7 @@ function getType(type){
   LAST_UPDATE = null;
   PAGE = 1;
   TWEETTYPE = type;
-  showAlert("Getting " + type + "…");
   $(".tweets").gettweets();
-  $("#alert").fadeOut(2000);
   if (type== 'friends') LAST_UPDATE = new Date().toGMTString();
   return;
 }
@@ -243,7 +227,7 @@ function olderPage(tweet_type) {
   $("#older").css('visibility','hidden');
   $("#newer").css('visibility','hidden');
   $("ul.tweet_list li[id^=msg]").remove();
-  refreshMessages(tweet_type);
+  refreshMessages();
 }
 
 function newerPage(tweet_type) {
@@ -255,7 +239,7 @@ function newerPage(tweet_type) {
     $("#older").css('visibility','hidden');
     $("#newer").css('visibility','hidden');
     $("ul.tweet_list li[id^=msg]").remove();
-    refreshMessages(tweet_type);
+    refreshMessages();
   }
 }
 
@@ -271,9 +255,7 @@ function setStatus(status_text) {
 }
 
 function refreshStatusField() {
-  var stayTypes = ['friends', 'mine'];
-  if (stayTypes.indexOf(TWEETTYPE) != -1) refreshMessages(TWEETTYPE);
-  else getType('friends');
+  refreshMessages();
   $("#status").val("");
   $('html').animate({scrollTop:0}, 'fast'); 
   $("#count").removeClass("warning");
@@ -320,7 +302,7 @@ $(document).ready(function(){
     });
 
     //set timer to reload friends timeline, if showing, every 3 minutes
-    window.setInterval("refreshFriends()", 3*60*1000);
+    window.setInterval("refreshMessages()", 3*60*1000);
 
     //set timer to recalc timestamps every 60 secs
     window.setInterval("recalcTime()", 60000);
