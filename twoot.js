@@ -106,10 +106,10 @@ function relative_time(time_value) {
     return 'an hour ago';
   } else if(delta < (120*60)) {
     return 'over an hour ago';
-  } else if(delta < (24*60*60)) {
+  } else if(delta < (22*60*60)) {
     return '' + (parseInt(delta / 3600)).toString() + ' hours ago';
   } else if(delta < (48*60*60)) {
-    return '1 day ago';
+    return 'a day ago';
   } else {
     return (parseInt(delta / 86400)).toString() + ' days ago';
   }
