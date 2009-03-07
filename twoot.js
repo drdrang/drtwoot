@@ -97,7 +97,7 @@ function relative_time(time_value) {
   var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
   delta = delta + (relative_to.getTimezoneOffset() * 60);
   if (delta < 60) {
-    return 'less than a minute ago';
+    return 'seconds ago';
   } else if(delta < 120) {
     return 'a minute ago';
   } else if(delta < (45*60)) {
