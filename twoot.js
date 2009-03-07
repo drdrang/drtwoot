@@ -24,10 +24,10 @@ jQuery.fn.reverse = function() {
 
 $.fn.gettweets = function(type){
   return this.each(function(){
-    var bigStream = [];
     var list = $('ul.tweet_list').appendTo(this);
     var url = BASE_URL[type] + '?count=' + COUNT;
     url += getSinceParameter();
+    
     $.getJSON(url, function(data){
       $.each(data.reverse(), function(i, item){
         if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
