@@ -3,7 +3,7 @@
  *
  * */
 var NOW = new Date();
-var THEN = new Date(NOW.getTime() - 48*60*60*1000);
+var THEN = new Date(NOW.getTime() - 12*60*60*1000);
 var INITIAL_UPDATE = THEN.toGMTString();
 var COUNT = 200;
 var LAST_UPDATE;
