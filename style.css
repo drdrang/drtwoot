@@ -3,54 +3,6 @@ a { text-decoration: none; color: blue; }
 a:hover { text-decoration: underline; }
 body { font: 15px/1.3 'Lucida Grande', sans-serif; color: #333; background-color:#fff }
 
-/* Top control bar */
-#controls {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 100%;
-  height: 2em;
-  background-color: #e5e5e5;
-  border-bottom: solid 2px #bebebe;
-  font-size: 80%;
-  font-weight: bold;
-}
-
-#controls table {
-  width: 100%;
-  color: black;
-  text-align: center;
-  height: 1em;
-	margin-top: 3px;
-}
-
-#controls td {
-  width: 25%;
-}
-
-#controls a {
-  text-decoration: none;
-  color: black;
-}
-
-/* Alert message */
-#alert {
-	position: fixed;
-	top: 0; left: 0;
-	z-index: 10;
-	width:100%;
-	height: 2em;
-	vertical-align: top;
-	background-color: #000;
-}
-
-#alert p {
-	color: #fff;
-	text-align:center;
-	height: 1em;
-	margin-top: 3px;
-}
 
 div.tweets {
 /*  margin-top: 2em;*/
@@ -139,22 +91,4 @@ label.normal {
 }
 label.warning {
   color: red;
-}
-
-a#older {
-  margin-top: 15px;
-  margin-left: -50px;
-  float: left;
-  font-weight: bold;
-  text-decoration: none;
-  visibility: hidden;  /*This is later controlled by JavaScript.*/
-}
-
-a#newer {
-  margin-top: 15px;
-  margin-right: 5px;
-  float: right;
-  font-weight: bold;
-  text-decoration: none;
-  visibility: hidden;  /*This is later controlled by JavaScript.*/
 }

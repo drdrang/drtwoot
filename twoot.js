@@ -3,87 +3,83 @@
  *
  * */
 var NOW = new Date();
-var THEN = new Date(NOW.getTime() - 12*60*60*1000);
-var INITIAL_UPDATE = escape(THEN.toGMTString());
+var THEN = new Date(NOW.getTime() - 48*60*60*1000);
+var INITIAL_UPDATE = THEN.toGMTString();
 var COUNT = 200;
 var LAST_UPDATE;
 var MSG_ID;
-var PAGE = 1;
 var BASE_URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
                 'replies': 'http://twitter.com/statuses/replies.json',
                 'directs': 'http://twitter.com/direct_messages.json',
                 'mine'   : 'http://twitter.com/statuses/user_timeline.json'};
-var UID;
-// var TWEETTYPE;
 
-//Reverse collection
-jQuery.fn.reverse = function() {
-  return this.pushStack(this.get().reverse(), arguments);
-}; 
-
-
-$.fn.gettweets = function(type){
+$.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
-    var url = BASE_URL[type] + '?count=' + COUNT;
-    url += getSinceParameter();
+    var friendsURL = BASE_URL['friends'] + '?count=200' + getSinceParameter();
+    var repliesURL = BASE_URL['replies'] + '?count=200' + getSinceParameter();
     
-    $.getJSON(url, function(data){
-      $.each(data.reverse(), function(i, item){
-        if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
-          if (item.in_reply_to_status_id == null) {
-            inReplyText = '';
+    $.getJSON(friendsURL, function(friends){
+      
+      $.getJSON(repliesURL, function(replies){
+        friends = $.merge(friends, replies)
+        $.each(friends.sort(function(a,b){return a.id-b.id;}),
+        function(i, item){
+          if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
+            if (item.in_reply_to_status_id == null) {
+              inReplyText = '';
+              }
+            else {
+              inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
             }
-          else {
-            inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
-          }
-          list.append('<li id="msg-' + item.id + '">' +
-          '<a href="http://twitter.com/account/profile_image/' +
-          item.user.screen_name +
-          '"><img class="profile_image" height="48" width="48" src="' + 
-          item.user.profile_image_url +
-          '" alt="' + item.user.name + '" /></a>' +
-          '<a class="time" title="' + item.created_at + '" ' +
-            'href="http://twitter.com/' + item.user.screen_name + '/statuses/' +
-            item.id +'">' +
-            relative_time(item.created_at) + '</a> '+
-          '<a class="user" href="http://twitter.com/' + 
-            item.user.screen_name + '">' +
-          item.user.screen_name + '</a> ' +
-          '<a class="retweet" title="Retweet" ' +
-            'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
-          '<a class="favorite" title="Toggle favorite status" '+
-            'href="javascript:toggleFavorite(' + 
-            item.id + ')">&#10029;</a>' +
-          '<a class="reply" title="Reply to this" ' +
-            'href="javascript:replyTo(\'' +
-            item.user.screen_name + '\',' + item.id +
-            ')">@</a>' +
-          '<a class="delete" title="Delete" ' +
-            'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
-          '<div class="tweet_text">' +
-          item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') +
-          '<span class="info">' + ' via ' + item.source + inReplyText + '</span>' +
-           '</div></li>');
+            list.append('<li id="msg-' + item.id + '">' +
+            '<a href="http://twitter.com/account/profile_image/' +
+            item.user.screen_name +
+            '"><img class="profile_image" height="48" width="48" src="' + 
+            item.user.profile_image_url +
+            '" alt="' + item.user.name + '" /></a>' +
+            '<a class="time" title="' + item.created_at + '" ' +
+              'href="http://twitter.com/' + item.user.screen_name + '/statuses/' +
+              item.id +'">' +
+              relative_time(item.created_at) + '</a> '+
+            '<a class="user" href="http://twitter.com/' + 
+              item.user.screen_name + '">' +
+            item.user.screen_name + '</a> ' +
+            '<a class="retweet" title="Retweet" ' +
+              'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
+            '<a class="favorite" title="Toggle favorite status" '+
+              'href="javascript:toggleFavorite(' + 
+              item.id + ')">&#10029;</a>' +
+            '<a class="reply" title="Reply to this" ' +
+              'href="javascript:replyTo(\'' +
+              item.user.screen_name + '\',' + item.id +
+              ')">@</a>' +
+            '<a class="delete" title="Delete" ' +
+              'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
+            '<div class="tweet_text">' +
+            item.text.replace(/((https?|ftp):\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+)/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>') +
+            '<span class="info">' + ' via ' + item.source + inReplyText + '</span>' +
+             '</div></li>');
 
-          // Change the class if it's a favorite.
-          if (item.favorited) {
-            $('#msg-' + item.id + ' a.favorite').css('color', 'red');
-          }
+            // Change the class if it's a favorite.
+            if (item.favorited) {
+              $('#msg-' + item.id + ' a.favorite').css('color', 'red');
+            }
           
-          // Set the visibility of the delete and reply buttons.
-          if (item.user.id == UID) {
-            $('#msg-' + item.id + ' a.delete').css("display", "inline");
-            $('#msg-' + item.id + ' a.reply').css("display", "none");
-          }
-          else {
-            $('#msg-' + item.id + ' a.delete').css("display", "none");
-            $('#msg-' + item.id + ' a.reply').css("display", "inline");
-          }
+            // Set the visibility of the delete and reply buttons.
+            if (item.user.id == UID) {
+              $('#msg-' + item.id + ' a.delete').css("display", "inline");
+              $('#msg-' + item.id + ' a.reply').css("display", "none");
+            }
+            else {
+              $('#msg-' + item.id + ' a.delete').css("display", "none");
+              $('#msg-' + item.id + ' a.reply').css("display", "inline");
+            }
           
-        }  // if
-      }); // each
-    }); // getJSON
+          }  // if
+        }); // each
+      }); // getJSON replies
+    }); // getJSON friends
   }); // this.each
 };  // gettweets
 
@@ -136,19 +132,11 @@ function getSinceParameter() {
 
 
 function refreshMessages() {
-  $(".tweets").gettweets('replies');
-  $(".tweets").gettweets('friends');
+  $(".tweets").gettweets();
   LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
-
-function getStream(){
-  $(".tweets").gettweets('friends');
-  $(".tweets").gettweets('replies');
-  LAST_UPDATE = new Date().toGMTString();
-  return;
-}
 
 function deleteTweet(msg_id) {
   $.post('http://twitter.com/statuses/destroy/' + msg_id + '.json', {id:msg_id});
@@ -242,7 +230,7 @@ function charCountdown() {
 $(document).ready(function(){
 
     //get the messages
-    getStream();
+    refreshMessages();
     
     // Get the user's ID.
     $.getJSON(BASE_URL['mine'], function(data){UID = data[0].user.id;return;});
@@ -264,8 +252,8 @@ $(document).ready(function(){
 
 
 // Reset the bottom margin of the tweet list so the status entry stuff
-// doesn't cover the last tweet. This has to be done after the size of
-// the #message_entry div is known (load) and whenever the text size is
+// doesn't cover the last tweet. This is done after the size of the
+// #message_entry div is known (load) and whenever the text size is
 // changed in the browser (scroll).
 
 function setBottomMargin() {
