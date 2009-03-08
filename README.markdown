@@ -1,6 +1,6 @@
 # Introduction #
 
-Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twitter "web app" that sits on your hard disk instead of in the cloud. The code comprises HTML, CSS, and JavaScript ([jQuery][2]) files that are turned into a site-specific browser (SSB) application on the Macintosh through [Fluid][3]. The advantage of using Dr. Twoot over an SSB pointed at twitter.com is that Dr. Twoot updates automatically.
+Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twitter "web app" that sits on your hard disk instead of in the cloud. The code comprises HTML, CSS, and JavaScript ([jQuery][2]) files that are turned into a site-specific browser (SSB) application on the Macintosh through [Fluid][3]. The main advantage of using Dr. Twoot over an SSB pointed at twitter.com is that Dr. Twoot updates automatically.
 
 # Installation #
 
