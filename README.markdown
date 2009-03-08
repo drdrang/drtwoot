@@ -10,16 +10,13 @@ When you run it the first time, you'll probably have to give it your Twitter use
 
 # Use #
 
-<img class="ss" src="http://www.leancrew.com/all-this/images/drtwoot-basic.png" />
+<img class="ss" src="http://www.leancrew.com/all-this/images/drtwoot-streamlined.png" />
 
 The Dr. Twoot feature list:
 
+* It merges your friends' timeline and @replies and presents them chronologically.
+* It opens showing tweets over the past 24 hours.
 * It updates automatically every three minutes.
-* From the toolbar at the top, you can:
-    * view your friends' timeline;
-    * view your own timeline;
-    * view replies to you; and
-    * view your favorite tweets.
 * Each tweet has buttons that let you:
     * reply, if the tweet is from someone else (**@**);
     * delete, if the tweet is from you (**⌫**);
@@ -33,9 +30,9 @@ The Dr. Twoot feature list:
     * the Twitter client used to write the tweet (click the name of the client); and
     * the tweet it's replying to or retweeting, when appropriate (click the user name after "re").
 * The message area at the bottom has a character countdown that:
-    * turns red when your within 20 of the 140-character limit; and
+    * turns red when you're within 20 of the 140-character limit; and
     * changes to "Twoosh!" when you're tweet hits exactly 140 characters.
-* Links at the bottom of the list of tweets (not visible in the screenshot) let you page backward and forward through the tweet history.
+
 # Customization #
 
 The style can be changed pretty easily by editing the `style.css` file. Functionality can be added/altered by editing `twoot.js`. Dr. Twoot, like Twoot before it, makes heavy use of the jQuery library.
