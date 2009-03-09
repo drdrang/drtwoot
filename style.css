@@ -18,7 +18,7 @@ div.tweets {
 }
 
 .tweet_list li:nth-child(even) {
-	background-color: #f6f9fa;
+	background-color: #e0eafa;
 }
 
 .tweet_list li.mine {
