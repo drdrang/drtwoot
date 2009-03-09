@@ -18,15 +18,15 @@ div.tweets {
 }
 
 .tweet_list li:nth-child(even) {
-	background-color: #e0eafa;
+	background-color: #e0eafa;    /* light blue */
 }
 
 .tweet_list li.mine {
-  background-color: #d4f4ce;
+  background-color: #d4f4ce;    /* light green */
 }
 
 .tweet_list li.tome {
-  background-color: #f6d2d1;
+  background-color: #f6d2d1;    /* pink */
 }
 
 img.profile_image {
