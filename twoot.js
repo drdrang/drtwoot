@@ -3,7 +3,7 @@
  *
  * */
 var NOW = new Date();
-var THEN = new Date(NOW.getTime() - 24*60*60*1000);
+var THEN = new Date(NOW.getTime() - 48*60*60*1000);
 var INITIAL_UPDATE = THEN.toGMTString();
 var COUNT = 200;
 var LAST_UPDATE;
@@ -66,15 +66,21 @@ $.fn.gettweets = function(){
               $('#msg-' + item.id + ' a.favorite').css('color', 'red');
             }
           
-            // Set the visibility of the delete and reply buttons.
+            // Distinguish between my tweets and others.
             if (item.user.id == UID) {
               $('#msg-' + item.id + ' a.delete').css("display", "inline");
               $('#msg-' + item.id + ' a.reply').css("display", "none");
+              $('#msg-' + item.id).addClass('mine');
             }
             else {
               $('#msg-' + item.id + ' a.delete').css("display", "none");
               $('#msg-' + item.id + ' a.reply').css("display", "inline");
             }
+            
+            // Distinguish replies to me.
+            if (item.in_reply_to_user_id == UID){
+              $('#msg-' + item.id).addClass('tome');
+            } 
           
           }  // if
         }); // each

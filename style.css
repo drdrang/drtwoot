@@ -21,6 +21,14 @@ div.tweets {
 	background-color: #f6f9fa;
 }
 
+.tweet_list li.mine {
+  background-color: #d4f4ce;
+}
+
+.tweet_list li.tome {
+  background-color: #f6d2d1;
+}
+
 img.profile_image {
 	float:left;
 	margin: 3px auto 2px -54px; /* Negative margin places the profile image in the space created by the padding in .tweet_list li */
