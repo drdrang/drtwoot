@@ -31,7 +31,7 @@ The Dr. Twoot feature list:
     * the tweet it's replying to or retweeting, when appropriate (click the user name after "re").
 * The message area at the bottom has a character countdown that:
     * turns red when you're within 20 of the 140-character limit; and
-    * changes to "Twoosh!" when you're tweet hits exactly 140 characters.
+    * changes to "Twoosh!" when your tweet hits exactly 140 characters.
 
 # Customization #
 
