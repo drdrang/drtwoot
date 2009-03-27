@@ -207,7 +207,7 @@ function refreshStatusField() {
   // Scroll down to the bottom after posting. Have to use a delay
   // or the scroll will happen before the tweet is added to the list.
   // The extra 200 pixels is a kluge.
-  window.setTimeout("window.scrollTo(0, $('div.tweets').height()+200)", 2*1000);
+  window.setTimeout("window.scrollTo(0, $('div.tweets').height()+200)", 4*1000);
   return;
 }
 
