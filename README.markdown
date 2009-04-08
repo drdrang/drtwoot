@@ -4,7 +4,22 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 # Installation #
 
-Download the files into a folder on your computer. Launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
+Download the files into a folder on your computer. You'll need to change Line 7 of the file `twoot.js`,
+
+    var UID = 10697232;
+
+so it has your Twitter user id instead of mine. To get your Twitter user id number, execute
+
+    curl -s http://twitter.com/users/show/screenname.xml | grep "<id>"
+
+in the Terminal, where `screenname` is replaced by your Twitter screen name. You'll get a response in the form
+
+    <id>123456789</id>
+      <id>2345678912345</id>
+
+Your user id will be the first number. Copy that number and paste it into Line 7 of twoot.js
+
+After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
 When you run it the first time, you'll probably have to give it your Twitter username and password. If you save those in your Keychain, you won't have to enter them again.
 
