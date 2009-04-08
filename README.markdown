@@ -13,9 +13,9 @@ Download the files into a folder on your computer. You'll need to change Line 7 
 
 so it has your Twitter user id instead of mine. To get your Twitter user id number, execute
 
-    curl -s http://twitter.com/users/show/screenname.xml | grep "<id>"
+    curl -s http://twitter.com/users/show/yourname.xml | grep "<id>"
 
-in the Terminal, where `screenname` is replaced by your Twitter screen name. You'll get a response in the form
+in the Terminal, where `yourname` is replaced by your Twitter screen name. You'll get a response in the form
 
     <id>123456789</id>
       <id>2345678912345</id>
