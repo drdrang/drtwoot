@@ -2,7 +2,11 @@
  * The Twitter request code is based on the jquery tweet extension by http://tweet.seaofclouds.com/
  *
  * */
+ 
+// Change this to your user id.
+var UID = 10697232;
 var NOW = new Date();
+// The initial update looks back 24 hours.
 var THEN = new Date(NOW.getTime() - 24*60*60*1000);
 var INITIAL_UPDATE = THEN.toGMTString();
 var COUNT = 200;
@@ -238,10 +242,6 @@ $(document).ready(function(){
     //get the messages
     refreshMessages();
     
-    // Get the user's ID.
-    $.getJSON(BASE_URL['mine'], function(data){UID = data[0].user.id;return;});
-    
-
     //add event capture to form submit
     $("#status_entry").submit(function() {
       setStatus($("#status").val());
