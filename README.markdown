@@ -17,7 +17,7 @@ in the Terminal, where `screenname` is replaced by your Twitter screen name. You
     <id>123456789</id>
       <id>2345678912345</id>
 
-Your user id will be the first number. Copy that number and paste it into Line 7 of twoot.js
+Your user id will be the first number. Copy that number and paste it into Line 7 of `twoot.js`.
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
