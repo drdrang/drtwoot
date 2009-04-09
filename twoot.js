@@ -5,29 +5,35 @@
  
 // Change this to your user id.
 var UID = 10697232;
-var NOW = new Date();
-// The initial update looks back 24 hours.
-var THEN = new Date(NOW.getTime() - 24*60*60*1000);
-var INITIAL_UPDATE = THEN.toGMTString();
+// The initial update looks back COUNT updates in your friends' timeline.
 var COUNT = 200;
+// The id of the most recently retrieved update.
 var LAST_UPDATE;
+// The times, in milliseconds, between status refreshes and timestamp recalculations.
+var REFRESH = 3*60*1000;
+var RECALC = 60*1000;
 var MSG_ID;
-var BASE_URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
-                'replies': 'http://twitter.com/statuses/mentions.json',
-                'directs': 'http://twitter.com/direct_messages.json',
-                'mine'   : 'http://twitter.com/statuses/user_timeline.json'};
+var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
+                'mentions': 'http://twitter.com/statuses/mentions.json',
+                'directs' : 'http://twitter.com/direct_messages.json',
+                'mine'    : 'http://twitter.com/statuses/user_timeline.json'};
 
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
     var friendsURL = BASE_URL['friends'] + '?count=' + COUNT + getSinceParameter();
-    var repliesURL = BASE_URL['replies'] + '?count=' + COUNT
+    var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT
     
     $.getJSON(friendsURL, function(friends){
-      LAST_UPDATE = friends[0].id;
-      repliesURL = repliesURL + "&since_id=" + LAST_UPDATE;
-      $.getJSON(repliesURL, function(replies){
-        friends = $.merge(friends, replies)
+      if (friends.length > 0){
+        mentionsURL += "&since_id=" + friends[0].id;
+      }
+      else {
+        mentionsURL += "&since_id=" + LAST_UPDATE;
+      }
+      $.getJSON(mentionsURL, function(mentions){
+        friends = $.merge(friends, mentions);
+        LAST_UPDATE = friends[0].id;
         $.each(friends.sort(function(a,b){return a.id-b.id;}),
         function(i, item){
           if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
@@ -82,14 +88,14 @@ $.fn.gettweets = function(){
               $('#msg-' + item.id + ' a.reply').css("display", "inline");
             }
             
-            // Distinguish replies to me.
+            // Distinguish mentions of me.
             if (item.in_reply_to_user_id == UID){
               $('#msg-' + item.id).addClass('tome');
             } 
           
           }  // if
         }); // each
-      }); // getJSON replies
+      }); // getJSON mentions
     }); // getJSON friends
   }); // this.each
 };  // gettweets
@@ -131,6 +137,7 @@ function recalcTime() {
       }
   )
 }
+
 
 
 function getSinceParameter() {
@@ -249,11 +256,11 @@ $(document).ready(function(){
       return false;
     });
 
-    //set timer to reload timeline, every 3 minutes
-    window.setInterval("refreshMessages()", 3*60*1000);
+    //set timer to reload timeline, every REFRESH milliseconds
+    window.setInterval("refreshMessages()", REFRESH);
 
-    //set timer to recalc timestamps every 60 secs
-    window.setInterval("recalcTime()", 60000);
+    //set timer to recalc timestamps every RECALC milliseconds
+    window.setInterval("recalcTime()", RECALC);
 
 });
 
