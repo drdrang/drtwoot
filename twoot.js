@@ -13,18 +13,19 @@ var COUNT = 200;
 var LAST_UPDATE;
 var MSG_ID;
 var BASE_URL = {'friends': 'http://twitter.com/statuses/friends_timeline.json',
-                'replies': 'http://twitter.com/statuses/replies.json',
+                'replies': 'http://twitter.com/statuses/mentions.json',
                 'directs': 'http://twitter.com/direct_messages.json',
                 'mine'   : 'http://twitter.com/statuses/user_timeline.json'};
 
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
-    var friendsURL = BASE_URL['friends'] + '?count=200' + getSinceParameter();
-    var repliesURL = BASE_URL['replies'] + '?count=200' + getSinceParameter();
+    var friendsURL = BASE_URL['friends'] + '?count=' + COUNT + getSinceParameter();
+    var repliesURL = BASE_URL['replies'] + '?count=' + COUNT
     
     $.getJSON(friendsURL, function(friends){
-      
+      LAST_UPDATE = friends[0].id;
+      repliesURL = repliesURL + "&since_id=" + LAST_UPDATE;
       $.getJSON(repliesURL, function(replies){
         friends = $.merge(friends, replies)
         $.each(friends.sort(function(a,b){return a.id-b.id;}),
@@ -134,16 +135,16 @@ function recalcTime() {
 
 function getSinceParameter() {
   if(LAST_UPDATE == null) {
-    return "&since=" + INITIAL_UPDATE;
+    return "";
   } else {
-    return "&since=" + LAST_UPDATE;
+    return "&since_id=" + LAST_UPDATE;
   }
 }
 
 
 function refreshMessages() {
   $(".tweets").gettweets();
-  LAST_UPDATE = new Date().toGMTString();
+  // LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
