@@ -5,14 +5,16 @@
  
 // Change this to your user id.
 var UID = 10697232;
-// The initial update looks back COUNT updates in your friends' timeline.
-var COUNT = 200;
+// The initial update looks back COUNT updates in your friends' timeline. Must be <= 200.
+var COUNT = 100;
 // The id of the most recently retrieved update.
 var LAST_UPDATE;
 // The times, in milliseconds, between status refreshes and timestamp recalculations.
 var REFRESH = 3*60*1000;
 var RECALC = 60*1000;
+// The id of the message you are replying to or retweeting.
 var MSG_ID;
+// The twitter URLs for getting tweets.
 var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
                 'mentions': 'http://twitter.com/statuses/mentions.json',
                 'directs' : 'http://twitter.com/direct_messages.json',
@@ -135,7 +137,6 @@ function recalcTime() {
       }
   )
 }
-
 
 
 function refreshMessages() {
