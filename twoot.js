@@ -28,8 +28,13 @@ $.fn.gettweets = function(){
     if (LAST_UPDATE != null) friendsURL += "&since_id=" + LAST_UPDATE;
     
     $.getJSON(friendsURL, function(friends){
-      if (friends.length > 0) mentionsURL += "&since_id=" + friends[0].id;
-      else mentionsURL += "&since_id=" + LAST_UPDATE;
+      if (LAST_UPDATE != null){
+        if (friends.length > 0) mentionsURL += "&since_id=" + friends[0].id;
+        else mentionsURL += "&since_id=" + LAST_UPDATE;
+      }
+      else {
+        mentionsURL += "&since_id=" + friends[friends.length - 1].id;
+      }
       
       $.getJSON(mentionsURL, function(mentions){
         friends = $.merge(friends, mentions);
