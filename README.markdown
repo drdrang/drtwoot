@@ -4,6 +4,8 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 1. Dr. Twoot updates automatically;
 2. Dr. Twoot intermixes your tweets, tweets from your friends, and mentions of you (tweets containing "@yourname")--even if those mentions come from people you don't follow.
+3. Dr. Twoot presents tweets in chronological order.
+
 
 # Installation #
 
@@ -33,8 +35,8 @@ When you run it the first time, you'll probably have to give it your Twitter use
 The Dr. Twoot feature list:
 
 * It merges your friends' timeline and @replies and presents them chronologically.
-* It opens showing tweets over the past 24 hours.
-* It updates automatically every three minutes.
+* It opens showing the most recent 100 tweets from your friends (the number can be adjusted).
+* It updates automatically every three minutes (the interval can be adjusted).
 * Each tweet has buttons that let you:
     * reply, if the tweet is from someone else (**@**);
     * delete, if the tweet is from you (**⌫**);
