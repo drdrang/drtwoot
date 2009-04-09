@@ -21,19 +21,17 @@ var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
-    var friendsURL = BASE_URL['friends'] + '?count=' + COUNT + getSinceParameter();
-    var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT
+    var friendsURL = BASE_URL['friends'] + '?count=' + COUNT;
+    var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT;
+    if (LAST_UPDATE != null) friendsURL += "&since_id=" + LAST_UPDATE;
     
     $.getJSON(friendsURL, function(friends){
-      if (friends.length > 0){
-        mentionsURL += "&since_id=" + friends[0].id;
-      }
-      else {
-        mentionsURL += "&since_id=" + LAST_UPDATE;
-      }
+      if (friends.length > 0) mentionsURL += "&since_id=" + friends[0].id;
+      else mentionsURL += "&since_id=" + LAST_UPDATE;
+      
       $.getJSON(mentionsURL, function(mentions){
         friends = $.merge(friends, mentions);
-        LAST_UPDATE = friends[0].id;
+        if (friends.length > 0) LAST_UPDATE = friends[0].id;
         $.each(friends.sort(function(a,b){return a.id-b.id;}),
         function(i, item){
           if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
@@ -138,15 +136,6 @@ function recalcTime() {
   )
 }
 
-
-
-function getSinceParameter() {
-  if(LAST_UPDATE == null) {
-    return "";
-  } else {
-    return "&since_id=" + LAST_UPDATE;
-  }
-}
 
 
 function refreshMessages() {
