@@ -16,9 +16,7 @@ var RECALC = 60*1000;
 var MSG_ID;
 // The twitter URLs for getting tweets.
 var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
-                'mentions': 'http://twitter.com/statuses/mentions.json',
-                'directs' : 'http://twitter.com/direct_messages.json',
-                'mine'    : 'http://twitter.com/statuses/user_timeline.json'};
+                'mentions': 'http://twitter.com/statuses/mentions.json'};
 
 $.fn.gettweets = function(){
   return this.each(function(){
@@ -29,13 +27,14 @@ $.fn.gettweets = function(){
     
     $.getJSON(friendsURL, function(friends){
       if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
-      else mentionsURL += "&since_id=" + friends[friends.length - 1].id;
+      else mentionsURL += "&since_id=" + friends[friends.length - 1].id;  // last is oldest
       
       $.getJSON(mentionsURL, function(mentions){
         friends = $.merge(friends, mentions);
-        if (friends.length > 0) LAST_UPDATE = friends[0].id;
-        $.each(friends.sort(function(a,b){return a.id-b.id;}),
-        function(i, item){
+        friends.sort(function(a,b){return a.id - b.id;});   // chron sort
+        if (friends.length > 0) LAST_UPDATE = friends[friends.length - 1].id;   // last is newest
+        
+        $.each(friends, function(i, item){
           if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
             if (item.in_reply_to_status_id == null) {
               inReplyText = '';
