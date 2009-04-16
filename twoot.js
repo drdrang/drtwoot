@@ -174,7 +174,7 @@ function toggleFavorite(msg_id) {
       }
       else {
         $.post('http://twitter.com/favorites/create/' + msg_id + '.json',
-          {id:msg_id}
+          {id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
           }
