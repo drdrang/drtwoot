@@ -61,7 +61,10 @@ The style can be changed pretty easily by editing the `style.css` file. Function
 
 MIT
 
+# Contributions #
 
+* Peter Krantz
+* Travis Jeffery
 
 
 

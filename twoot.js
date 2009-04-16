@@ -161,6 +161,7 @@ function replyTo(screen_name, msg_id) {
 }
 
 function toggleFavorite(msg_id) {
+  setStatus("");
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
       if (data.favorited) {
