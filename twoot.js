@@ -165,12 +165,20 @@ function toggleFavorite(msg_id) {
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
       if (data.favorited) {
-        $.post('http://twitter.com/favorites/destroy/' + msg_id + '.json', {id:msg_id});
-        $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
+        $.post('http://twitter.com/favorites/destroy/' + msg_id + '.json',
+          {id:msg_id},
+          function(post_return){
+            $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
+          }
+        );
       }
       else {
-        $.post('http://twitter.com/favorites/create/' + msg_id + '.json', {id:msg_id});
-        $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
+        $.post('http://twitter.com/favorites/create/' + msg_id + '.json',
+          {id:msg_id}
+          function(post_return){
+            $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
+          }
+        );
       }
     }
   );
