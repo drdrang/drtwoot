@@ -161,7 +161,10 @@ function replyTo(screen_name, msg_id) {
 }
 
 function toggleFavorite(msg_id) {
-  setStatus("");
+  // Turn the star reddish-gray to let the user know that something is happening.
+  // Depending on Twitter traffic, it may take a second or two to make the final
+  // color change.
+  $('#msg-' + msg_id + ' a.favorite').css('color', '#b88');
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
       if (data.favorited) {
@@ -244,21 +247,24 @@ function charCountdown() {
 
 // set up basic stuff for first load
 $(document).ready(function(){
+  // This is a kludge. An empty status update will set the user credentials
+  // so the /statuses/show call in toggleFavorite will be run as that user.
+  $.post("http://twitter.com/statuses/update.json", { status: ""});
 
-    //get the messages
-    refreshMessages();
-    
-    //add event capture to form submit
-    $("#status_entry").submit(function() {
-      setStatus($("#status").val());
-      return false;
-    });
+  //get the messages
+  refreshMessages();
+  
+  //add event capture to form submit
+  $("#status_entry").submit(function() {
+    setStatus($("#status").val());
+    return false;
+  });
 
-    //set timer to reload timeline, every REFRESH milliseconds
-    window.setInterval("refreshMessages()", REFRESH);
+  //set timer to reload timeline, every REFRESH milliseconds
+  window.setInterval("refreshMessages()", REFRESH);
 
-    //set timer to recalc timestamps every RECALC milliseconds
-    window.setInterval("recalcTime()", RECALC);
+  //set timer to recalc timestamps every RECALC milliseconds
+  window.setInterval("recalcTime()", RECALC);
 
 });
 
