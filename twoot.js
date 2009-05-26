@@ -87,7 +87,7 @@ $.fn.gettweets = function(){
               $('#msg-' + item.id + ' a.reply').css("display", "inline");
             }
             
-            // Distinguish mentions of me.
+            // Distinguish replies to me.
             if (item.in_reply_to_user_id == UID){
               $('#msg-' + item.id).addClass('tome');
             } 
