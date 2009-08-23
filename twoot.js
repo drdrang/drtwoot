@@ -12,11 +12,28 @@ var LAST_UPDATE;
 // The times, in milliseconds, between status refreshes and timestamp recalculations.
 var REFRESH = 3*60*1000;
 var RECALC = 60*1000;
+// Should "And now it's all this" comment references be turned into links?
+// This should be false for everyone but Dr. Drang.
+var ALL_THIS = new Boolean(true);
 // The id of the message you are replying to or retweeting.
 var MSG_ID;
 // The twitter URLs for getting tweets.
 var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
                 'mentions': 'http://twitter.com/statuses/mentions.json'};
+                
+function htmlify(body, allThisLinks) {
+  // handle links
+  body = body.replace(/((https?|ftp):\/\/[^ \n]+[^ \n.,;:?!&'"’”)}\]])/g, '<a href="$1">$1</a>');
+  // handle Twitter names
+  body = body.replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>');
+  // turn newlines into breaks
+  body = body.replace(/\n/g, '<br />');
+  // handle references to And now it's all this
+  if (allThisLinks){
+    body = body.replace(/#(\d+)∀/, '<a href="http://www.leancrew.com/all-this?p=$1">#$1∀</a>');
+  }
+  return body;
+}
 
 $.fn.gettweets = function(){
   return this.each(function(){
@@ -67,7 +84,7 @@ $.fn.gettweets = function(){
             '<a class="delete" title="Delete" ' +
               'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
             '<div class="tweet_text">' +
-            item.text.replace(/((https?|ftp):\/\/[^ \n]+[^ \n.,;:?!&'"’”)}\]])/g, '<a href="$1">$1</a>').replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>').replace(/\n/g, '<br />') +
+            htmlify(item.text, ALL_THIS) +
             '<span class="info">' + ' via ' + item.source + inReplyText + '</span>' +
              '</div></li>');
 
