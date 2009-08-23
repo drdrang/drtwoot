@@ -30,7 +30,7 @@ function htmlify(body, allThisLinks) {
   body = body.replace(/\n/g, '<br />');
   // handle references to And now it's all this
   if (allThisLinks){
-    body = body.replace(/#(\d+)∀/, '<a href="http://www.leancrew.com/all-this?p=$1">#$1∀</a>');
+    body = body.replace(/#(\d+)∀/, '<a href="http://www.leancrew.com/all-this/?p=$1">#$1∀</a>');
   }
   return body;
 }
