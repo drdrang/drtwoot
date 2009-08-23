@@ -52,6 +52,8 @@ The Dr. Twoot feature list:
 * The message area at the bottom has a character countdown that:
     * turns red when you're within 20 of the 140-character limit; and
     * changes to "Twoosh!" when your tweet hits exactly 140 characters.
+* Any mention of a Twitter user (@username) is turned into a link to that user's Twitter page.
+* Any comment on an "And now it's all this" post (#1234∀, see [here][4]) is turned into a link to the post. This behavior, valuable only to me, can be turned off by setting the `ALL_THIS` variable to false near the top of `twoot.js`.
 
 # Customization #
 
@@ -71,3 +73,4 @@ MIT
 [1]: http://www.peterkrantz.com/2008/twitter-client-with-fluid-and-jquery/
 [2]: http://jquery.com/
 [3]: http://fluidapp.com/
+[4]: http://www.leancrew.com/all-this/2009/05/blog-housekeeping/
