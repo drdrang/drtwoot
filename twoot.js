@@ -59,6 +59,12 @@ $.fn.gettweets = function(){
             else {
               inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
             }
+            if (item.retweet_details == null) {
+              retweetText = '';
+            }
+            else {
+              retweetText = ' via <a href="http://twitter.com/' + item.retweet_details.retweeting_user.screen_name + '">' + item.retweet_details.retweeting_user.screen_name + '</a>'
+            }
             list.append('<li id="msg-' + item.id + '">' +
             '<a href="http://twitter.com/account/profile_image/' +
             item.user.screen_name +
@@ -85,7 +91,7 @@ $.fn.gettweets = function(){
               'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
             '<div class="tweet_text">' +
             htmlify(item.text, ALL_THIS) +
-            '<span class="info">' + ' via ' + item.source + inReplyText + '</span>' +
+            '<span class="info">' + ' from ' + item.source + inReplyText + retweetText + '</span>' +
              '</div></li>');
 
             // Change the class if it's a favorite.
