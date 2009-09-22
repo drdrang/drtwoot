@@ -211,6 +211,10 @@ function toggleFavorite(msg_id) {
 }
 
 function retweet(msg_id) {
+  // $.post('http://twitter.com/statuses/retweet/' + msg_id + '.json',
+  //   {id: msg_id, source: "drtwoot"},
+  //   function(data) { refreshStatusField(); },
+  //   'json');
   MSG_ID = msg_id;
   $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
     function(data){
