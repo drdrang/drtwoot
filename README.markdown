@@ -48,7 +48,7 @@ The Dr. Twoot feature list:
     * the tweet itself on twitter.com (click the timestamp);
     * the user's timeline (click the user name);
     * the Twitter client used to write the tweet (click the name of the client); and
-    * the tweet it's replying to or retweeting, when appropriate (click the user name after "re").
+    * the tweet it's replying to or retweeting, when appropriate (click the user name after "re" or "via").
 * The message area at the bottom has a character countdown that:
     * turns red when you're within 20 of the 140-character limit; and
     * changes to "Twoosh!" when your tweet hits exactly 140 characters.
