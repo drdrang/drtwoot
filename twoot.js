@@ -211,6 +211,7 @@ function toggleFavorite(msg_id) {
 }
 
 function retweet(msg_id) {
+  // The commented lines should work when new-style retweeting goes live.
   // $.post('http://twitter.com/statuses/retweet/' + msg_id + '.json',
   //   {id: msg_id, source: "drtwoot"},
   //   function(data) { refreshStatusField(); },
