@@ -5,7 +5,7 @@
  
 // Change this to your user id.
 var UID = 10697232;
-// The initial update looks back COUNT updates in your friends' timeline. Must be <= 200.
+// The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
 var LAST_UPDATE;
@@ -18,7 +18,7 @@ var ALL_THIS = new Boolean(true);
 // The id of the message you are replying to or retweeting.
 var MSG_ID;
 // The twitter URLs for getting tweets.
-var BASE_URL = {'friends' : 'http://twitter.com/statuses/friends_timeline.json',
+var BASE_URL = {'home' : 'http://twitter.com/statuses/home_timeline.json',
                 'mentions': 'http://twitter.com/statuses/mentions.json'};
                 
 function htmlify(body, allThisLinks) {
@@ -38,20 +38,20 @@ function htmlify(body, allThisLinks) {
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
-    var friendsURL = BASE_URL['friends'] + '?count=' + COUNT;
+    var homeURL = BASE_URL['home'] + '?count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT;
-    if (LAST_UPDATE != null) friendsURL += "&since_id=" + LAST_UPDATE;
+    if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     
-    $.getJSON(friendsURL, function(friends){
+    $.getJSON(homeURL, function(home){
       if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
-      else mentionsURL += "&since_id=" + friends[friends.length - 1].id;  // last is oldest
+      else mentionsURL += "&since_id=" + home[home.length - 1].id;  // last is oldest
       
       $.getJSON(mentionsURL, function(mentions){
-        friends = $.merge(friends, mentions);
-        friends.sort(function(a,b){return a.id - b.id;});   // chron sort
-        if (friends.length > 0) LAST_UPDATE = friends[friends.length - 1].id;   // last is newest
+        home = $.merge(home, mentions);
+        home.sort(function(a,b){return a.id - b.id;});   // chron sort
+        if (home.length > 0) LAST_UPDATE = home[home.length - 1].id;   // last is newest
         
-        $.each(friends, function(i, item){
+        $.each(home, function(i, item){
           if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
             if (item.in_reply_to_status_id == null) {
               inReplyText = '';
@@ -112,7 +112,7 @@ $.fn.gettweets = function(){
           }  // if
         }); // each
       }); // getJSON mentions
-    }); // getJSON friends
+    }); // getJSON home
   }); // this.each
 };  // gettweets
 
