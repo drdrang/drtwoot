@@ -59,39 +59,53 @@ $.fn.gettweets = function(){
             else {
               inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
             }
-            if (item.retweet_details == null) {
+            if (item.retweeted_status == null) {
               retweetText = '';
+              theID = item.id;
+              theName = item.user.name;
+              theScreenName = item.user.screen_name;
+              theIcon = item.user.profile_image_url;
+              theTime = item.created_at;
+              theText = item.text;
+              theSource = item.source;
             }
             else {
-              retweetText = ' via <a href="http://twitter.com/' + item.retweet_details.retweeting_user.screen_name + '">' + item.retweet_details.retweeting_user.screen_name + '</a>'
+              retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
+              theID = item.retweeted_status.id;
+              theName = item.retweeted_status.user.name;
+              theScreenName = item.retweeted_status.user.screen_name;
+              theIcon = item.retweeted_status.user.profile_image_url;
+              theTime = item.retweeted_status.created_at;
+              theText = item.retweeted_status.text;
+              theSource = item.retweeted_status.source;
             }
-            list.append('<li id="msg-' + item.id + '">' +
+            list.append('<li id="msg-' + theID + '">' +
             '<a href="http://twitter.com/account/profile_image/' +
-            item.user.screen_name +
+            theScreenName +
             '"><img class="profile_image" height="48" width="48" src="' + 
-            item.user.profile_image_url +
-            '" alt="' + item.user.name + '" /></a>' +
-            '<a class="time" title="' + item.created_at + '" ' +
-              'href="http://twitter.com/' + item.user.screen_name + '/statuses/' +
-              item.id +'">' +
-              relative_time(item.created_at) + '</a> '+
+            theIcon +
+            '" alt="' + theName + '" /></a>' +
+            '<a class="time" title="' + theTime + '" ' +
+              'href="http://twitter.com/' + theScreenName + '/statuses/' +
+              theID +'">' +
+              relative_time(theTime) + '</a> '+
             '<a class="user" href="http://twitter.com/' + 
-              item.user.screen_name + '">' +
-            item.user.screen_name + '</a> ' +
+              theScreenName + '">' +
+            theScreenName + '</a> ' +
             '<a class="retweet" title="Retweet" ' +
-              'href="javascript:retweet(' + item.id + ')">&#9850;</a>' +
+              'href="javascript:retweet(' + theID + ')">&#9850;</a>' +
             '<a class="favorite" title="Toggle favorite status" '+
               'href="javascript:toggleFavorite(' + 
-              item.id + ')">&#10029;</a>' +
+              theID + ')">&#10029;</a>' +
             '<a class="reply" title="Reply to this" ' +
               'href="javascript:replyTo(\'' +
-              item.user.screen_name + '\',' + item.id +
+              theScreenName + '\',' + theID +
               ')">@</a>' +
             '<a class="delete" title="Delete" ' +
-              'href="javascript:deleteTweet(' + item.id + ')">&#9003;</a>' +
+              'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
             '<div class="tweet_text">' +
-            htmlify(item.text, ALL_THIS) +
-            '<span class="info">' + ' from ' + item.source + inReplyText + retweetText + '</span>' +
+            htmlify(theText, ALL_THIS) +
+            '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
              '</div></li>');
 
             // Change the class if it's a favorite.
