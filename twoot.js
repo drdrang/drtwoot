@@ -225,11 +225,12 @@ function toggleFavorite(msg_id) {
 }
 
 function retweet(msg_id) {
-  // The commented lines should work when new-style retweeting goes live.
+  // Use new-style retweeting.
   $.post('http://twitter.com/statuses/retweet/' + msg_id + '.json',
     {id: msg_id, source: "drtwoot"},
     function(data) { refreshStatusField(); },
     'json');
+  // The following is legacy code for old-style retweeting.
   // MSG_ID = msg_id;
   // $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
   //   function(data){
