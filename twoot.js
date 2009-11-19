@@ -107,6 +107,8 @@ $.fn.gettweets = function(){
               '<a class="user" href="http://twitter.com/' + 
                 theScreenName + '">' +
               theScreenName + '</a> ' +
+              '<a class="delete" title="Delete" ' +
+                'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
               '<a class="retweet" title="Retweet" ' +
                 'href="javascript:retweet(' + theID + ')">&#9850;</a>' +
               '<a class="favorite" title="Toggle favorite status" '+
@@ -116,8 +118,6 @@ $.fn.gettweets = function(){
                 'href="javascript:replyTo(\'' +
                 theScreenName + '\',' + theID +
                 ')">@</a>' +
-              '<a class="delete" title="Delete" ' +
-                'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
               '<div class="tweet_text">' +
               htmlify(theText, ALL_THIS) +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
