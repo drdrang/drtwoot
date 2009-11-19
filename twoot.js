@@ -19,7 +19,8 @@ var ALL_THIS = new Boolean(true);
 var MSG_ID;
 // The twitter URLs for getting tweets.
 var BASE_URL = {'home' : 'http://twitter.com/statuses/home_timeline.json',
-                'mentions': 'http://twitter.com/statuses/mentions.json'};
+                'mentions': 'http://twitter.com/statuses/mentions.json',
+                'retweets': 'http://twitter.com/statuses/retweeted_by_me.json'};
                 
 function htmlify(body, allThisLinks) {
   // handle links
@@ -40,6 +41,7 @@ $.fn.gettweets = function(){
     var list = $('ul.tweet_list').appendTo(this);
     var homeURL = BASE_URL['home'] + '?count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT;
+    var retweetsURL = BASE_URL['retweets'] + '?count=' + COUNT;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     
     $.getJSON(homeURL, function(home){
@@ -49,88 +51,95 @@ $.fn.gettweets = function(){
       $.getJSON(mentionsURL, function(mentions){
         home = $.merge(home, mentions);
         home.sort(function(a,b){return a.id - b.id;});   // chron sort
-        if (home.length > 0) LAST_UPDATE = home[home.length - 1].id;   // last is newest
+        if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
+        else retweetsURL += "&since_id=" + home[0].id;  // first is oldest after sort
         
-        $.each(home, function(i, item){
-          if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
-            if (item.in_reply_to_status_id == null) {
-              inReplyText = '';
+        $.getJSON(retweetsURL, function(retweets){
+          home = $.merge(home, retweets);
+          home.sort(function(a,b){return a.id - b.id;});   // chron sort
+          if (home.length > 0) LAST_UPDATE = home[home.length - 1].id;   // last is newest
+        
+          $.each(home, function(i, item){
+            if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
+              if (item.in_reply_to_status_id == null) {
+                inReplyText = '';
+                }
+              else {
+                inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
               }
-            else {
-              inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
-            }
-            if (item.retweeted_status == null) {
-              retweetText = '';
-              theID = item.id;
-              theName = item.user.name;
-              theScreenName = item.user.screen_name;
-              theIcon = item.user.profile_image_url;
-              theTime = item.created_at;
-              theText = item.text;
-              theSource = item.source;
-            }
-            else {
-              retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
-              theID = item.retweeted_status.id;
-              theName = item.retweeted_status.user.name;
-              theScreenName = item.retweeted_status.user.screen_name;
-              theIcon = item.retweeted_status.user.profile_image_url;
-              theTime = item.retweeted_status.created_at;
-              theText = item.retweeted_status.text;
-              theSource = item.retweeted_status.source;
-            }
-            list.append('<li id="msg-' + theID + '">' +
-            '<a href="http://twitter.com/account/profile_image/' +
-            theScreenName +
-            '"><img class="profile_image" height="48" width="48" src="' + 
-            theIcon +
-            '" alt="' + theName + '" /></a>' +
-            '<a class="time" title="' + theTime + '" ' +
-              'href="http://twitter.com/' + theScreenName + '/statuses/' +
-              theID +'">' +
-              relative_time(theTime) + '</a> '+
-            '<a class="user" href="http://twitter.com/' + 
-              theScreenName + '">' +
-            theScreenName + '</a> ' +
-            '<a class="retweet" title="Retweet" ' +
-              'href="javascript:retweet(' + theID + ')">&#9850;</a>' +
-            '<a class="favorite" title="Toggle favorite status" '+
-              'href="javascript:toggleFavorite(' + 
-              theID + ')">&#10029;</a>' +
-            '<a class="reply" title="Reply to this" ' +
-              'href="javascript:replyTo(\'' +
-              theScreenName + '\',' + theID +
-              ')">@</a>' +
-            '<a class="delete" title="Delete" ' +
-              'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
-            '<div class="tweet_text">' +
-            htmlify(theText, ALL_THIS) +
-            '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
-             '</div></li>');
+              if (item.retweeted_status == null) {
+                retweetText = '';
+                theID = item.id;
+                theName = item.user.name;
+                theScreenName = item.user.screen_name;
+                theIcon = item.user.profile_image_url;
+                theTime = item.created_at;
+                theText = item.text;
+                theSource = item.source;
+              }
+              else {
+                retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
+                theID = item.retweeted_status.id;
+                theName = item.retweeted_status.user.name;
+                theScreenName = item.retweeted_status.user.screen_name;
+                theIcon = item.retweeted_status.user.profile_image_url;
+                theTime = item.retweeted_status.created_at;
+                theText = item.retweeted_status.text;
+                theSource = item.retweeted_status.source;
+              }
+              list.append('<li id="msg-' + theID + '">' +
+              '<a href="http://twitter.com/account/profile_image/' +
+              theScreenName +
+              '"><img class="profile_image" height="48" width="48" src="' + 
+              theIcon +
+              '" alt="' + theName + '" /></a>' +
+              '<a class="time" title="' + theTime + '" ' +
+                'href="http://twitter.com/' + theScreenName + '/statuses/' +
+                theID +'">' +
+                relative_time(theTime) + '</a> '+
+              '<a class="user" href="http://twitter.com/' + 
+                theScreenName + '">' +
+              theScreenName + '</a> ' +
+              '<a class="retweet" title="Retweet" ' +
+                'href="javascript:retweet(' + theID + ')">&#9850;</a>' +
+              '<a class="favorite" title="Toggle favorite status" '+
+                'href="javascript:toggleFavorite(' + 
+                theID + ')">&#10029;</a>' +
+              '<a class="reply" title="Reply to this" ' +
+                'href="javascript:replyTo(\'' +
+                theScreenName + '\',' + theID +
+                ')">@</a>' +
+              '<a class="delete" title="Delete" ' +
+                'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
+              '<div class="tweet_text">' +
+              htmlify(theText, ALL_THIS) +
+              '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
+               '</div></li>');
 
-            // Change the class if it's a favorite.
-            if (item.favorited) {
-              $('#msg-' + item.id + ' a.favorite').css('color', 'red');
-            }
+              // Change the class if it's a favorite.
+              if (item.favorited) {
+                $('#msg-' + item.id + ' a.favorite').css('color', 'red');
+              }
           
-            // Distinguish between my tweets and others.
-            if (item.user.id == UID) {
-              $('#msg-' + item.id + ' a.delete').css("display", "inline");
-              $('#msg-' + item.id + ' a.reply').css("display", "none");
-              $('#msg-' + item.id).addClass('mine');
-            }
-            else {
-              $('#msg-' + item.id + ' a.delete').css("display", "none");
-              $('#msg-' + item.id + ' a.reply').css("display", "inline");
-            }
+              // Distinguish between my tweets and others.
+              if (item.user.id == UID) {
+                $('#msg-' + item.id + ' a.delete').css("display", "inline");
+                $('#msg-' + item.id + ' a.reply').css("display", "none");
+                $('#msg-' + item.id).addClass('mine');
+              }
+              else {
+                $('#msg-' + item.id + ' a.delete').css("display", "none");
+                $('#msg-' + item.id + ' a.reply').css("display", "inline");
+              }
             
-            // Distinguish replies to me.
-            if (item.in_reply_to_user_id == UID){
-              $('#msg-' + item.id).addClass('tome');
-            } 
+              // Distinguish replies to me.
+              if (item.in_reply_to_user_id == UID){
+                $('#msg-' + item.id).addClass('tome');
+              } 
           
-          }  // if
-        }); // each
+            }  // if
+          }); // each
+        }); // getJSON retweets
       }); // getJSON mentions
     }); // getJSON home
   }); // this.each
