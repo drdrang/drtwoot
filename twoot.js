@@ -226,20 +226,20 @@ function toggleFavorite(msg_id) {
 
 function retweet(msg_id) {
   // The commented lines should work when new-style retweeting goes live.
-  // $.post('http://twitter.com/statuses/retweet/' + msg_id + '.json',
-  //   {id: msg_id, source: "drtwoot"},
-  //   function(data) { refreshStatusField(); },
-  //   'json');
-  MSG_ID = msg_id;
-  $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
-    function(data){
-      start = 'RT @' + data.user.screen_name + ': ' + data.text + ' ';
-      $("#status").val(start);
-      $("#status").focus();
-      $("#status").caret(start.length, start.length);
-      charCountdown();
-    }
-  );
+  $.post('http://twitter.com/statuses/retweet/' + msg_id + '.json',
+    {id: msg_id, source: "drtwoot"},
+    function(data) { refreshStatusField(); },
+    'json');
+  // MSG_ID = msg_id;
+  // $.getJSON("http://twitter.com/statuses/show/" + msg_id + ".json", 
+  //   function(data){
+  //     start = 'RT @' + data.user.screen_name + ': ' + data.text + ' ';
+  //     $("#status").val(start);
+  //     $("#status").focus();
+  //     $("#status").caret(start.length, start.length);
+  //     charCountdown();
+  //   }
+  // );
 }
 
 function setStatus(status_text) {
