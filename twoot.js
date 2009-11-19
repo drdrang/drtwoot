@@ -136,7 +136,7 @@ $.fn.gettweets = function(){
               // Allow me to delete my tweets and distinguish them from others.
               if (item.user.id == UID) {
                 $('#msg-' + item.id + ' a.delete').css("display", "inline");
-                // $('#msg-' + item.id + ' a.reply').css("display", "none");
+                $('#msg-' + item.id + ' a.retweet').css("display", "none");
                 $('#msg-' + item.id).addClass('mine');
               }
               // else {
