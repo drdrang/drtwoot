@@ -146,23 +146,11 @@ function relative_time(time_value) {
   var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
   var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
   delta = delta + (relative_to.getTimezoneOffset() * 60);
-  if (delta < 60) {
-    return 'seconds ago';
-  } else if(delta < 120) {
-    return 'a minute ago';
-  } else if(delta < (50*60)) {
-    return (parseInt(delta / 60)).toString() + ' minutes ago';
-  } else if(delta < (70*60)) {
-    return 'an hour ago';
-  } else if(delta < (120*60)) {
-    return 'over an hour ago';
-  } else if(delta < (22*60*60)) {
-    return '' + (parseInt(delta / 3600)).toString() + ' hours ago';
-  } else if(delta < (48*60*60)) {
-    return 'a day ago';
-  } else {
-    return (parseInt(delta / 86400)).toString() + ' days ago';
-  }
+  var hrs = parseInt(delta / 3600);
+  delta -= hrs*3600;
+  var mins = parseInt(delta / 60);
+  if (hrs > 0) return hrs.toString() + 'h ' + mins.toString() + 'm ago';
+  else return  mins.toString() + 'm ago';
 };
 
 
