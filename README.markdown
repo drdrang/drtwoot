@@ -38,11 +38,11 @@ The Dr. Twoot feature list:
 * It opens showing the most recent 100 tweets from your friends (the number can be adjusted).
 * It updates automatically every three minutes (the interval can be adjusted).
 * Each tweet has buttons that let you:
-    * reply, if the tweet is from someone else (**@**);
-    * delete, if the tweet is from you (**⌫**);
+    * reply (**@**);
     * add it to your favorites list (**★** changes to red);
     * delete it from your favorites list (**★** changes back to black); and
-    * retweet it (**♺**).
+    * delete, if the tweet is from you (**⌫**);
+    * retweet, if the tweet is from someone else (**♺** changes to red).
 * Less obviously, each tweet has links to:
     * the full-sized user picture (click the thumbnail);
     * the tweet itself on twitter.com (click the timestamp);
