@@ -9,30 +9,18 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 # Installation #
 
-Download the files into a folder on your computer. You'll need to change Line 7 of the file `twoot.js`,
+Download the files into a folder on your computer. You'll need to change Lines 8 and 9 of the file `twoot.js`,
 
     var UID = 123456789;
+		var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
 
-so it has your Twitter user id. To get your Twitter user id number, execute
+so it has your Twitter user id and base64-encoded authentication information. To get that information for your account, run the `config.py` script from the command line:
 
-    curl -s http://twitter.com/users/show/username.xml | grep "<id>"
+    python config.py
 
-in the Terminal, where `username` is replaced by your Twitter screen name. You'll get a response in the form
+You'll be prompted for your username and password, and the appropriate Lines 8-9 for your account will be printed out. Copy and paste into `twoot.js`, replacing the dummy lines shown above.
 
-    <id>123456789</id>
-      <id>2345678912345</id>
-
-Your user id will be the first number. Copy that number and paste it into Line 7 of `twoot.js`.
-
-You'll also need to change Line 9 of `twoot.js`
-
-    var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
-
-to the base 64 encoding of your `username:password` string. Here's a quick way to do it from the command line using Python:
-
-    python -c 'import base64;print base64.b64encode("username:password")'
-
-where you put your username and password in the double-quoted string. Don't forget the colon. Copy the output and paste it into Line 9.
+Note: `config.py` connects to Twitter to get your user ID number, so you'll have to have an Internet connection (and Twitter will have to be up and running) for the script to work. It does not send your password across the network, nor does it store your password anywhere.
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
