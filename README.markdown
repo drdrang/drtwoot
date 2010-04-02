@@ -36,8 +36,6 @@ where you put your username and password in the double-quoted string. Don't forg
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
-When you run it the first time, you'll probably have to give it your Twitter username and password. If you save those in your Keychain, you won't have to enter them again.
-
 # Use #
 
 <img class="ss" src="http://www.leancrew.com/all-this/images/drtwoot-streamlined.png" />
