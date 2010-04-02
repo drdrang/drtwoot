@@ -4,7 +4,9 @@
  * */
  
 // Change this to your user id.
-var UID = 10697232;
+var UID = 123456789;
+// Change this to the base 64 encoding of your username:password pair.
+var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
@@ -309,7 +311,14 @@ function charCountdown() {
 $(document).ready(function(){
   // This is a kludge. An empty status update will set the user credentials
   // so the /statuses/show call in toggleFavorite will be run as that user.
-  $.post("http://api.twitter.com/1/statuses/update.json", { status: ""});
+  // $.post("http://api.twitter.com/1/statuses/update.json", { status: ""});
+  
+  // Authenticate each call.
+  $.ajaxSetup({
+    beforeSend: function(xhr){
+      xhr.setRequestHeader('Authorization', 'Basic ' + B64AUTH); 
+    }
+  })
 
   //get the messages
   refreshMessages();
