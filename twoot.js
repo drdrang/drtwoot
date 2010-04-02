@@ -6,7 +6,7 @@
 // Change this to your user id.
 var UID = 123456789;
 // Change this to the base 64 encoding of your username:password pair.
-var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=
+var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
