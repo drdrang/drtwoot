@@ -24,7 +24,11 @@ in the Terminal, where `yourname` is replaced by your Twitter screen name. You'l
 
 Your user id will be the first number. Copy that number and paste it into Line 7 of `twoot.js`.
 
-You'll also need to change Line 9 of `twoot.js` to the base 64 encoding of your `username:password` string. Here's a quick way to do it from the command line using Python:
+You'll also need to change Line 9 of `twoot.js`
+
+    var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
+
+to the base 64 encoding of your `username:password` string. Here's a quick way to do it from the command line using Python:
 
     python -c 'import base64;print base64.b64encode("username:password")'
 
