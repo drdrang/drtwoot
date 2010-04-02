@@ -11,7 +11,7 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 Download the files into a folder on your computer. You'll need to change Line 7 of the file `twoot.js`,
 
-    var UID = 10697232;
+    var UID = 123456789;
 
 so it has your Twitter user id instead of mine. To get your Twitter user id number, execute
 
@@ -23,6 +23,12 @@ in the Terminal, where `yourname` is replaced by your Twitter screen name. You'l
       <id>2345678912345</id>
 
 Your user id will be the first number. Copy that number and paste it into Line 7 of `twoot.js`.
+
+You'll also need to change Line 9 of `twoot.js` to the base 64 encoding of your `username:password` string. Here's a quick way to do it from the command line using Python:
+
+    python -c 'import base64;print base64.b64encode("username:password")'
+
+where you put your username and password in the double-quoted string. Don't forget the colon. Copy the output and paste it into Line 9.
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
