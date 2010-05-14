@@ -20,9 +20,9 @@ var ALL_THIS = new Boolean(true);
 // The id of the message you are replying to or retweeting.
 var MSG_ID;
 // The twitter URLs for getting tweets.
-var BASE_URL = {'home' : 'http://api.twitter.com/1/statuses/home_timeline.json',
-                'mentions': 'http://api.twitter.com/1/statuses/mentions.json',
-                'retweets': 'http://api.twitter.com/1/statuses/retweeted_by_me.json'};
+var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json',
+                'mentions': 'https://api.twitter.com/1/statuses/mentions.json',
+                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json'};
 // The list of message IDs I've retweeted.
 var RTID = new Array();
                 
@@ -194,7 +194,7 @@ function refreshMessages() {
 
 
 function deleteTweet(msg_id) {
-  $.post('http://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', {id:msg_id});
+  $.post('https://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', {id:msg_id});
   $("#msg-" + msg_id).css('display', 'none');
   return;
 }
@@ -213,10 +213,10 @@ function toggleFavorite(msg_id) {
   // Depending on Twitter traffic, it may take a second or two to make the final
   // color change.
   $('#msg-' + msg_id + ' a.favorite').css('color', '#b88');
-  $.getJSON("http://api.twitter.com/1/statuses/show/" + msg_id + ".json", 
+  $.getJSON("https://api.twitter.com/1/statuses/show/" + msg_id + ".json", 
     function(data){
       if (data.favorited) {
-        $.post('http://api.twitter.com/1/favorites/destroy/' + msg_id + '.json',
+        $.post('https://api.twitter.com/1/favorites/destroy/' + msg_id + '.json',
           {id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
@@ -224,7 +224,7 @@ function toggleFavorite(msg_id) {
         );
       }
       else {
-        $.post('http://api.twitter.com/1/favorites/create/' + msg_id + '.json',
+        $.post('https://api.twitter.com/1/favorites/create/' + msg_id + '.json',
           {id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
@@ -242,7 +242,7 @@ function retweet(msg_id) {
     alert("You've already retweeted that one!");
   }
   else {
-    $.post('http://api.twitter.com/1/statuses/retweet/' + msg_id + '.json',
+    $.post('https://api.twitter.com/1/statuses/retweet/' + msg_id + '.json',
       {id: msg_id, source: "drtwoot"},
       function(data) {
         $('#msg-' + msg_id + ' a.retweet').css('color', 'red');
@@ -264,11 +264,11 @@ function retweet(msg_id) {
 
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
-    $.post("http://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
+    $.post("https://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
   else {
-    $.post("http://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot" }, function(data) { refreshStatusField(); }, "json" );
+    $.post("https://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot" }, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
