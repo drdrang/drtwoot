@@ -96,6 +96,14 @@ $.fn.gettweets = function(){
                 theText = item.retweeted_status.text;
                 theSource = item.retweeted_status.source;
               }
+              if (theScreenName == 'DrSamuelJohnson') {
+                tweet_span_start = '<span class="c18th">';
+                tweet_span_end = '</span>';
+              }
+              else {
+                tweet_span_start = '';
+                tweet_span_end = '';
+              }
               list.append('<li id="msg-' + theID + '">' +
               '<a href="http://twitter.com/account/profile_image/' +
               theScreenName +
@@ -120,8 +128,8 @@ $.fn.gettweets = function(){
                 'href="javascript:replyTo(\'' +
                 theScreenName + '\',' + theID +
                 ')">@</a>' +
-              '<div class="tweet_text">' +
-              htmlify(theText, ALL_THIS) +
+              '<div class="tweet_text">' + tweet_span_start +
+              htmlify(theText, ALL_THIS) + tweet_span_end +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                '</div></li>');
 

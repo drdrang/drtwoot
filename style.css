@@ -105,3 +105,8 @@ label.normal {
 label.warning {
   color: red;
 }
+
+span.c18th {
+  font-family: 'IM Fell English', Helvetica;
+  font-size: 18px;
+}
