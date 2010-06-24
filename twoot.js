@@ -110,13 +110,13 @@ $.fn.gettweets = function(){
               '"><img class="profile_image" height="48" width="48" src="' + 
               theIcon +
               '" alt="' + theName + '" /></a>' +
+              '<a class="user" href="http://twitter.com/' + 
+                theScreenName + '">' +
+              theScreenName + '</a> ' +
               '<a class="time" title="' + theTime + '" ' +
                 'href="http://twitter.com/' + theScreenName + '/statuses/' +
                 theID +'">' +
                 relative_time(theTime) + '</a> '+
-              '<a class="user" href="http://twitter.com/' + 
-                theScreenName + '">' +
-              theScreenName + '</a> ' +
               '<a class="delete" title="Delete" ' +
                 'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
               '<a class="retweet" title="Retweet" ' +
