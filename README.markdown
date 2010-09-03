@@ -1,3 +1,9 @@
+# Nota bene #
+
+Dr. Twoot relies on Basic Authentication rather than OAuth, which means that it stopped working at the end of August 2010. If you're looking for a Twitter client that works out of the box, Dr. Twoot—at present, at least—isn't for you.
+
+I'm considering different approaches to get Dr. Twoot working again but haven't had time to implement anything yet. If you fork it and add OAuth, I'd love to hear from you.
+
 # Introduction #
 
 Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twitter "web app" that sits on your hard disk instead of in the cloud. The code comprises HTML, CSS, and JavaScript ([jQuery][2]) files that are turned into a site-specific browser (SSB) application on the Macintosh through [Fluid][3]. The main advantages of using Dr. Twoot over an SSB pointed at twitter.com are:
