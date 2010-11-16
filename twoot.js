@@ -25,6 +25,8 @@ var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json'
                 'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json'};
 // The list of message IDs I've retweeted.
 var RTID = new Array();
+// The local CGI URL.
+var CGI = 'http://localhost/cgi-bin/twitter.cgi'
                 
 function htmlify(body, allThisLinks) {
   // handle links
@@ -50,7 +52,7 @@ $.fn.gettweets = function(){
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
     // Get my retweets as a list of original message IDs.
-    $.getJSON(retweetsURL, function(retweets){
+    $.getJSON(CGI, {url:retweetsURL}, function(retweets){
       $.each(retweets, function(i, item){
         // alert(item.retweeted_status.id);
         if ($.inArray(item.retweeted_status.id, RTID) == -1){
@@ -59,11 +61,11 @@ $.fn.gettweets = function(){
         }
       }); // each
     
-      $.getJSON(homeURL, function(home){
+      $.getJSON(CGI, {url:homeURL}, function(home){
         if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
         else mentionsURL += "&since_id=" + home[home.length - 1].id;  // last is oldest
       
-        $.getJSON(mentionsURL, function(mentions){
+        $.getJSON(CGI, {url:mentionsURL}, function(mentions){
           home = $.merge(home, mentions);
           home.sort(function(a,b){return a.id - b.id;});   // chron sort
           if (home.length > 0) LAST_UPDATE = home[home.length - 1].id;   // last is newest
@@ -322,11 +324,11 @@ $(document).ready(function(){
   // $.post("http://api.twitter.com/1/statuses/update.json", { status: ""});
   
   // Authenticate each call.
-  $.ajaxSetup({
-    beforeSend: function(xhr){
-      xhr.setRequestHeader('Authorization', 'Basic ' + B64AUTH); 
-    }
-  })
+  // $.ajaxSetup({
+  //   beforeSend: function(xhr){
+  //     xhr.setRequestHeader('Authorization', 'Basic ' + B64AUTH); 
+  //   }
+  // })
 
   //get the messages
   refreshMessages();
