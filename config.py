@@ -17,7 +17,6 @@ url = 'http://twitter.com/users/show/%s.xml' % uname
 uid = re.sub(r'\s*</?id>\s*', '', urlopen(url).readlines()[2])
 
 print '''
-Copy the following two lines and paste into twoot.js.
+Copy the following lines and paste into twoot.js.
 '''
 print "var UID = %s;" % uid
-print "var B64AUTH = '%s';" % b64encode('%s:%s' % (uname, pword))

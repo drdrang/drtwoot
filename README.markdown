@@ -1,9 +1,3 @@
-# Nota bene #
-
-Dr. Twoot relies on Basic Authentication rather than OAuth, which means that it stopped working at the end of August 2010. If you're looking for a Twitter client that works out of the box, Dr. Twoot—at present, at least—isn't for you.
-
-I'm considering different approaches to get Dr. Twoot working again but haven't had time to implement anything yet. If you fork it and add OAuth, I'd love to hear from you.
-
 # Introduction #
 
 Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twitter "web app" that sits on your hard disk instead of in the cloud. The code comprises HTML, CSS, and JavaScript ([jQuery][2]) files that are turned into a site-specific browser (SSB) application on the Macintosh through [Fluid][3]. The main advantages of using Dr. Twoot over an SSB pointed at twitter.com are:
@@ -15,18 +9,28 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 
 # Installation #
 
-Download the files into a folder on your computer. You'll need to change Lines 8 and 9 of the file `twoot.js`,
+## The CGI script ##
+
+When Twitter removed Basic Authentication in August of 2010, Dr. Twoot could no longer work as a standalone client. It now requires a running web server on your local machine and a CGI script to make the OAuth requests to Twitter. Here's what you need to do:
+
+1. Make sure the Apache web server is running. All Macs have Apache installed; it can be turned on clicking the Web Sharing checkbox in the Sharing panel of System Preferences.
+2. Register yourself as [a Twitter developer][5] and then register a new application (as far as I know, you can call it "Dr. Twoot" without conflicting with anyone else's Dr. Twoot). This will give you the OAuth credentials necessary for the CGI script. The four credentials are the Consumer Key, the Consumer Secret, the Access Token, and the Access Token Secret. Copy these items from your newly-registered application's settings pages and paste them into the appropriate spots in Lines 10-13 of `twitter.cgi`.
+3. Move `twitter.cgi` to the `/Library/Webserver/CGI-Executables` folder on your computer and make it executable: `chmod +x /Library/Webserver/CGI-Executables/twitter.cgi`.
+
+Now you're ready to configure and create the site-specific browser.
+
+## The HTML/CSS/JavaScript part ##
+You'll need to change Line 8 of the file `twoot.js`,
 
     var UID = 123456789;
-		var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
 
-so it has your Twitter user id and base64-encoded authentication information. To get that information for your account, run the `config.py` script from the command line:
+so it has your Twitter user id. To get that information for your account, run the `config.py` script from the command line:
 
     python config.py
 
-You'll be prompted for your username and password, and the appropriate Lines 8-9 for your account will be printed out. Copy and paste into `twoot.js`, replacing the dummy lines shown above.
+You'll be prompted for your username and password, and the appropriate Line 8 for your account will be printed out. Copy and paste into `twoot.js`, replacing the dummy line shown above.
 
-Note: `config.py` connects to Twitter to get your user ID number, so you'll have to have an Internet connection (and Twitter will have to be up and running) for the script to work. It does not send your password across the network, nor does it store your password anywhere.
+Note: `config.py` connects to Twitter to get your user ID number, so you'll have to have an Internet connection (and the Twitter site itself will have to be up and running) for the script to work. It does not send your password across the network, nor does it store your password anywhere.
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
@@ -76,3 +80,4 @@ MIT
 [2]: http://jquery.com/
 [3]: http://fluidapp.com/
 [4]: http://www.leancrew.com/all-this/2009/05/blog-housekeeping/
+[5]: http://dev.twitter.com/
