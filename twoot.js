@@ -5,8 +5,8 @@
  
 // Change these two lines to your user information. You can get the information by
 // running the config script.
-var UID = 123456789;
-var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
+var UID = 10697232;
+// var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
@@ -204,7 +204,7 @@ function refreshMessages() {
 
 
 function deleteTweet(msg_id) {
-  $.post('https://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', {id:msg_id});
+  $.post(CGI, {url:'https://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', id:msg_id});
   $("#msg-" + msg_id).css('display', 'none');
   return;
 }
@@ -223,19 +223,17 @@ function toggleFavorite(msg_id) {
   // Depending on Twitter traffic, it may take a second or two to make the final
   // color change.
   $('#msg-' + msg_id + ' a.favorite').css('color', '#b88');
-  $.getJSON("https://api.twitter.com/1/statuses/show/" + msg_id + ".json", 
+  $.getJSON(CGI, {url:"https://api.twitter.com/1/statuses/show/" + msg_id + ".json"}, 
     function(data){
       if (data.favorited) {
-        $.post('https://api.twitter.com/1/favorites/destroy/' + msg_id + '.json',
-          {id:msg_id},
+        $.post(CGI, {url:'https://api.twitter.com/1/favorites/destroy/' + msg_id + '.json', id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
           }
         );
       }
       else {
-        $.post('https://api.twitter.com/1/favorites/create/' + msg_id + '.json',
-          {id:msg_id},
+        $.post(CGI, {url:'https://api.twitter.com/1/favorites/create/' + msg_id + '.json', id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
           }
@@ -252,8 +250,7 @@ function retweet(msg_id) {
     alert("You've already retweeted that one!");
   }
   else {
-    $.post('https://api.twitter.com/1/statuses/retweet/' + msg_id + '.json',
-      {id: msg_id, source: "drtwoot"},
+    $.post(CGI, {url:'https://api.twitter.com/1/statuses/retweet/' + msg_id + '.json', id: msg_id},
       function(data) {
         $('#msg-' + msg_id + ' a.retweet').css('color', 'red');
         refreshStatusField(); },
@@ -274,11 +271,11 @@ function retweet(msg_id) {
 
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
-    $.post("https://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot", in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url: "https://api.twitter.com/1/statuses/update.json", status: status_text, in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
   else {
-    $.post("https://api.twitter.com/1/statuses/update.json", { status: status_text, source: "drtwoot" }, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url:"https://api.twitter.com/1/statuses/update.json", status: status_text}, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
