@@ -22,7 +22,7 @@ Now you're ready to configure and create the site-specific browser.
 ## The HTML/CSS/JavaScript part ##
 You'll need to change Line 8 of the file `twoot.js`,
 
-    var UID = 123456789;
+    var UID = 10697232;
 
 so it has your Twitter user id. To get that information for your account, run the `config.py` script from the command line:
 
