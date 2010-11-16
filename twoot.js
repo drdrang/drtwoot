@@ -6,7 +6,6 @@
 // Change these two lines to your user information. You can get the information by
 // running the config script.
 var UID = 10697232;
-// var B64AUTH = 'dXNlcm5hbWU6cGFzc3dvcmQ=';
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
