@@ -18,7 +18,7 @@ When Twitter removed Basic Authentication in August of 2010, Dr. Twoot could no 
     <img src="http://www.leancrew.com/all-this/images2010/web-sharing.png" />
 
 2. Register yourself as [a Twitter developer][5] and then register a new application (as far as I know, you can call it "Dr. Twoot" without conflicting with anyone else's Dr. Twoot). This will give you the OAuth credentials necessary for the CGI script. The four credentials are the Consumer Key, the Consumer Secret, the Access Token, and the Access Token Secret. Copy these items from your newly-registered application's settings pages and paste them into the appropriate spots in Lines 10-13 of `twitter.cgi`.
-3. Move `twitter.cgi` to the `/Library/Webserver/CGI-Executables` folder on your computer and make it executable: `chmod +x /Library/Webserver/CGI-Executables/twitter.cgi`.
+3. Move `twitter.cgi` to the `/Library/WebServer/CGI-Executables` folder on your computer and make it executable: `chmod +x /Library/WebServer/CGI-Executables/twitter.cgi`.
 4. Install the `oauth2` python library and its dependencies: `sudo easy_install oauth2`.
 
 Now you're ready to configure and create the site-specific browser.

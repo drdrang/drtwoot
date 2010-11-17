@@ -51,5 +51,3 @@ else:
 print '''Content-Type: application/json
 
 %s''' % answer
-
-# print answer
