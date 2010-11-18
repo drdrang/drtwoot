@@ -41,6 +41,30 @@ function htmlify(body, allThisLinks) {
   return body;
 }
 
+// Adapted from http://code.google.com/p/jsprettify/.
+function smarten(a) {
+   var b = new RegExp("(^|[\\(\\s\"-\\u2014])'([\\s\\S]*?)'($|[\\)\\s\".,;:?!-\\u2014])", "g"), c;
+   do {
+     c = a;
+     a = a.replace(b, "$1\u2018$2\u2019$3")
+   }
+   while (c != a);
+   c = [{ g: "'",
+          replace: "\u2019" },
+        { g: '"($|[\\]\\)\\s/.,;:?!\\u2014\\u2019])',
+          replace: "\u201d$1" },
+        { g: '(^|[\\[\\(\\s-\\u2014/\\u2018])"',
+          replace: "$1\u201c" },
+        { g: "--",
+        replace: "\u2014" }];
+   for (var d = 0, f = c.length; d < f; ++d) {
+     var e = c[d];
+     b = new RegExp(e.g, "g");
+     a = a.replace(b, e.replace)
+   }
+   return a
+};
+
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
@@ -270,11 +294,11 @@ function retweet(msg_id) {
 
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
-    $.post(CGI, {url: "https://api.twitter.com/1/statuses/update.json", status: status_text, in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url: "https://api.twitter.com/1/statuses/update.json", status: smarten(status_text), in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
   else {
-    $.post(CGI, {url:"https://api.twitter.com/1/statuses/update.json", status: status_text}, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url:"https://api.twitter.com/1/statuses/update.json", status: smarten(status_text) }, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
