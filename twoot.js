@@ -43,7 +43,7 @@ function htmlify(body, allThisLinks) {
 
 // Change straight quotes to curly and double hyphens to m-dashes.
 function smarten(a) {
-  a = a.replace(/(^|[-\u2014\s])'/g, "$1\u2018");
+  a = a.replace(/(^|[-\u2014\s(\["])'/g, "$1\u2018");
   a = a.replace(/'/g, "\u2019");
   a = a.replace(/(^|[-\u2014/\[(\u2018\s])"/, "$1\u201c");
   a = a.replace(/"/, "\u201d");
