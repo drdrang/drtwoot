@@ -41,27 +41,13 @@ function htmlify(body, allThisLinks) {
   return body;
 }
 
-// Adapted from http://code.google.com/p/jsprettify/.
+// Change straight quotes to curly and double hyphens to m-dashes.
 function smarten(a) {
-   var b = new RegExp("(^|[\\(\\s\"-\\u2014])'([\\s\\S]*?)'($|[\\)\\s\".,;:?!-\\u2014])", "g"), c;
-   do {
-     c = a;
-     a = a.replace(b, "$1\u2018$2\u2019$3")
-   }
-   while (c != a);
-   c = [{ g: "'",
-          replace: "\u2019" },
-        { g: '"($|[\\]\\)\\s/.,;:?!\\u2014\\u2019])',
-          replace: "\u201d$1" },
-        { g: '(^|[\\[\\(\\s-\\u2014/\\u2018])"',
-          replace: "$1\u201c" },
-        { g: "--",
-        replace: "\u2014" }];
-   for (var d = 0, f = c.length; d < f; ++d) {
-     var e = c[d];
-     b = new RegExp(e.g, "g");
-     a = a.replace(b, e.replace)
-   }
+  a = a.replace(/(^|[-\u2014\s])'/g, "$1\u2018");
+  a = a.replace(/'/g, "\u2019");
+  a = a.replace(/(^|[-\u2014/\[(\u2018\s])"/, "$1\u201c");
+  a = a.replace(/"/, "\u201d");
+  a = a.replace(/--/, "\u2014");
    return a
 };
 
