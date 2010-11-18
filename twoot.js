@@ -45,9 +45,9 @@ function htmlify(body, allThisLinks) {
 function smarten(a) {
   a = a.replace(/(^|[-\u2014\s(\["])'/g, "$1\u2018");
   a = a.replace(/'/g, "\u2019");
-  a = a.replace(/(^|[-\u2014/\[(\u2018\s])"/, "$1\u201c");
-  a = a.replace(/"/, "\u201d");
-  a = a.replace(/--/, "\u2014");
+  a = a.replace(/(^|[-\u2014/\[(\u2018\s])"/g, "$1\u201c");
+  a = a.replace(/"/g, "\u201d");
+  a = a.replace(/--/g, "\u2014");
    return a
 };
 
