@@ -51,6 +51,16 @@ function smarten(a) {
   return a
 };
 
+// Compare two numeric string, returning -1, 0, or 1. To be used for sorting message IDs
+// We can't just subract one ID from the other because the ID numbers have grown
+// beyond JavaScripts's ability to parse them. So we have to do a string comparison
+// that accounts for the possibility that the strings are of different length.
+function cmpID (a, b) {
+  if (a.length < b.length) return -1;
+  else if (a.length > b.length) return 1;
+  else return a.localeCompare(b);
+}
+
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
@@ -63,24 +73,22 @@ $.fn.gettweets = function(){
     // Get my retweets as a list of original message IDs.
     $.getJSON(CGI, {url:retweetsURL}, function(retweets){
       $.each(retweets, function(i, item){
-        // alert(item.retweeted_status.id);
-        if ($.inArray(item.retweeted_status.id, RTID) == -1){
-          // alert(item.retweeted_status.id);
-          RTID.push(item.retweeted_status.id);
+        if ($.inArray(item.retweeted_status.id_str, RTID) == -1){
+          RTID.push(item.retweeted_status.id_str);
         }
       }); // each
     
       $.getJSON(CGI, {url:homeURL}, function(home){
         if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
-        else mentionsURL += "&since_id=" + home[home.length - 1].id;  // last is oldest
+        else mentionsURL += "&since_id=" + home[home.length - 1].id_str;  // last is oldest
       
         $.getJSON(CGI, {url:mentionsURL}, function(mentions){
           home = $.merge(home, mentions);
-          home.sort(function(a,b){return a.id - b.id;});   // chron sort
-          if (home.length > 0) LAST_UPDATE = home[home.length - 1].id;   // last is newest
+          home.sort(function(a,b){return cmpID(a.id_str, b.id_str);});   // chron sort
+          if (home.length > 0) LAST_UPDATE = home[home.length - 1].id_str;   // last is newest
       
           $.each(home, function(i, item){
-            if($("#msg-" + item.id).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
+            if($("#msg-" + item.id_str).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
               if (item.in_reply_to_status_id == null) {
                 inReplyText = '';
                 }
@@ -89,7 +97,7 @@ $.fn.gettweets = function(){
               }
               if (item.retweeted_status == null) {
                 retweetText = '';
-                theID = item.id;
+                theID = item.id_str;
                 theName = item.user.name;
                 theScreenName = item.user.screen_name;
                 theIcon = item.user.profile_image_url;
@@ -99,7 +107,7 @@ $.fn.gettweets = function(){
               }
               else {
                 retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
-                theID = item.retweeted_status.id;
+                theID = item.retweeted_status.id_str;
                 theName = item.retweeted_status.user.name;
                 theScreenName = item.retweeted_status.user.screen_name;
                 theIcon = item.retweeted_status.user.profile_image_url;
@@ -146,19 +154,19 @@ $.fn.gettweets = function(){
 
               // Mark if it's a favorite.
               if (item.favorited) {
-                $('#msg-' + item.id + ' a.favorite').css('color', 'red');
+                $('#msg-' + item.id_str + ' a.favorite').css('color', 'red');
               }
               
               // Mark if I've retweeted it.
-              if ($.inArray(item.id, RTID) > -1) {
-                $('#msg-' + item.id + ' a.retweet').css('color', 'red');
+              if ($.inArray(item.id_str, RTID) > -1) {
+                $('#msg-' + item.id_str + ' a.retweet').css('color', 'red');
               }
         
               // Allow me to delete my tweets and distinguish them from others.
               if (item.user.id == UID) {
-                $('#msg-' + item.id + ' a.delete').css("display", "inline");
-                $('#msg-' + item.id + ' a.retweet').css("display", "none");
-                $('#msg-' + item.id).addClass('mine');
+                $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
+                $('#msg-' + item.id._str + ' a.retweet').css("display", "none");
+                $('#msg-' + item.id_str).addClass('mine');
               }
               // else {
               //   $('#msg-' + item.id + ' a.delete').css("display", "none");
@@ -167,7 +175,7 @@ $.fn.gettweets = function(){
           
               // Distinguish replies to me.
               if (item.in_reply_to_user_id == UID){
-                $('#msg-' + item.id).addClass('tome');
+                $('#msg-' + item.id_str).addClass('tome');
               } 
         
             }  // if
