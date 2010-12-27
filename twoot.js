@@ -137,16 +137,16 @@ $.fn.gettweets = function(){
                 theID +'">' +
                 relative_time(theTime) + '</a> '+
               '<a class="delete" title="Delete" ' +
-                'href="javascript:deleteTweet(' + theID + ')">&#9003;</a>' +
+                'href="javascript:deleteTweet(\'' + theID + '\')">&#9003;</a>' +
               '<a class="retweet" title="Retweet" ' +
-                'href="javascript:retweet(' + theID + ')">&#9850;</a>' +
+                'href="javascript:retweet(\'' + theID + '\')">&#9850;</a>' +
               '<a class="favorite" title="Toggle favorite status" '+
-                'href="javascript:toggleFavorite(' + 
-                theID + ')">&#10029;</a>' +
+                'href="javascript:toggleFavorite(\'' + 
+                theID + '\')">&#10029;</a>' +
               '<a class="reply" title="Reply to this" ' +
                 'href="javascript:replyTo(\'' +
-                theScreenName + '\',' + theID +
-                ')">@</a>' +
+                theScreenName + '\', \'' + theID +
+                '\')">@</a>' +
               '<div class="tweet_text">' + tweet_span_start +
               htmlify(theText, ALL_THIS) + tweet_span_end +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
@@ -165,7 +165,7 @@ $.fn.gettweets = function(){
               // Allow me to delete my tweets and distinguish them from others.
               if (item.user.id == UID) {
                 $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
-                $('#msg-' + item.id._str + ' a.retweet').css("display", "none");
+                $('#msg-' + item.id_str + ' a.retweet').css("display", "none");
                 $('#msg-' + item.id_str).addClass('mine');
               }
               // else {
