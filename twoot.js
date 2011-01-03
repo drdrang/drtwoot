@@ -352,6 +352,14 @@ $(document).ready(function(){
     setStatus($("#status").val());
     return false;
   });
+  
+  // Add event capture to status field.
+  $("#status").keypress( function(e) {
+    if (e.which == 13) {
+      setStatus($("#status").val());
+      return false;
+    }
+  });
 
   //set timer to reload timeline, every REFRESH milliseconds
   window.setInterval("refreshMessages()", REFRESH);
