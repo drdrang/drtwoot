@@ -93,7 +93,7 @@ $.fn.gettweets = function(){
                 inReplyText = '';
                 }
               else {
-                inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id + '">' + item.in_reply_to_screen_name + '</a>';
+                inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
               }
               if (item.retweeted_status == null) {
                 retweetText = '';
