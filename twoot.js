@@ -352,6 +352,15 @@ $(document).ready(function(){
     setStatus($("#status").val());
     return false;
   });
+  
+  // Add event capture to status field. Cmd-Return is same as clicking
+  // the Update button.
+  $("#status").keypress( function(e) {
+    if (e.which == 13 && e.metaKey) {
+      setStatus($("#status").val());
+      return false;
+    }
+  });
 
   //set timer to reload timeline, every REFRESH milliseconds
   window.setInterval("refreshMessages()", REFRESH);
