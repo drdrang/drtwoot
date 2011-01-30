@@ -353,9 +353,10 @@ $(document).ready(function(){
     return false;
   });
   
-  // Add event capture to status field.
+  // Add event capture to status field. Cmd-Return is same as clicking
+  // the Update button.
   $("#status").keypress( function(e) {
-    if (e.which == 13) {
+    if (e.which == 13 && e.metaKey) {
       setStatus($("#status").val());
       return false;
     }
