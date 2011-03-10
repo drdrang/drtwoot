@@ -145,7 +145,7 @@ $.fn.gettweets = function(){
                 theID + '\')">&#10029;</a>' +
               '<a class="reply" title="Reply to this" ' +
                 'href="javascript:replyTo(\'' +
-                theScreenName + '\', \'' + theID +
+                theScreenName + '\',\'' + theID +
                 '\')">@</a>' +
               '<div class="tweet_text">' + tweet_span_start +
               htmlify(theText, ALL_THIS) + tweet_span_end +
