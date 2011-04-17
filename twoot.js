@@ -64,10 +64,11 @@ function cmpID (a, b) {
 $.fn.gettweets = function(){
   return this.each(function(){
     var list = $('ul.tweet_list').appendTo(this);
-    var homeURL = BASE_URL['home'] + '?count=' + COUNT;
-    var mentionsURL = BASE_URL['mentions'] + '?count=' + COUNT;
-    var retweetsURL = BASE_URL['retweets'] + '?count=' + COUNT;
+    var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
+    var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
+    var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
+    if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
     // Get my retweets as a list of original message IDs.
@@ -174,8 +175,13 @@ $.fn.gettweets = function(){
               // }
           
               // Distinguish mentions of me.
-              if (item.text.indexOf("@" + SNAME) > -1){
-                $('#msg-' + item.id_str).addClass('tome');
+              if ("entities" in item && "user_mentions" in item.entities){
+                for (var i=0; i<item.entities.user_mentions.length; i++){
+                  if (item.entities.user_mentions[i].id == UID) {
+                    $('#msg-' + item.id_str).addClass('tome');
+                    break;
+                  }
+                }
               } 
         
             }  // if
