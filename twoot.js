@@ -3,9 +3,9 @@
  *
  * */
  
-// Change these two lines to your user information. You can get the information by
-// running the config script.
+// Change these two lines to your user information.
 var UID = 10697232;
+var SNAME = "drdrang";
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 100;
 // The id of the most recently retrieved update.
@@ -173,8 +173,8 @@ $.fn.gettweets = function(){
               //   $('#msg-' + item.id + ' a.reply').css("display", "inline");
               // }
           
-              // Distinguish replies to me.
-              if (item.in_reply_to_user_id == UID){
+              // Distinguish mentions of me.
+              if (item.text.indexOf("@" + SNAME) > -1){
                 $('#msg-' + item.id_str).addClass('tome');
               } 
         
