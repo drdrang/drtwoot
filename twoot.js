@@ -68,7 +68,6 @@ $.fn.gettweets = function(){
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
     var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
-    if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
     // Get my retweets as a list of original message IDs.
