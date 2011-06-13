@@ -131,7 +131,7 @@ $.fn.gettweets = function(){
                 tweet_span_end = '';
               }
               if (isSpam(theText)) {
-                theText = theText + '<br /><em>Reported as spam</em>';
+                theText = theText + ' <br /><em>Reported as spam</em>';
                 reportSpam(theScreenName);
               }
               list.append('<li id="msg-' + theID + '">' +
