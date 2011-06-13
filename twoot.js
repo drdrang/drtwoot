@@ -26,7 +26,8 @@ var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json'
 var RTID = new Array();
 // The local CGI URL.
 var CGI = 'http://localhost/cgi-bin/twitter.cgi'
-                
+
+// Turn certain things into links.              
 function htmlify(body, allThisLinks) {
   // handle links
   body = body.replace(/((https?|ftp):\/\/[^ \n]+[^ \n.,;:?!&'"’”)}\]])/g, '<a href="$1">$1</a>');
@@ -41,6 +42,12 @@ function htmlify(body, allThisLinks) {
   return body;
 }
 
+// See if a tweet is just my nickname and a link. This will be treated as spam.
+function isSpam(body) {
+  spamRE = new RegExp('^@' + SNAME + '\\s+' + 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]' + '\\s*$');
+  return body.match(spamRE)
+}
+
 // Change straight quotes to curly and double hyphens to em-dashes.
 function smarten(a) {
   a = a.replace(/(^|[-\u2014/(\[{"\s])'/g, "$1\u2018");      // opening singles
@@ -49,7 +56,7 @@ function smarten(a) {
   a = a.replace(/"/g, "\u201d");                             // closing doubles
   a = a.replace(/--/g, "\u2014");                            // em-dashes
   return a
-};
+}
 
 // Compare two numeric string, returning -1, 0, or 1. To be used for sorting message IDs
 // We can't just subract one ID from the other because the ID numbers have grown
@@ -122,6 +129,10 @@ $.fn.gettweets = function(){
               else {
                 tweet_span_start = '';
                 tweet_span_end = '';
+              }
+              if (isSpam(theText)) {
+                theText = theText + '<br /><em>Reported as spam</em>';
+                reportSpam(theScreenName);
               }
               list.append('<li id="msg-' + theID + '">' +
               '<a href="http://twitter.com/account/profile_image/' +
@@ -228,6 +239,11 @@ function refreshMessages() {
 function deleteTweet(msg_id) {
   $.post(CGI, {url:'https://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', id:msg_id});
   $("#msg-" + msg_id).css('display', 'none');
+  return;
+}
+
+function reportSpam(screenName) {
+  $.post(CGI, {url:'https://api.twitter.com/1/report_spam.json', screen_name:screenName});
   return;
 }
       
