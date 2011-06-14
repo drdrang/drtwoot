@@ -139,8 +139,8 @@ $.fn.gettweets = function(){
                   tweet_span_end = '';
                 }
                 if (isSpam(theText, theUserID, friends)) {
-                  theText = theText + ' <br /><em>Reported as spam</em>'; // + ' <br />' + theUserID + ' <br />' + friends;
-                  // reportSpam(theScreenName);
+                  theText = theText + ' <br /><em>Reported as spam</em>';
+                  reportSpam(theScreenName);
                 }
                 list.append('<li id="msg-' + theID + '">' +
                 '<a href="http://twitter.com/account/profile_image/' +
