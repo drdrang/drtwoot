@@ -24,7 +24,7 @@ When Twitter removed Basic Authentication in August of 2010, Dr. Twoot could no 
 Now you're ready to configure and create the site-specific browser.
 
 ## The HTML/CSS/JavaScript part ##
-You'll need to change Line 8 of the file `twoot.js`,
+You'll need to change Line 7 of the file `twoot.js`,
 
     var UID = 10697232;
 
@@ -32,9 +32,9 @@ so it has your Twitter user id. To get that information for your account, run th
 
     python config.py
 
-You'll be prompted for your username and password, and the appropriate Line 8 for your account will be printed out. Copy and paste into `twoot.js`, replacing the dummy line shown above.
+You'll be prompted for your username, and the appropriate Line 7 for your account will be printed out. Copy and paste into `twoot.js`, replacing the dummy line shown above.
 
-Note: `config.py` connects to Twitter to get your user ID number, so you'll have to have an Internet connection (and the Twitter site itself will have to be up and running) for the script to work. It does not send your password across the network, nor does it store your password anywhere.
+Note: `config.py` connects to Twitter to get your user ID number, so you'll have to have an Internet connection (and the Twitter site itself will have to be up and running) for the script to work.
 
 After `twoot.js` has been edited and saved, launch Fluid and point it to the `twoot.htm` file: `file:///path/to/twoot.htm`. Give the SSB a name ("Dr. Twoot" is a good choice), tell it to use one of the PNG files as the icon, and let it make the new application.
 
