@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-import oauth2 as oauth
-import urllib
 import cgi
 import cgitb; cgitb.enable()
+import oauth2 as oauth
+import urllib
 
 # You'll need to change these to the values you get from Twitter
 # when you register your app.
@@ -13,7 +13,7 @@ accessToken = "123456789"
 accessTokenSecret = "123456789"
 
 # Pretty much stolen from http://dev.twitter.com/pages/oauth_single_token#python.
-def oauth_req(url, http_method="GET", post_body=None, http_headers=None):
+def oauth_req(url, http_method="GET", post_body='', http_headers=None):
   'Make a request and return the content of the response.'
   
   # Set up the client.
