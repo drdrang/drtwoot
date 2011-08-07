@@ -26,11 +26,26 @@ var RTID = new Array();
 var CGI = 'http://localhost/cgi-bin/twitter.cgi'
 
 // Turn certain things into links.              
-function htmlify(body) {
+function htmlify(body, entities) {
+  urls = entities.urls;
+  users = entities.user_mentions;
   // handle links
-  body = body.replace(/((https?|ftp):\/\/[^ \n]+[^ \n.,;:?!&'"’”)}\]])/g, '<a href="$1">$1</a>');
+  $.each(urls, function(i, u) {
+    if (u.display_url != null) {
+      link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+    }
+    else {
+      link = '<a href="' + u.url + '">' + u.url + '</a>';
+    }
+    body = body.replace(u.url, link);
+  }) // each
+  
   // handle Twitter names
-  body = body.replace(/[\@]+([A-Za-z0-9-_]+)/g, '<a href="http://twitter.com/$1">@$1</a>');
+  $.each(users, function(i, u) {
+    link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
+    body = body.replace('@' + u.screen_name, link);
+  }) // each
+  
   // turn newlines into breaks
   body = body.replace(/\n/g, '<br />');
   return body;
@@ -160,7 +175,7 @@ $.fn.gettweets = function(){
                   theScreenName + '\',\'' + theID +
                   '\')">@</a>' +
                 '<div class="tweet_text">' + tweet_span_start +
-                htmlify(theText) + tweet_span_end +
+                htmlify(theText, item.entities) + tweet_span_end +
                 '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                  '</div></li>');
 
