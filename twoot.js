@@ -160,7 +160,7 @@ $.fn.gettweets = function(){
                   theScreenName + '\',\'' + theID +
                   '\')">@</a>' +
                 '<div class="tweet_text">' + tweet_span_start +
-                htmlify(theText, ALL_THIS) + tweet_span_end +
+                htmlify(theText) + tweet_span_end +
                 '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                  '</div></li>');
 
