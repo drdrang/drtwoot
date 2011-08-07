@@ -23,13 +23,17 @@ var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json'
 // The list of message IDs I've retweeted.
 var RTID = new Array();
 // The local CGI URL.
-var CGI = 'http://localhost/cgi-bin/twitter.cgi'
+var CGI = 'http://localhost/cgi-bin/twitter.cgi';
+// A URL regex.
+var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
 
 // Turn certain things into links.              
 function htmlify(body, entities) {
   urls = entities.urls;
   users = entities.user_mentions;
-  // handle links
+  media = entities.media;
+  
+  // Handle links.
   $.each(urls, function(i, u) {
     if (u.display_url != null) {
       link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
@@ -40,12 +44,29 @@ function htmlify(body, entities) {
     body = body.replace(u.url, link);
   }) // each
   
-  // handle Twitter names
+  // Handle Twitter names.
   $.each(users, function(i, u) {
     link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
     body = body.replace('@' + u.screen_name, link);
   }) // each
   
+  // Handle media. For some reason, media is undefined rather than an empty
+  // list, so we have to check before trying to loop through.
+  // I've decided to comment out this whole thing until the media entity starts
+  // getting used by people I follow.
+  // if (typeof media != 'undefined') {
+  //   $.each(media, function(i, u) {
+  //     alert(body);
+  //     if (u.media_url != null) {
+  //       link = '<a href="' + u.expanded_url + '">' + '<img src="' + u.media_url + '"></a>';
+  //     }
+  //     else {
+  //       link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+  //     }
+  //     body = body.replace(u.url, link);
+  //   }) // each
+  // } // if
+    
   // turn newlines into breaks
   body = body.replace(/\n/g, '<br />');
   return body;
@@ -54,7 +75,7 @@ function htmlify(body, entities) {
 // If a tweet is just my nickname and a link and was not sent by someone I follow,
 // it will be considered spam.
 function isSpam(body, sender, friendList) {
-  spamRE = new RegExp('^@' + SNAME + '\\s+' + 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]' + '\\s*$');
+  spamRE = new RegExp('^@' + SNAME + '\\s+' + URL_RE + '\\s*$');
   return body.match(spamRE) && ($.inArray(sender, friendList) == -1);
 }
 
@@ -352,7 +373,14 @@ function refreshStatusField() {
 // style to warn the user when there are only 20 characters left. Show
 // "Twoosh!" when the tweet is exactly 140 characters long.
 function charCountdown() {
-  charsLeft = 140 - $("#status").val().length;
+  body = $("#status").val();
+  charsLeft = 140 - body.length;
+  urlRE = new RegExp(URL_RE, 'g');
+  matches = body.match(urlRE);
+  if (matches) {
+    charsLeft -= matches.length*20;
+    charsLeft += matches.join('').length;
+  }
   if (charsLeft <= 20) {
     $("#count").removeClass("normal");
     $("#count").addClass("warning");
