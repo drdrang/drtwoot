@@ -15,17 +15,20 @@ var REFRESH = 3*60*1000;
 var RECALC = 60*1000;
 // The id of the message you are replying to or retweeting.
 var MSG_ID;
-// The twitter URLs for getting tweets.
+// The twitter URLs for getting tweets and configuration info.
 var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json',
                 'mentions': 'https://api.twitter.com/1/statuses/mentions.json',
                 'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json',
                 'friends': 'https://api.twitter.com/1/friends/ids.json'};
+var CONFIG_URL = 'http://api.twitter.com/1/help/configuration.json';
 // The list of message IDs I've retweeted.
 var RTID = new Array();
 // The local CGI URL.
 var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
+// The shortened link length. 
+var SURL = 20;
 
 // Turn certain things into links.              
 function htmlify(body, entities) {
@@ -378,7 +381,7 @@ function charCountdown() {
   urlRE = new RegExp(URL_RE, 'g');
   matches = body.match(urlRE);
   if (matches) {
-    charsLeft -= matches.length*20;
+    charsLeft -= matches.length*SURL;
     charsLeft += matches.join('').length;
   }
   if (charsLeft <= 20) {
@@ -398,17 +401,11 @@ function charCountdown() {
 }
 
 // set up basic stuff for first load
-$(document).ready(function(){
-  // This is a kludge. An empty status update will set the user credentials
-  // so the /statuses/show call in toggleFavorite will be run as that user.
-  // $.post("http://api.twitter.com/1/statuses/update.json", { status: ""});
-  
-  // Authenticate each call.
-  // $.ajaxSetup({
-  //   beforeSend: function(xhr){
-  //     xhr.setRequestHeader('Authorization', 'Basic ' + B64AUTH); 
-  //   }
-  // })
+$(document).ready(function(){  
+  // Get the shortened link length.
+  $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
+    SURL = info.short_url_length;
+  });
 
   //get the messages
   refreshMessages();
