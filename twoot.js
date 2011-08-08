@@ -150,6 +150,7 @@ $.fn.gettweets = function(){
                   theTime = item.created_at;
                   theText = item.text;
                   theSource = item.source;
+                  theEntities = item.entities;
                 }
                 else {
                   retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
@@ -161,6 +162,7 @@ $.fn.gettweets = function(){
                   theTime = item.retweeted_status.created_at;
                   theText = item.retweeted_status.text;
                   theSource = item.retweeted_status.source;
+                  theEntities = item.retweeted_status.entities;
                 }
                 if (theScreenName == 'DrSamuelJohnson') {
                   tweet_span_start = '<span class="c18th">';
@@ -199,7 +201,7 @@ $.fn.gettweets = function(){
                   theScreenName + '\',\'' + theID +
                   '\')">@</a>' +
                 '<div class="tweet_text">' + tweet_span_start +
-                htmlify(theText, item.entities) + tweet_span_end +
+                htmlify(theText, theEntities) + tweet_span_end +
                 '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                  '</div></li>');
 
