@@ -47,10 +47,11 @@ function htmlify(body, entities) {
     body = body.replace(u.url, link);
   }) // each
   
-  // Handle Twitter names.
+  // Handle Twitter names, ignoring case.
   $.each(users, function(i, u) {
+    iname = new RegExp('@' + u.screen_name, 'gi');
     link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
-    body = body.replace('@' + u.screen_name, link);
+    body = body.replace(iname, link);
   }) // each
   
   // Handle media. For some reason, media is undefined rather than an empty
