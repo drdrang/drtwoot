@@ -56,20 +56,17 @@ function htmlify(body, entities) {
   
   // Handle media. For some reason, media is undefined rather than an empty
   // list, so we have to check before trying to loop through.
-  // I've decided to comment out this whole thing until the media entity starts
-  // getting used by people I follow.
-  // if (typeof media != 'undefined') {
-  //   $.each(media, function(i, u) {
-  //     alert(body);
-  //     if (u.media_url != null) {
-  //       link = '<a href="' + u.expanded_url + '">' + '<img src="' + u.media_url + '"></a>';
-  //     }
-  //     else {
-  //       link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
-  //     }
-  //     body = body.replace(u.url, link);
-  //   }) // each
-  // } // if
+  if (typeof media != 'undefined') {
+    $.each(media, function(i, u) {
+      if ((u.media_url != null) && (u.type == 'photo')) {
+        link = '<br /><a href="' + u.media_url + ':large">' + '<img src="' + u.media_url + ':thumb"></a><br />';
+      }
+      else {
+        link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+      }
+      body = body.replace(u.url, link);
+    }) // each
+  } // if
     
   // turn newlines into breaks
   body = body.replace(/\n/g, '<br />');
