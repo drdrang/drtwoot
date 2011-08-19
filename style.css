@@ -33,11 +33,13 @@ img.profile_image {
 	float:left;
 	margin: 3px auto 2px -54px; /* Negative margin places the profile image in the space created by the padding in .tweet_list li */
 }
+
 a.user {
 	font-weight:bold;
 	font-size: 90%;
-	text-decoration:none;
+	color: black;
 }
+
 a.reply, a.favorite, a.retweet, a.delete {
   font-weight: bold;
   text-decoration: none;
