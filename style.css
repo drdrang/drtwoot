@@ -29,6 +29,10 @@ div.tweets {
   background-color: #f6d2d1;    /* pink */
 }
 
+.tweet_list span.spam {
+  text-decoration: line-through;
+}
+
 img.profile_image {
 	float:left;
 	margin: 3px auto 2px -54px; /* Negative margin places the profile image in the space created by the padding in .tweet_list li */
