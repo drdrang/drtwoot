@@ -29,6 +29,8 @@ var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
 // The shortened link length. 
 var SURL = 20;
+// Unread tweet count;
+var UNREAD = 0;
 
 // Turn certain things into links.              
 function htmlify(body, entities) {
@@ -130,7 +132,8 @@ $.fn.gettweets = function(){
             home.sort(function(a,b){return cmpID(a.id_str, b.id_str);});   // chron sort
             if (home.length > 0) {
               LAST_UPDATE = home[home.length - 1].id_str;   // last is newest
-              window.fluid.dockBadge = parseInt(home.length);
+              UNREAD += home.length;
+              window.fluid.dockBadge = parseInt(UNREAD);
             }
             
             $.each(home, function(i, item){
@@ -451,4 +454,7 @@ $(window).scroll(setBottomMargin);
 
 // Turn off the Dock badge when I scroll. This would be better if it
 // turned off when I scrolled to the bottom, but baby steps first.
-$(window).scroll(function() {window.fluid.dockBadge = '';});
+$(window).scroll(function() {
+  window.fluid.dockBadge = '';
+  UNREAD = 0;
+});
