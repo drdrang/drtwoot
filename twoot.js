@@ -128,7 +128,10 @@ $.fn.gettweets = function(){
           $.getJSON(CGI, {url:mentionsURL}, function(mentions){
             home = $.merge(home, mentions);
             home.sort(function(a,b){return cmpID(a.id_str, b.id_str);});   // chron sort
-            if (home.length > 0) LAST_UPDATE = home[home.length - 1].id_str;   // last is newest
+            if (home.length > 0) {
+              LAST_UPDATE = home[home.length - 1].id_str;   // last is newest
+              window.fluid.dockBadge = parseInt(home.length);
+            }
             
             $.each(home, function(i, item){
               if($("#msg-" + item.id_str).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
@@ -445,3 +448,7 @@ function setBottomMargin() {
 
 $(document).load(setBottomMargin);
 $(window).scroll(setBottomMargin);
+
+// Turn off the Dock badge when I scroll. This would be better if it
+// turned off when I scrolled to the bottom, but baby steps first.
+$(window).scroll(function() {window.fluid.dockBadge = '';});
