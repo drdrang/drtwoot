@@ -36,6 +36,7 @@ var UNREAD = 0;
 function htmlify(body, entities) {
   urls = entities.urls;
   users = entities.user_mentions;
+  hashtags = entities.hashtags;
   media = entities.media;
   
   // Handle links.
@@ -55,6 +56,14 @@ function htmlify(body, entities) {
     link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
     body = body.replace(iname, link);
   }) // each
+  
+  // Handle hashtags, ignoring case.
+  $.each(hashtags, function(i, h) {
+    ihash = new RegExp('#' + h.text, 'gi');
+    link = '<a href="http://twitter.com/search/%23' + h.text + '">' + '#' + h.text + '</a>';
+    body = body.replace(ihash, link);
+  }) // each
+  
   
   // Handle media. For some reason, media is undefined rather than an empty
   // list, so we have to check before trying to loop through.
