@@ -28,9 +28,9 @@ var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
 // The shortened link length for http. 
-var SURL = 10;
+var SURL = 20;
 // And for https.
-var SURLS = 11;
+var SURLS = 21;
 // Unread tweet count;
 var UNREAD = 0;
 
