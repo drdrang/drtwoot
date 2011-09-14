@@ -92,9 +92,15 @@ textarea#status {
 	margin-left:auto;
   margin-top: .2em;
 }
+
 input#send {
 	float: right;
 }
+
+input#image {
+	float: right;
+}
+
 input#status:focus, input#status:active, a:focus, a:active
 {
 	color:#000;

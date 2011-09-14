@@ -27,8 +27,10 @@ var RTID = new Array();
 var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
-// The shortened link length. 
-var SURL = 20;
+// The shortened link length for http. 
+var SURL = 10;
+// And for https.
+var SURLS = 11;
 // Unread tweet count;
 var UNREAD = 0;
 
@@ -396,8 +398,15 @@ function charCountdown() {
   urlRE = new RegExp(URL_RE, 'g');
   matches = body.match(urlRE);
   if (matches) {
-    charsLeft -= matches.length*SURL;
-    charsLeft += matches.join('').length;
+    for (var i=0; i<matches.length; i++) {
+      charsLeft += matches[i].length;
+      if (matches[i].charAt(4) == 's') {
+        charsLeft -= SURLS;
+      }
+      else {
+        charsLeft -= SURL;
+      }
+    }
   }
   if (charsLeft <= 20) {
     $("#count").removeClass("normal");
@@ -420,6 +429,7 @@ $(document).ready(function(){
   // Get the shortened link length.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
     SURL = info.short_url_length;
+    SURLS = info.short_url_length_https;
   });
 
   //get the messages
