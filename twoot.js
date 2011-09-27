@@ -86,6 +86,16 @@ function htmlify(body, entities) {
   return body;
 }
 
+// Return a list of all the users mentioned.
+function mentioned(entities) {
+  users = entities.user_mentions;
+  folks = [];
+  $.each(users, function(i, u) {
+    folks.push(u.screen_name);
+  })
+  return folks;
+}
+
 // If a tweet is just my nickname and a link and was not sent by someone I follow,
 // it will be considered spam.
 function isSpam(body, sender, friendList) {
@@ -166,6 +176,12 @@ $.fn.gettweets = function(){
                   theText = item.text;
                   theSource = item.source;
                   theEntities = item.entities;
+                  if (mentioned(theEntities).length > 0) {
+                    replyAllHeader = '@' + theScreenName + ' @' + mentioned(theEntities).join(' @');
+                  }
+                  else {
+                    replyAllHeader = '@' + theScreenName;
+                  }
                 }
                 else {
                   retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
@@ -178,6 +194,12 @@ $.fn.gettweets = function(){
                   theText = item.retweeted_status.text;
                   theSource = item.retweeted_status.source;
                   theEntities = item.retweeted_status.entities;
+                  if (mentioned(theEntities).length > 0) {
+                    replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName + ' @' + mentioned(theEntities).join(' @');
+                  }
+                  else {
+                    replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName;
+                  }
                 }
                 if (theScreenName == 'DrSamuelJohnson') {
                   tweet_span_start = '<span class="c18th">';
@@ -211,9 +233,13 @@ $.fn.gettweets = function(){
                 '<a class="favorite" title="Toggle favorite status" '+
                   'href="javascript:toggleFavorite(\'' + 
                   theID + '\')">&#10029;</a>' +
-                '<a class="reply" title="Reply to this" ' +
-                  'href="javascript:replyTo(\'' +
-                  theScreenName + '\',\'' + theID +
+                '<a class="reply" title="Reply to all" ' +
+                  'href="javascript:replyTo(\'' + theID +
+                  '\', \'' + replyAllHeader +  
+                  '\')">&#8704;</a>' +
+                '<a class="reply" title="Reply to sender" ' +
+                  'href="javascript:replyTo(\'' + theID + 
+                  '\', \'@' + theScreenName +
                   '\')">@</a>' +
                 '<div class="tweet_text">' + tweet_span_start +
                 htmlify(theText, theEntities) + tweet_span_end +
@@ -305,14 +331,16 @@ function reportSpam(screenName) {
   return;
 }
       
-function replyTo(screen_name, msg_id) {
+function replyTo(msg_id, to) {
   MSG_ID = msg_id;
-  start = '@' + screen_name + ' ';
+  start = to + ' ';
   $("#status").val(start);
   $("#status").focus();
   $("#status").caret(start.length, start.length);
   charCountdown();
 }
+
+
 
 function toggleFavorite(msg_id) {
   // Turn the star reddish-gray to let the user know that something is happening.
