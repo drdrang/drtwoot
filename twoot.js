@@ -129,7 +129,7 @@ $.fn.gettweets = function(){
     var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
     var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
-    var friendsURL = BASE_URL['friends'] + '?screen_name=' + SNAME;
+    var friendsURL = BASE_URL['friends'] + '?cursor=-1&screen_name=' + SNAME;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
@@ -209,7 +209,7 @@ $.fn.gettweets = function(){
                   tweet_span_start = '';
                   tweet_span_end = '';
                 }
-                if (isSpam(theText, theUserID, friends)) {
+                if (isSpam(theText, theUserID, friends.ids)) {
                   theText = '<span class="spam">' + theText + '</span>' + ' <br /><em>Reported as spam</em>';
                   reportSpam(theScreenName);
                 }
