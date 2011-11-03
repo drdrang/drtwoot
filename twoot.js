@@ -48,7 +48,6 @@ function htmlify(body, entities) {
     }
     else {
       if (u.url.slice(0,3) == 'http') lnk = u.url;
-      else if (u.url.slice(0,7) == 'https://') lnk = 'https://' + u.url;
       else lnk = 'http://' + u.url;
       link = '<a href="' + lnk + '">' + u.url + '</a>';
     }
