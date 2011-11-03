@@ -47,7 +47,10 @@ function htmlify(body, entities) {
       link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
     }
     else {
-      link = '<a href="' + u.url + '">' + u.url + '</a>';
+      if (u.url.slice(0,3) == 'http') lnk = u.url;
+      else if (u.url.slice(0,7) == 'https://') lnk = 'https://' + u.url;
+      else lnk = 'http://' + u.url;
+      link = '<a href="' + lnk + '">' + u.url + '</a>';
     }
     body = body.replace(u.url, link);
   }) // each
