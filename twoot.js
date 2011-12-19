@@ -141,7 +141,8 @@ $.fn.gettweets = function(){
       // Get my retweets as a list of original message IDs.
       $.getJSON(CGI, {url:retweetsURL}, function(retweets){
         $.each(retweets, function(i, item){
-          if ($.inArray(item.retweeted_status.id_str, RTID) == -1){
+          if (typeof(item.retweeted_status) != "undefined" &&
+              $.inArray(item.retweeted_status.id_str, RTID) == -1){
             RTID.push(item.retweeted_status.id_str);
           }
         }); // each
