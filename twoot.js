@@ -180,7 +180,7 @@ $.fn.gettweets = function(){
                   theSource = item.source;
                   theEntities = item.entities;
                   notMe = mentioned(theEntities).filter(function(val){
-                    return val != SNAME;
+                    return val!= SNAME;
                   });
                   if (notMe.length > 0) {
                     replyAllHeader = '@' + theScreenName +
@@ -202,7 +202,7 @@ $.fn.gettweets = function(){
                   theSource = item.retweeted_status.source;
                   theEntities = item.retweeted_status.entities;
                   notMe = mentioned(theEntities).filter(function(val){
-                    return val != SNAME;
+                    return val!= SNAME;
                   });
                   if (notMe.length > 0) {
                     replyAllHeader = '@' + theScreenName +
