@@ -179,8 +179,12 @@ $.fn.gettweets = function(){
                   theText = item.text;
                   theSource = item.source;
                   theEntities = item.entities;
-                  if (mentioned(theEntities).length > 0) {
-                    replyAllHeader = '@' + theScreenName + ' @' + mentioned(theEntities).join(' @');
+                  notMe = mentioned(theEntities).filter(function(val){
+                    return val!= SNAME;
+                  });
+                  if (notMe.length > 0) {
+                    replyAllHeader = '@' + theScreenName +
+                    ' @' + notMe.join(' @');
                   }
                   else {
                     replyAllHeader = '@' + theScreenName;
@@ -197,8 +201,12 @@ $.fn.gettweets = function(){
                   theText = item.retweeted_status.text;
                   theSource = item.retweeted_status.source;
                   theEntities = item.retweeted_status.entities;
-                  if (mentioned(theEntities).length > 0) {
-                    replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName + ' @' + mentioned(theEntities).join(' @');
+                  notMe = mentioned(theEntities).filter(function(val){
+                    return val!= SNAME;
+                  });
+                  if (notMe.length > 0) {
+                    replyAllHeader = '@' + theScreenName +
+                    ' @' + notMe.join(' @');
                   }
                   else {
                     replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName;
