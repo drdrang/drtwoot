@@ -56,14 +56,14 @@ function htmlify(body, entities) {
   
   // Handle Twitter names, ignoring case.
   $.each(users, function(i, u) {
-    iname = new RegExp('@' + u.screen_name, 'gi');
+    iname = new RegExp('@' + u.screen_name + '\\b', 'gi');
     link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
     body = body.replace(iname, link);
   }) // each
   
   // Handle hashtags, ignoring case.
   $.each(hashtags, function(i, h) {
-    ihash = new RegExp('#' + h.text, 'gi');
+    ihash = new RegExp('#' + h.text + '\\b', 'gi');
     link = '<a href="http://twitter.com/search/%23' + h.text + '">' + '#' + h.text + '</a>';
     body = body.replace(ihash, link);
   }) // each
