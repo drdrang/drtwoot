@@ -7,7 +7,7 @@
 var UID = 10697232;
 var SNAME = "drdrang";
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
-var COUNT = 100;
+var COUNT = 50;
 // The id of the most recently retrieved update.
 var LAST_UPDATE;
 // The times, in milliseconds, between status refreshes and timestamp recalculations.
@@ -180,7 +180,7 @@ $.fn.gettweets = function(){
                   theSource = item.source;
                   theEntities = item.entities;
                   notMe = mentioned(theEntities).filter(function(val){
-                    return val!= SNAME;
+                    return val != SNAME;
                   });
                   if (notMe.length > 0) {
                     replyAllHeader = '@' + theScreenName +
@@ -202,7 +202,7 @@ $.fn.gettweets = function(){
                   theSource = item.retweeted_status.source;
                   theEntities = item.retweeted_status.entities;
                   notMe = mentioned(theEntities).filter(function(val){
-                    return val!= SNAME;
+                    return val != SNAME;
                   });
                   if (notMe.length > 0) {
                     replyAllHeader = '@' + theScreenName +
