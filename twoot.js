@@ -480,7 +480,7 @@ $(document).ready(function(){
     return false;
   });
   
-  // Add event capture to status field. Cmd-Return is same as clicking
+  // Cmd-Return in the status field is same as clicking
   // the Update button.
   $("#status").keypress( function(e) {
     if (e.which == 13 && e.metaKey) {
@@ -488,7 +488,15 @@ $(document).ready(function(){
       return false;
     }
   });
-
+  
+  // Manually refresh by typing Ctrl-R. 
+  $("html").keypress( function(e) {
+    if (e.which == 18 && e.ctrlKey) {
+      refreshMessages();
+      return false;
+    }
+  });
+  
   //set timer to reload timeline, every REFRESH milliseconds
   window.setInterval("refreshMessages()", REFRESH);
 
