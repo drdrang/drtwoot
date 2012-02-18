@@ -213,12 +213,12 @@ $.fn.gettweets = function(){
                   }
                 }
                 if (theScreenName == 'DrSamuelJohnson') {
-                  tweet_span_start = '<span class="c18th">';
+                  tweet_span_start = '<span class="content c18th">';
                   tweet_span_end = '</span>';
                 }
                 else {
-                  tweet_span_start = '';
-                  tweet_span_end = '';
+                  tweet_span_start = '<span class="content">';
+                  tweet_span_end = '</span>';
                 }
                 if (isSpam(theText, theUserID, friends.ids)) {
                   theText = '<span class="spam">' + theText + '</span>' + ' <br /><em>Reported as spam</em>';
@@ -244,6 +244,9 @@ $.fn.gettweets = function(){
                 '<a class="favorite" title="Toggle favorite status" '+
                   'href="javascript:toggleFavorite(\'' + 
                   theID + '\')">&#10029;</a>' +
+                '<a class="reply" title="Block and report as spam" ' +
+                  'href="javascript:makeSpam(\'' +  theScreenName +
+                  '\', \'' + theID + '\')">&#8709;</a>' +
                 '<a class="reply" title="Reply to all" ' +
                   'href="javascript:replyTo(\'' + theID +
                   '\', \'' + replyAllHeader +  
@@ -340,6 +343,12 @@ function deleteTweet(msg_id) {
 function reportSpam(screenName) {
   $.post(CGI, {url:'https://api.twitter.com/1/report_spam.json', screen_name:screenName});
   return;
+}
+
+function makeSpam(screenName, msg_id) {
+  reportSpam(screenName);
+  $('#msg-' + msg_id + ' span.content').addClass('spam');
+  $('#msg-' + msg_id + ' span.content').after('<br /><em>Reported as spam</em>');
 }
       
 function replyTo(msg_id, to) {
