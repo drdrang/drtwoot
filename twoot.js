@@ -230,10 +230,12 @@ $.fn.gettweets = function(){
               }
               list.append('<li id="msg-' + theID + '">' +
               '<a href="http://twitter.com/account/profile_image/' +
-              theScreenName +
-              '"><img class="profile_image" height="48" width="48" src="' + 
-              theIcon +
-              '" alt="' + theName + '" /></a>' +
+                theScreenName + '" title="Followers: ' + commify(followerCount) +
+                '\nFollowing: ' + commify(friendCount) +
+                '\nTweets: ' + commify(tweetCount) +
+                '"><img class="profile_image" height="48" width="48" src="' + 
+                theIcon +
+                '" alt="' + theName + '" /></a>' +
               '<a class="user" href="http://twitter.com/' + 
                 theScreenName + '" title="Followers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
