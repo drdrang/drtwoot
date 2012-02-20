@@ -41,7 +41,7 @@ After `twoot.js` has been edited and saved, launch Fluid and point it to the `tw
 
 # Use #
 
-[<img class="ss" src="http://farm8.staticflickr.com/7199/6907043585_e3315ec6f3_o.png" />](http://www.flickr.com/photos/drdrang/6907043585/)
+<img class="ss" src="http://www.leancrew.com/all-this/images2011/fry.png" />
 
 The Dr. Twoot feature list:
 
