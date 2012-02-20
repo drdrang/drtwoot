@@ -5,6 +5,7 @@ Dr. Twoot is a significant fork of [Peter Krantz's Twoot][1], a customizable Twi
 1. Dr. Twoot updates automatically;
 2. Dr. Twoot intermixes your tweets, tweets from your friends, and mentions of you (tweets containing "@yourname")--even if those mentions come from people you don't follow.
 3. Dr. Twoot presents tweets in chronological order.
+4. Dr. Twoot provides one-click spam reporting.
 
 
 # Installation #
@@ -45,12 +46,14 @@ After `twoot.js` has been edited and saved, launch Fluid and point it to the `tw
 The Dr. Twoot feature list:
 
 * It merges your friends' timeline and @replies and presents them chronologically.
-* It opens showing the most recent 100 tweets from your friends (the number can be adjusted).
+* It opens showing the most recent 50 tweets from your friends (the number can be adjusted).
 * It updates automatically every three minutes (the interval can be adjusted).
 * Each tweet has buttons that let you:
     * reply (**@**);
-    * add it to your favorites list (**★** changes to red);
-    * delete it from your favorites list (**★** changes back to black); and
+    * reply to all (**∀**);
+    * block and report as spam (**∅**);
+    * add to your favorites list (**★** changes to red);
+    * delete from your favorites list (**★** changes back to black); and
     * delete, if the tweet is from you (**⌫**);
     * retweet, if the tweet is from someone else (**♺** changes to red).
 * Less obviously, each tweet has links to:
@@ -59,11 +62,14 @@ The Dr. Twoot feature list:
     * the user's timeline (click the user name);
     * the Twitter client used to write the tweet (click the name of the client); and
     * the tweet it's replying to or retweeting, when appropriate (click the user name after "re" or "via").
+* Hovering over the user's image or name causes a popup to appear that shows the user's:
+    * follower count;
+    * friend count; and
+    * tweet count.
 * The message area at the bottom has a character countdown that:
     * turns red when you're within 20 of the 140-character limit; and
     * changes to "Twoosh!" when your tweet hits exactly 140 characters.
-* Any mention of a Twitter user (@username) is turned into a link to that user's Twitter page.
-* Any comment on an "And now it's all this" post (#1234∀, see [here][4]) is turned into a link to the post. This behavior, valuable only to me, can be turned off by setting the `ALL_THIS` variable to false near the top of `twoot.js`.
+* Mentions of a Twitter users (@username), URLs, and hashtags (#hashtag) are turned into a links.
 
 # Customization #
 
