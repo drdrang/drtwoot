@@ -180,6 +180,7 @@ $.fn.gettweets = function(){
                 followerCount = item.user.followers_count;
                 friendCount = item.user.friends_count;
                 tweetCount = item.user.statuses_count;
+                sdList = item.user.created_at.split(" ");
                 theTime = item.created_at;
                 theText = item.text;
                 theSource = item.source;
@@ -205,6 +206,7 @@ $.fn.gettweets = function(){
                 followerCount = item.retweeted_status.user.followers_count;
                 friendCount = item.retweeted_status.user.friends_count;
                 tweetCount = item.retweeted_status.user.statuses_count;
+                sdList = item.retweeted_status.user.created_at.split(" ");
                 theTime = item.retweeted_status.created_at;
                 theText = item.retweeted_status.text;
                 theSource = item.retweeted_status.source;
@@ -228,11 +230,13 @@ $.fn.gettweets = function(){
                 tweet_span_start = '<span class="content">';
                 tweet_span_end = '</span>';
               }
+              startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
               list.append('<li id="msg-' + theID + '">' +
               '<a href="http://twitter.com/account/profile_image/' +
                 theScreenName + '" title="Followers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
+                '\nSince: ' + startDate +
                 '"><img class="profile_image" height="48" width="48" src="' + 
                 theIcon +
                 '" alt="' + theName + '" /></a>' +
