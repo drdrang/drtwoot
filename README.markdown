@@ -41,7 +41,7 @@ After `twoot.js` has been edited and saved, launch Fluid and point it to the `tw
 
 # Use #
 
-<img class="ss" src="http://www.leancrew.com/all-this/images2011/fry.png" />
+<img class="ss" src="http://farm8.staticflickr.com/7205/6776341634_849881c83e_o.jpg" />
 
 The Dr. Twoot feature list:
 
@@ -56,6 +56,8 @@ The Dr. Twoot feature list:
     * delete from your favorites list (**★** changes back to black); and
     * delete, if the tweet is from you (**⌫**);
     * retweet, if the tweet is from someone else (**♺** changes to red).
+    
+    The buttons appear only for the tweet the cursor is over.
 * Less obviously, each tweet has links to:
     * the full-sized user picture (click the thumbnail);
     * the tweet itself on twitter.com (click the timestamp);
@@ -64,8 +66,11 @@ The Dr. Twoot feature list:
     * the tweet it's replying to or retweeting, when appropriate (click the user name after "re" or "via").
 * Hovering over the user's image or name causes a popup to appear that shows the user's:
     * follower count;
-    * friend count; and
-    * tweet count.
+    * friend count;
+    * tweet count; and
+    * start date.
+    
+    This information might be interesting in its own right, but it's meant to help decide whether to report a suspicious tweet as spam.
 * The message area at the bottom has a character countdown that:
     * turns red when you're within 20 of the 140-character limit; and
     * changes to "Twoosh!" when your tweet hits exactly 140 characters.

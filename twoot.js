@@ -307,6 +307,7 @@ $.fn.gettweets = function(){
     
             }  // if
           }); // each
+          
           // Make buttons invisible.
           $('.buttons').addClass('invisible');
           $('li').hover(
