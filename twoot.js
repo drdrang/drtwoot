@@ -243,7 +243,8 @@ $.fn.gettweets = function(){
               '<a class="user" href="http://twitter.com/' + 
                 theScreenName + '" title="Followers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
-                '\nTweets: ' + commify(tweetCount) + '">' +
+                '\nTweets: ' + commify(tweetCount) +
+                '\nSince: ' + startDate + '">' +
               theScreenName + '</a> ' +
               '<a class="time" title="' + theTime + '" ' +
                 'href="http://twitter.com/' + theScreenName + '/statuses/' +
