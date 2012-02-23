@@ -122,3 +122,7 @@ span.c18th {
   font-family: 'IM Fell English', 'Lucida Grande';
   font-size: 19px;
 }
+
+.invisible {
+  visibility: hidden;
+}

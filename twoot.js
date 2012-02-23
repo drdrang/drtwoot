@@ -248,7 +248,8 @@ $.fn.gettweets = function(){
               '<a class="time" title="' + theTime + '" ' +
                 'href="http://twitter.com/' + theScreenName + '/statuses/' +
                 theID +'">' +
-                relative_time(theTime) + '</a> '+
+                relative_time(theTime) + '</a> ' +
+              '<span class="buttons">' +
               '<a class="delete" title="Delete" ' +
                 'href="javascript:deleteTweet(\'' + theID + '\')">&#9003;</a>' +
               '<a class="retweet" title="Retweet" ' +
@@ -267,11 +268,12 @@ $.fn.gettweets = function(){
                 'href="javascript:replyTo(\'' + theID + 
                 '\', \'@' + theScreenName +
                 '\')">@</a>' +
+              '</span>' +
               '<div class="tweet_text">' + tweet_span_start +
               htmlify(theText, theEntities) + tweet_span_end +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                '</div></li>');
-
+               
               // Mark if it's a favorite.
               if (item.favorited) {
                 $('#msg-' + item.id_str + ' a.favorite').css('color', 'red');
@@ -305,7 +307,18 @@ $.fn.gettweets = function(){
     
             }  // if
           }); // each
-        }); // getJSON mentions
+          // Make buttons invisible.
+          $('.buttons').addClass('invisible');
+          $('li').hover(
+            function() {
+              $(this).children('.buttons').removeClass('invisible')
+            },
+            function() {
+              $(this).children('.buttons').addClass('invisible')
+            }
+          );
+
+         }); // getJSON mentions
       }); // getJSON home
     }); //getJSON retweets
   }); // this.each
@@ -340,7 +353,6 @@ function recalcTime() {
 
 function refreshMessages() {
   $(".tweets").gettweets();
-  // LAST_UPDATE = new Date().toGMTString();
   return;
 }
 
