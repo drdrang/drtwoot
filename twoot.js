@@ -31,8 +31,10 @@ var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
 var SURL = 20;
 // And for https.
 var SURLS = 21;
-// Unread tweet count;
+// Unread tweet count.
 var UNREAD = 0;
+// Initial tweet delay, in minutes.
+var DELAY = localStorage.getItem('delay');
 
 // Turn certain things into links.              
 function htmlify(body, entities) {
@@ -132,10 +134,9 @@ function commify(n) {
 
 $.fn.gettweets = function(){
   return this.each(function(){
-    var limitTime = new Date.now().addMinutes(-120);
+    var limitTime = new Date.now().addMinutes(-DELAY);
     var offset = limitTime.getTimezoneOffset();
     limitTime = limitTime.addMinutes(offset);
-    // alert(limitTime.toString('HH:mm'));
     var list = $('ul.tweet_list').appendTo(this);
     var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
@@ -228,7 +229,6 @@ $.fn.gettweets = function(){
                   replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName;
                 }
               }
-              // alert(filterTime.toString('HH:mm'));
               if (filterTime <= limitTime) {
                 LAST_UPDATE = item.id_str;
                 UNREAD += 1;
@@ -509,7 +509,10 @@ function charCountdown() {
 }
 
 // set up basic stuff for first load
-$(document).ready(function(){  
+$(document).ready(function(){
+  // Fill the delay field.
+  $('#delay input').val(localStorage.getItem('delay'));
+  
   // Get the shortened link length.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
     SURL = info.short_url_length;
@@ -540,6 +543,17 @@ $(document).ready(function(){
       refreshMessages();
       return false;
     }
+  });
+  
+  // Set the delay.
+  $("#delay input").change( function() {
+    if (DELAY = parseInt($('#delay input').val(), 10)) {
+      localStorage.setItem('delay', $('#delay input').val());
+    }
+    else {
+      localStorage.setItem('delay', '0');
+    }
+    $('#delay input').val(localStorage.getItem('delay'));
   });
   
   //set timer to reload timeline, every REFRESH milliseconds

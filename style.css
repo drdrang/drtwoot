@@ -80,9 +80,20 @@ span.info {
 	border-top: solid 2px #bebebe;
 /*  display: none;*/
 }
+
 form {
 	margin: 0.4em 0.5em;
-}	
+}
+
+div#delay {
+  float: left;
+  margin: 0.4em 0.5em;
+}
+
+#info_line {
+  margin: .25em;
+}
+
 textarea#status {
 	width: 100%;
 	height: 5em;
@@ -97,18 +108,15 @@ input#send {
 	float: right;
 }
 
-input#image {
-	float: right;
-}
-
-input#status:focus, input#status:active, a:focus, a:active
-{
+input#status:focus, input#status:active, a:focus, a:active {
 	color:#000;
-    background-color:#ffa;
+  background-color:#ffa;
 }
 
-label {
+label#count {
 	display:block;
+	float: right;
+	margin-left: 1em;
 }
 
 label.normal {
@@ -116,6 +124,10 @@ label.normal {
 }
 label.warning {
   color: red;
+}
+
+label#tivo {
+  font-size: 75%;
 }
 
 span.c18th {
