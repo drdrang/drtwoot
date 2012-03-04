@@ -7,7 +7,7 @@
 var UID = 10697232;
 var SNAME = "drdrang";
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
-var COUNT = 50;
+var COUNT = 100;
 // The id of the most recently retrieved update.
 var LAST_UPDATE;
 // The times, in milliseconds, between status refreshes and timestamp recalculations.
@@ -35,6 +35,8 @@ var SURLS = 21;
 var UNREAD = 0;
 // Initial tweet delay, in minutes.
 var DELAY = localStorage.getItem('delay');
+if (!DELAY) DELAY = 0;    // handles nulls
+  
 
 // Turn certain things into links.              
 function htmlify(body, entities) {
@@ -133,10 +135,9 @@ function commify(n) {
 }
 
 $.fn.gettweets = function(){
+  var limitTime = new Date();
+  limitValue = limitTime.valueOf() - DELAY*60*1000;
   return this.each(function(){
-    var limitTime = new Date.now().addMinutes(-DELAY);
-    var offset = limitTime.getTimezoneOffset();
-    limitTime = limitTime.addMinutes(offset);
     var list = $('ul.tweet_list').appendTo(this);
     var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
@@ -187,7 +188,6 @@ $.fn.gettweets = function(){
                 tweetCount = item.user.statuses_count;
                 sdList = item.user.created_at.split(" ");
                 theTime = item.created_at;
-                filterTime = Date.parse(item.created_at);
                 theText = item.text;
                 theSource = item.source;
                 theEntities = item.entities;
@@ -214,7 +214,6 @@ $.fn.gettweets = function(){
                 tweetCount = item.retweeted_status.user.statuses_count;
                 sdList = item.retweeted_status.user.created_at.split(" ");
                 theTime = item.retweeted_status.created_at;
-                filterTime = Date.parse(item.created_at);
                 theText = item.retweeted_status.text;
                 theSource = item.retweeted_status.source;
                 theEntities = item.retweeted_status.entities;
@@ -229,7 +228,8 @@ $.fn.gettweets = function(){
                   replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName;
                 }
               }
-              if (filterTime <= limitTime) {
+              filterValue = Date.parse(theTime);
+              if (filterValue <= limitValue) {
                 LAST_UPDATE = item.id_str;
                 UNREAD += 1;
                 
@@ -551,6 +551,7 @@ $(document).ready(function(){
       localStorage.setItem('delay', $('#delay input').val());
     }
     else {
+      DELAY = 0;
       localStorage.setItem('delay', '0');
     }
     $('#delay input').val(localStorage.getItem('delay'));
