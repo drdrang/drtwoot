@@ -18,8 +18,7 @@ var MSG_ID;
 // The twitter URLs for getting tweets and configuration info.
 var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json',
                 'mentions': 'https://api.twitter.com/1/statuses/mentions.json',
-                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json',
-                'friends': 'https://api.twitter.com/1/friends/ids.json'};
+                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json'};
 var CONFIG_URL = 'http://api.twitter.com/1/help/configuration.json';
 // The list of message IDs I've retweeted.
 var RTID = new Array();
@@ -136,7 +135,6 @@ $.fn.gettweets = function(){
     var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
     var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
-    // var friendsURL = BASE_URL['friends'] + '?cursor=-1&screen_name=' + SNAME;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
@@ -421,17 +419,6 @@ function retweet(msg_id) {
         refreshStatusField(); },
       'json');
   }
-  // The following is legacy code for old-style retweeting.
-  // MSG_ID = msg_id;
-  // $.getJSON("http://api.twitter.com/1/statuses/show/" + msg_id + ".json", 
-  //   function(data){
-  //     start = 'RT @' + data.user.screen_name + ': ' + data.text + ' ';
-  //     $("#status").val(start);
-  //     $("#status").focus();
-  //     $("#status").caret(start.length, start.length);
-  //     charCountdown();
-  //   }
-  // );
 }
 
 function setStatus(status_text) {
