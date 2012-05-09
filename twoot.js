@@ -172,7 +172,7 @@ $.fn.gettweets = function(){
                 inReplyText = '';
                 }
               else {
-                inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
+                inReplyText = ' re <a href="https://twitter.com/#!/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
               }
               if (item.retweeted_status == null) {
                 retweetText = '';
@@ -201,7 +201,7 @@ $.fn.gettweets = function(){
                 }
               }
               else {
-                retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
+                retweetText = ' via <a href="https://twitter.com/#!/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
                 theID = item.retweeted_status.id_str;
                 theName = item.retweeted_status.user.name;
                 theScreenName = item.retweeted_status.user.screen_name;
@@ -241,7 +241,7 @@ $.fn.gettweets = function(){
                 }
                 startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
                 list.append('<li id="msg-' + theID + '">' +
-                '<a href="http://twitter.com/account/profile_image/' +
+                '<a href="https://twitter.com/account/profile_image/' +
                   theScreenName + '" title="Followers: ' + commify(followerCount) +
                   '\nFollowing: ' + commify(friendCount) +
                   '\nTweets: ' + commify(tweetCount) +
@@ -249,14 +249,14 @@ $.fn.gettweets = function(){
                   '"><img class="profile_image" height="48" width="48" src="' + 
                   theIcon +
                   '" alt="' + theName + '" /></a>' +
-                '<a class="user" href="http://twitter.com/' + 
+                '<a class="user" href="https://twitter.com/#!/' + 
                   theScreenName + '" title="Followers: ' + commify(followerCount) +
                   '\nFollowing: ' + commify(friendCount) +
                   '\nTweets: ' + commify(tweetCount) +
                   '\nSince: ' + startDate + '">' +
                 theScreenName + '</a> ' +
                 '<a class="time" title="' + theTime + '" ' +
-                  'href="http://twitter.com/' + theScreenName + '/statuses/' +
+                  'href="https://twitter.com/#!/' + theScreenName + '/statuses/' +
                   theID +'">' +
                   relative_time(theTime) + '</a> ' +
                 '<span class="buttons">' +
