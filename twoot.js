@@ -18,8 +18,7 @@ var MSG_ID;
 // The twitter URLs for getting tweets and configuration info.
 var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json',
                 'mentions': 'https://api.twitter.com/1/statuses/mentions.json',
-                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json',
-                'friends': 'https://api.twitter.com/1/friends/ids.json'};
+                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json'};
 var CONFIG_URL = 'http://api.twitter.com/1/help/configuration.json';
 // The list of message IDs I've retweeted.
 var RTID = new Array();
@@ -136,7 +135,6 @@ $.fn.gettweets = function(){
     var homeURL = BASE_URL['home'] + '?include_entities=1&count=' + COUNT;
     var mentionsURL = BASE_URL['mentions'] + '?include_entities=1&count=' + COUNT;
     var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
-    // var friendsURL = BASE_URL['friends'] + '?cursor=-1&screen_name=' + SNAME;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
     
@@ -168,7 +166,7 @@ $.fn.gettweets = function(){
                 inReplyText = '';
                 }
               else {
-                inReplyText = ' re <a href="http://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
+                inReplyText = ' re <a href="https://twitter.com/#!/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
               }
               if (item.retweeted_status == null) {
                 retweetText = '';
@@ -197,7 +195,7 @@ $.fn.gettweets = function(){
                 }
               }
               else {
-                retweetText = ' via <a href="http://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
+                retweetText = ' via <a href="https://twitter.com/#!/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
                 theID = item.retweeted_status.id_str;
                 theName = item.retweeted_status.user.name;
                 theScreenName = item.retweeted_status.user.screen_name;
@@ -232,7 +230,7 @@ $.fn.gettweets = function(){
               }
               startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
               list.append('<li id="msg-' + theID + '">' +
-              '<a href="http://twitter.com/account/profile_image/' +
+              '<a href="https://twitter.com/account/profile_image/' +
                 theScreenName + '" title="Followers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
@@ -240,14 +238,14 @@ $.fn.gettweets = function(){
                 '"><img class="profile_image" height="48" width="48" src="' + 
                 theIcon +
                 '" alt="' + theName + '" /></a>' +
-              '<a class="user" href="http://twitter.com/' + 
+              '<a class="user" href="https://twitter.com/#!/' + 
                 theScreenName + '" title="Followers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
                 '\nSince: ' + startDate + '">' +
               theScreenName + '</a> ' +
               '<a class="time" title="' + theTime + '" ' +
-                'href="http://twitter.com/' + theScreenName + '/statuses/' +
+                'href="https://twitter.com/#!/' + theScreenName + '/statuses/' +
                 theID +'">' +
                 relative_time(theTime) + '</a> ' +
               '<span class="buttons">' +
@@ -421,17 +419,6 @@ function retweet(msg_id) {
         refreshStatusField(); },
       'json');
   }
-  // The following is legacy code for old-style retweeting.
-  // MSG_ID = msg_id;
-  // $.getJSON("http://api.twitter.com/1/statuses/show/" + msg_id + ".json", 
-  //   function(data){
-  //     start = 'RT @' + data.user.screen_name + ': ' + data.text + ' ';
-  //     $("#status").val(start);
-  //     $("#status").focus();
-  //     $("#status").caret(start.length, start.length);
-  //     charCountdown();
-  //   }
-  // );
 }
 
 function setStatus(status_text) {
