@@ -231,7 +231,8 @@ $.fn.gettweets = function(){
               startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
               list.append('<li id="msg-' + theID + '">' +
               '<a href="https://twitter.com/account/profile_image/' +
-                theScreenName + '" title="Followers: ' + commify(followerCount) +
+                theScreenName + '" title="' + theName +
+                '\nFollowers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
                 '\nSince: ' + startDate +
@@ -239,7 +240,8 @@ $.fn.gettweets = function(){
                 theIcon +
                 '" alt="' + theName + '" /></a>' +
               '<a class="user" href="https://twitter.com/#!/' + 
-                theScreenName + '" title="Followers: ' + commify(followerCount) +
+                theScreenName + '" title="' + theName +
+                '\nFollowers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
                 '\nSince: ' + startDate + '">' +
