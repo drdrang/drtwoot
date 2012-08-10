@@ -26,7 +26,7 @@ div.tweets {
 }
 
 .tweet_list li.tome {
-  background-color: #f6d2d1;    /* pink */
+  background-color: #f6d2d1 !important;    /* pink */
 }
 
 .tweet_list span.spam {
