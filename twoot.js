@@ -239,13 +239,8 @@ $.fn.gettweets = function(){
                 '"><img class="profile_image" height="48" width="48" src="' +
                 theIcon +
                 '" alt="' + theName + '" /></a>' +
-<<<<<<< HEAD
               '<a class="user" href="https://twitter.com/#!/' +
-                theScreenName + '" title="' + theName +
-=======
-              '<a class="user" href="https://twitter.com/#!/' + 
                 theScreenName + '" title="' + theScreenName +
->>>>>>> eb3f7eb432679a301a358815445ed05fa3ead822
                 '\nFollowers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
