@@ -2,7 +2,7 @@
  * The Twitter request code is based on the jquery tweet extension by http://tweet.seaofclouds.com/
  *
  * */
- 
+
 // Change these two lines to your user information.
 var UID = 10697232;
 var SNAME = "drdrang";
@@ -26,20 +26,20 @@ var RTID = new Array();
 var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
-// The shortened link length for http. 
+// The shortened link length for http.
 var SURL = 20;
 // And for https.
 var SURLS = 21;
 // Unread tweet count;
 var UNREAD = 0;
 
-// Turn certain things into links.              
+// Turn certain things into links.
 function htmlify(body, entities) {
   urls = entities.urls;
   users = entities.user_mentions;
   hashtags = entities.hashtags;
   media = entities.media;
-  
+
   // Handle links.
   $.each(urls, function(i, u) {
     if (u.display_url != null) {
@@ -52,22 +52,22 @@ function htmlify(body, entities) {
     }
     body = body.replace(u.url, link);
   }) // each
-  
+
   // Handle Twitter names, ignoring case.
   $.each(users, function(i, u) {
     iname = new RegExp('@' + u.screen_name + '\\b', 'gi');
     link = '<a href="http://twitter.com/' + u.screen_name + '">' + '@' + u.screen_name + '</a>';
     body = body.replace(iname, link);
   }) // each
-  
+
   // Handle hashtags, ignoring case.
   $.each(hashtags, function(i, h) {
     ihash = new RegExp('#' + h.text + '\\b', 'gi');
     link = '<a href="http://twitter.com/search/%23' + h.text + '">' + '#' + h.text + '</a>';
     body = body.replace(ihash, link);
   }) // each
-  
-  
+
+
   // Handle media. For some reason, media is undefined rather than an empty
   // list, so we have to check before trying to loop through.
   if (typeof media != 'undefined') {
@@ -81,7 +81,7 @@ function htmlify(body, entities) {
       body = body.replace(u.url, link);
     }) // each
   } // if
-    
+
   // turn newlines into breaks
   body = body.replace(/\n/g, '<br />');
   return body;
@@ -137,7 +137,7 @@ $.fn.gettweets = function(){
     var retweetsURL = BASE_URL['retweets'] + '?include_entities=1&count=' + COUNT;
     if (LAST_UPDATE != null) homeURL += "&since_id=" + LAST_UPDATE;
     if (LAST_UPDATE != null) retweetsURL += "&since_id=" + LAST_UPDATE;
-    
+
     // Get my retweets as a list of original message IDs.
     $.getJSON(CGI, {url:retweetsURL}, function(retweets){
       $.each(retweets, function(i, item){
@@ -146,11 +146,11 @@ $.fn.gettweets = function(){
           RTID.push(item.retweeted_status.id_str);
         }
       }); // each
-  
+
       $.getJSON(CGI, {url:homeURL}, function(home){
         if (LAST_UPDATE != null) mentionsURL += "&since_id=" + LAST_UPDATE;
         else mentionsURL += "&since_id=" + home[home.length - 1].id_str;  // last is oldest
-    
+
         $.getJSON(CGI, {url:mentionsURL}, function(mentions){
           home = $.merge(home, mentions);
           home.sort(function(a,b){return cmpID(a.id_str, b.id_str);});   // chron sort
@@ -159,7 +159,7 @@ $.fn.gettweets = function(){
             UNREAD += home.length;
             window.fluid.dockBadge = parseInt(UNREAD);
           }
-          
+
           $.each(home, function(i, item){
             if($("#msg-" + item.id_str).length == 0) { // <- fix for twitter caching which sometimes have problems with the "since" parameter
               if (item.in_reply_to_status_id == null) {
@@ -236,10 +236,10 @@ $.fn.gettweets = function(){
                 '\nFollowing: ' + commify(friendCount) +
                 '\nTweets: ' + commify(tweetCount) +
                 '\nSince: ' + startDate +
-                '"><img class="profile_image" height="48" width="48" src="' + 
+                '"><img class="profile_image" height="48" width="48" src="' +
                 theIcon +
                 '" alt="' + theName + '" /></a>' +
-              '<a class="user" href="https://twitter.com/#!/' + 
+              '<a class="user" href="https://twitter.com/#!/' +
                 theScreenName + '" title="' + theName +
                 '\nFollowers: ' + commify(followerCount) +
                 '\nFollowing: ' + commify(friendCount) +
@@ -256,17 +256,17 @@ $.fn.gettweets = function(){
               '<a class="retweet" title="Retweet" ' +
                 'href="javascript:retweet(\'' + theID + '\')">&#9850;</a>' +
               '<a class="favorite" title="Toggle favorite status" '+
-                'href="javascript:toggleFavorite(\'' + 
+                'href="javascript:toggleFavorite(\'' +
                 theID + '\')">&#10029;</a>' +
               '<a class="reply" title="Block and report as spam" ' +
                 'href="javascript:reportSpam(\'' +  theScreenName +
                 '\', \'' + theID + '\')">&#8709;</a>' +
               '<a class="reply" title="Reply to all" ' +
                 'href="javascript:replyTo(\'' + theID +
-                '\', \'' + replyAllHeader +  
+                '\', \'' + replyAllHeader +
                 '\')">&#8704;</a>' +
               '<a class="reply" title="Reply to sender" ' +
-                'href="javascript:replyTo(\'' + theID + 
+                'href="javascript:replyTo(\'' + theID +
                 '\', \'@' + theScreenName +
                 '\')">@</a>' +
               '</span>' +
@@ -274,17 +274,17 @@ $.fn.gettweets = function(){
               htmlify(theText, theEntities) + tweet_span_end +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                '</div></li>');
-               
+
               // Mark if it's a favorite.
               if (item.favorited) {
                 $('#msg-' + item.id_str + ' a.favorite').css('color', 'red');
               }
-          
+
               // Mark if I've retweeted it.
               if ($.inArray(item.id_str, RTID) > -1) {
                 $('#msg-' + item.id_str + ' a.retweet').css('color', 'red');
               }
-    
+
               // Allow me to delete my tweets and distinguish them from others.
               if (item.user.id == UID) {
                 $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
@@ -295,7 +295,7 @@ $.fn.gettweets = function(){
               //   $('#msg-' + item.id + ' a.delete').css("display", "none");
               //   $('#msg-' + item.id + ' a.reply').css("display", "inline");
               // }
-      
+
               // Distinguish mentions of me.
               if ("entities" in item && "user_mentions" in item.entities){
                 for (var i=0; i<item.entities.user_mentions.length; i++){
@@ -304,11 +304,11 @@ $.fn.gettweets = function(){
                     break;
                   }
                 }
-              } 
-    
+              }
+
             }  // if
           }); // each
-          
+
           // Make buttons invisible.
           $('.buttons').addClass('invisible');
           $('li').hover(
@@ -345,7 +345,7 @@ function relative_time(time_value) {
 
 //get all span.time and recalc from title attribute
 function recalcTime() {
-  $('a.time').each( 
+  $('a.time').each(
       function() {
         $(this).text(relative_time($(this).attr("title")));
       }
@@ -371,7 +371,7 @@ function reportSpam(screenName, msg_id) {
   $('#msg-' + msg_id + ' span.content').addClass('spam');
   $('#msg-' + msg_id + ' span.content').after('<br /><em>Reported as spam</em>');
 }
-      
+
 function replyTo(msg_id, to) {
   MSG_ID = msg_id;
   start = to + ' ';
@@ -388,7 +388,7 @@ function toggleFavorite(msg_id) {
   // Depending on Twitter traffic, it may take a second or two to make the final
   // color change.
   $('#msg-' + msg_id + ' a.favorite').css('color', '#b88');
-  $.getJSON(CGI, {url:"https://api.twitter.com/1/statuses/show/" + msg_id + ".json"}, 
+  $.getJSON(CGI, {url:"https://api.twitter.com/1/statuses/show/" + msg_id + ".json"},
     function(data){
       if (data.favorited) {
         $.post(CGI, {url:'https://api.twitter.com/1/favorites/destroy/' + msg_id + '.json', id:msg_id},
@@ -483,7 +483,7 @@ function charCountdown() {
 }
 
 // set up basic stuff for first load
-$(document).ready(function(){  
+$(document).ready(function(){
   // Get the shortened link length.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
     SURL = info.short_url_length;
@@ -492,13 +492,13 @@ $(document).ready(function(){
 
   //get the messages
   refreshMessages();
-  
+
   //add event capture to form submit
   $("#status_entry").submit(function() {
     setStatus($("#status").val());
     return false;
   });
-  
+
   // Cmd-Return in the status field is same as clicking
   // the Update button.
   $("#status").keypress( function(e) {
@@ -507,15 +507,15 @@ $(document).ready(function(){
       return false;
     }
   });
-  
-  // Manually refresh by typing Ctrl-R. 
+
+  // Manually refresh by typing Ctrl-R.
   $("html").keypress( function(e) {
     if (e.which == 18 && e.ctrlKey) {
       refreshMessages();
       return false;
     }
   });
-  
+
   //set timer to reload timeline, every REFRESH milliseconds
   window.setInterval("refreshMessages()", REFRESH);
 
