@@ -17,7 +17,7 @@ var RECALC = 60*1000;
 var MSG_ID;
 // The twitter URLs for getting tweets and configuration info.
 var BASE_URL = {'home' : 'https://api.twitter.com/1.1/statuses/home_timeline.json',
-                'mentions': 'https://api.twitter.com/1.1/statuses/mentions.json',
+                'mentions': 'https://api.twitter.com/1.1/statuses/mentions_timeline.json',
                 'retweets': 'https://api.twitter.com/1.1/statuses/retweeted_by_me.json'};
 var CONFIG_URL = 'http://api.twitter.com/1.1/help/configuration.json';
 // The list of message IDs I've retweeted.
