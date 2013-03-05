@@ -16,10 +16,10 @@ var RECALC = 60*1000;
 // The id of the message you are replying to or retweeting.
 var MSG_ID;
 // The twitter URLs for getting tweets and configuration info.
-var BASE_URL = {'home' : 'https://api.twitter.com/1/statuses/home_timeline.json',
-                'mentions': 'https://api.twitter.com/1/statuses/mentions.json',
-                'retweets': 'https://api.twitter.com/1/statuses/retweeted_by_me.json'};
-var CONFIG_URL = 'http://api.twitter.com/1/help/configuration.json';
+var BASE_URL = {'home' : 'https://api.twitter.com/1.1/statuses/home_timeline.json',
+                'mentions': 'https://api.twitter.com/1.1/statuses/mentions.json',
+                'retweets': 'https://api.twitter.com/1.1/statuses/retweeted_by_me.json'};
+var CONFIG_URL = 'http://api.twitter.com/1.1/help/configuration.json';
 // The list of message IDs I've retweeted.
 var RTID = new Array();
 // The local CGI URL.
@@ -360,13 +360,13 @@ function refreshMessages() {
 
 
 function deleteTweet(msg_id) {
-  $.post(CGI, {url:'https://api.twitter.com/1/statuses/destroy/' + msg_id + '.json', id:msg_id});
+  $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/destroy/' + msg_id + '.json', id:msg_id});
   $("#msg-" + msg_id).css('display', 'none');
   return;
 }
 
 function reportSpam(screenName, msg_id) {
-  $.post(CGI, {url:'https://api.twitter.com/1/report_spam.json',
+  $.post(CGI, {url:'https://api.twitter.com/1.1/report_spam.json',
     screen_name:screenName});
   $('#msg-' + msg_id + ' span.content').addClass('spam');
   $('#msg-' + msg_id + ' span.content').after('<br /><em>Reported as spam</em>');
@@ -388,17 +388,17 @@ function toggleFavorite(msg_id) {
   // Depending on Twitter traffic, it may take a second or two to make the final
   // color change.
   $('#msg-' + msg_id + ' a.favorite').css('color', '#b88');
-  $.getJSON(CGI, {url:"https://api.twitter.com/1/statuses/show/" + msg_id + ".json"},
+  $.getJSON(CGI, {url:"https://api.twitter.com/1.1/statuses/show/" + msg_id + ".json"},
     function(data){
       if (data.favorited) {
-        $.post(CGI, {url:'https://api.twitter.com/1/favorites/destroy/' + msg_id + '.json', id:msg_id},
+        $.post(CGI, {url:'https://api.twitter.com/1.1/favorites/destroy/' + msg_id + '.json', id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'black');
           }
         );
       }
       else {
-        $.post(CGI, {url:'https://api.twitter.com/1/favorites/create/' + msg_id + '.json', id:msg_id},
+        $.post(CGI, {url:'https://api.twitter.com/1.1/favorites/create/' + msg_id + '.json', id:msg_id},
           function(post_return){
             $('#msg-' + msg_id + ' a.favorite').css('color', 'red');
           }
@@ -415,7 +415,7 @@ function retweet(msg_id) {
     alert("You've already retweeted that one!");
   }
   else {
-    $.post(CGI, {url:'https://api.twitter.com/1/statuses/retweet/' + msg_id + '.json', id: msg_id},
+    $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/retweet/' + msg_id + '.json', id: msg_id},
       function(data) {
         $('#msg-' + msg_id + ' a.retweet').css('color', 'red');
         refreshStatusField(); },
@@ -425,11 +425,11 @@ function retweet(msg_id) {
 
 function setStatus(status_text) {
   if (status_text.indexOf("@") != -1 && MSG_ID) {
-    $.post(CGI, {url: "https://api.twitter.com/1/statuses/update.json", status: smarten(status_text), in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url: "https://api.twitter.com/1.1/statuses/update.json", status: smarten(status_text), in_reply_to_status_id: MSG_ID }, function(data) { refreshStatusField(); }, "json" );
     MSG_ID = '';
   }
   else {
-    $.post(CGI, {url:"https://api.twitter.com/1/statuses/update.json", status: smarten(status_text) }, function(data) { refreshStatusField(); }, "json" );
+    $.post(CGI, {url:"https://api.twitter.com/1.1/statuses/update.json", status: smarten(status_text) }, function(data) { refreshStatusField(); }, "json" );
   }
   return;
 }
