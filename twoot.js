@@ -163,6 +163,7 @@ $.fn.gettweets = function(){
               theIcon = item.user.profile_image_url;
               followerCount = item.user.followers_count;
               friendCount = item.user.friends_count;
+              isFollowing = item.user.following ? "Yes" : "No";
               tweetCount = item.user.statuses_count;
               sdList = item.user.created_at.split(" ");
               theTime = item.created_at;
@@ -189,6 +190,7 @@ $.fn.gettweets = function(){
               theIcon = item.retweeted_status.user.profile_image_url;
               followerCount = item.retweeted_status.user.followers_count;
               friendCount = item.retweeted_status.user.friends_count;
+              isFollowing = item.retweeted_status.user.following ? "Yes" : "No";
               tweetCount = item.retweeted_status.user.statuses_count;
               sdList = item.retweeted_status.user.created_at.split(" ");
               theTime = item.retweeted_status.created_at;
@@ -220,6 +222,7 @@ $.fn.gettweets = function(){
               theScreenName + '" title="' + theScreenName +
               '\nFollowers: ' + commify(followerCount) +
               '\nFollowing: ' + commify(friendCount) +
+              '\nFollowing Me: ' + isFollowing +
               '\nTweets: ' + commify(tweetCount) +
               '\nSince: ' + startDate +
               '"><img class="profile_image" height="48" width="48" src="' +
@@ -229,6 +232,7 @@ $.fn.gettweets = function(){
               theScreenName + '" title="' + theScreenName +
               '\nFollowers: ' + commify(followerCount) +
               '\nFollowing: ' + commify(friendCount) +
+              '\nFollowing Me: ' + isFollowing +
               '\nTweets: ' + commify(tweetCount) +
               '\nSince: ' + startDate + '">' +
             theName + '</a> ' +
