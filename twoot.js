@@ -79,8 +79,8 @@ function htmlify(body, entities) {
     }) // each
   } // if
 
-  // turn newlines into breaks
-  body = body.replace(/\n/g, '<br />');
+  // turn newlines into breaks (this is now done through CSS)
+  // body = body.replace(/\n/g, '<br />');
   return body;
 }
 
