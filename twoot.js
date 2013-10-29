@@ -4,8 +4,8 @@
  * */
 
 // Change these two lines to your user information.
-var UID = 1898581;
-var SNAME = "luisrivera_co";
+var UID = 10697232;
+var SNAME = "drdrang";
 // The initial update looks back COUNT updates in your home timeline. Must be <= 200.
 var COUNT = 50;
 // The id of the most recently retrieved update.
