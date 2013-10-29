@@ -64,7 +64,6 @@ function htmlify(body, entities) {
     body = body.replace(ihash, link);
   }) // each
 
-
   // Handle media. For some reason, media is undefined rather than an empty
   // list, so we have to check before trying to loop through.
   if (typeof media != 'undefined') {
@@ -120,10 +119,10 @@ function cmpID (a, b) {
 function commify(n) {
   n += '';
   var rgx = /(\d+)(\d{3})/;
-	while (rgx.test(n)) {
-		n = n.replace(rgx, '$1' + ',' + '$2');
-	}
-	return n;
+  while (rgx.test(n)) {
+    n = n.replace(rgx, '$1' + ',' + '$2');
+  }
+  return n;
 }
 
 $.fn.gettweets = function(){
@@ -158,6 +157,7 @@ $.fn.gettweets = function(){
               retweetText = '';
               theID = item.id_str;
               theName = item.user.name;
+              theAvatar = item.user.profile_image_url;
               theScreenName = item.user.screen_name;
               theUserID = item.user.id;
               theIcon = item.user.profile_image_url;
@@ -185,6 +185,7 @@ $.fn.gettweets = function(){
               retweetText = ' via <a href="https://twitter.com/#!/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
               theID = item.retweeted_status.id_str;
               theName = item.retweeted_status.user.name;
+              theAvatar = item.retweeted_status.user.profile_image_url;
               theScreenName = item.retweeted_status.user.screen_name;
               theUserID = item.retweeted_status.user.id;
               theIcon = item.retweeted_status.user.profile_image_url;
@@ -218,8 +219,7 @@ $.fn.gettweets = function(){
             }
             startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
             list.append('<li id="msg-' + theID + '">' +
-            '<a href="https://twitter.com/account/profile_image/' +
-              theScreenName + '" title="' + theScreenName +
+            '<a href="' +  theAvatar.replace("_normal","") + '" title="' + theScreenName +
               '\nFollowers: ' + commify(followerCount) +
               '\nFollowing: ' + commify(friendCount) +
               '\nFollowing Me: ' + isFollowing +
