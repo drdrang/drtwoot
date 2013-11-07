@@ -152,7 +152,7 @@ $.fn.gettweets = function(){
               inReplyText = '';
               }
             else {
-              inReplyText = ' re <a href="https://twitter.com/#!/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
+              inReplyText = ' re <a href="https://twitter.com/' + item.in_reply_to_screen_name + '/status/' + item.in_reply_to_status_id_str + '">' + item.in_reply_to_screen_name + '</a>';
             }
             if (item.retweeted_status == null) {
               retweetText = '';
@@ -161,6 +161,7 @@ $.fn.gettweets = function(){
               theScreenName = item.user.screen_name;
               theUserID = item.user.id;
               theIcon = item.user.profile_image_url;
+              thePhoto = theIcon.replace("_normal", "");
               followerCount = item.user.followers_count;
               friendCount = item.user.friends_count;
               isFollowing = item.user.following ? "Yes" : "No";
@@ -182,12 +183,13 @@ $.fn.gettweets = function(){
               }
             }
             else {
-              retweetText = ' via <a href="https://twitter.com/#!/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
+              retweetText = ' via <a href="https://twitter.com/' + item.user.screen_name + '">' + item.user.screen_name + '</a>';
               theID = item.retweeted_status.id_str;
               theName = item.retweeted_status.user.name;
               theScreenName = item.retweeted_status.user.screen_name;
               theUserID = item.retweeted_status.user.id;
               theIcon = item.retweeted_status.user.profile_image_url;
+              thePhoto = theIcon.replace("_normal", "");
               followerCount = item.retweeted_status.user.followers_count;
               friendCount = item.retweeted_status.user.friends_count;
               isFollowing = item.retweeted_status.user.following ? "Yes" : "No";
@@ -218,8 +220,7 @@ $.fn.gettweets = function(){
             }
             startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
             list.append('<li id="msg-' + theID + '">' +
-            '<a href="https://twitter.com/account/profile_image/' +
-              theScreenName + '" title="' + theScreenName +
+            '<a href="' + thePhoto + '" title="' + theScreenName +
               '\nFollowers: ' + commify(followerCount) +
               '\nFollowing: ' + commify(friendCount) +
               '\nFollowing Me: ' + isFollowing +
@@ -228,7 +229,7 @@ $.fn.gettweets = function(){
               '"><img class="profile_image" height="48" width="48" src="' +
               theIcon +
               '" alt="' + theName + '" /></a>' +
-            '<a class="user" href="https://twitter.com/#!/' +
+            '<a class="user" href="https://twitter.com/' +
               theScreenName + '" title="' + theScreenName +
               '\nFollowers: ' + commify(followerCount) +
               '\nFollowing: ' + commify(friendCount) +
@@ -237,7 +238,7 @@ $.fn.gettweets = function(){
               '\nSince: ' + startDate + '">' +
             theName + '</a> ' +
             '<a class="time" title="' + theTime + '" ' +
-              'href="https://twitter.com/#!/' + theScreenName + '/statuses/' +
+              'href="https://twitter.com/' + theScreenName + '/statuses/' +
               theID +'">' +
               relative_time(theTime) + '</a> ' +
             '<span class="buttons">' +
