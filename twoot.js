@@ -474,11 +474,10 @@ function charCountdown() {
 
 // set up basic stuff for first load
 $(document).ready(function(){
-  // Get the shortened link length.
+  // Get the shortened link lengths.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
-    SURL = info.short_url_length;
-    alert(SURL);
-    SURLS = info.short_url_length_https;
+//     SURL = info.short_url_length;
+//     SURLS = info.short_url_length_https;
   });
 
   //get the messages
