@@ -477,6 +477,7 @@ $(document).ready(function(){
   // Get the shortened link length.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
     SURL = info.short_url_length;
+    alert(SURL);
     SURLS = info.short_url_length_https;
   });
 
