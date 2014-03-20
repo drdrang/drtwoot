@@ -497,7 +497,7 @@ $(document).ready(function(){
       return false;
     }
   });
-
+  
   // Manually refresh by typing Ctrl-R.
   $("html").keypress( function(e) {
     if (e.which == 18 && e.ctrlKey) {
