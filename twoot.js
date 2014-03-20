@@ -24,9 +24,9 @@ var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
 var URL_RE = 'https?://[^ \\n]+[^ \\n.,;:?!&\'"’”)}\\]]';
 // The shortened link length for http.
-var SURL = 20;
+var SURL = 22;
 // And for https.
-var SURLS = 21;
+var SURLS = 23;
 // Unread tweet count;
 var UNREAD = 0;
 
@@ -474,10 +474,10 @@ function charCountdown() {
 
 // set up basic stuff for first load
 $(document).ready(function(){
-  // Get the shortened link length.
+  // Get the shortened link lengths.
   $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
-    SURL = info.short_url_length;
-    SURLS = info.short_url_length_https;
+//     SURL = info.short_url_length;
+//     SURLS = info.short_url_length_https;
   });
 
   //get the messages
