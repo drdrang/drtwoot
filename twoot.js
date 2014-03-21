@@ -29,6 +29,9 @@ var SURL = 22;
 var SURLS = 23;
 // Unread tweet count;
 var UNREAD = 0;
+// List of strings to mute.
+var MUTESTRINGS = ['icymi', 'baconmethod'];
+
 
 // Turn certain things into links.
 function htmlify(body, entities) {
@@ -210,93 +213,102 @@ $.fn.gettweets = function(){
                 replyAllHeader = '@' + item.user.screen_name + ' @' + theScreenName;
               }
             }
-            if (theScreenName == 'DrSamuelJohnson') {
-              tweet_span_start = '<span class="content c18th">';
-              tweet_span_end = '</span>';
-            }
-            else {
-              tweet_span_start = '<span class="content">';
-              tweet_span_end = '</span>';
-            }
-            startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
-            list.append('<li id="msg-' + theID + '">' +
-            '<a href="' + thePhoto + '" title="' + theScreenName +
-              '\nFollowers: ' + commify(followerCount) +
-              '\nFollowing: ' + commify(friendCount) +
-              '\nFollowing Me: ' + isFollowing +
-              '\nTweets: ' + commify(tweetCount) +
-              '\nSince: ' + startDate +
-              '"><img class="profile_image" height="48" width="48" src="' +
-              theIcon +
-              '" alt="' + theName + '" /></a>' +
-            '<a class="user" href="https://twitter.com/' +
-              theScreenName + '" title="' + theScreenName +
-              '\nFollowers: ' + commify(followerCount) +
-              '\nFollowing: ' + commify(friendCount) +
-              '\nFollowing Me: ' + isFollowing +
-              '\nTweets: ' + commify(tweetCount) +
-              '\nSince: ' + startDate + '">' +
-            theName + '</a> ' +
-            '<a class="time" title="' + theTime + '" ' +
-              'href="https://twitter.com/' + theScreenName + '/statuses/' +
-              theID +'">' +
-              relative_time(theTime) + '</a> ' +
-            '<span class="buttons">' +
-            '<a class="delete" title="Delete" ' +
-              'href="javascript:deleteTweet(\'' + theID + '\')">&#9003;</a>' +
-            '<a class="retweet" title="Retweet" ' +
-              'href="javascript:retweet(\'' + theID + '\')">&#9850;</a>' +
-            '<a class="favorite" title="Toggle favorite status" '+
-              'href="javascript:toggleFavorite(\'' +
-              theID + '\')">&#10029;</a>' +
-            '<a class="reply" title="Block and report as spam" ' +
-              'href="javascript:reportSpam(\'' +  theScreenName +
-              '\', \'' + theID + '\')">&#8709;</a>' +
-            '<a class="reply" title="Reply to all" ' +
-              'href="javascript:replyTo(\'' + theID +
-              '\', \'' + replyAllHeader +
-              '\')">&#8704;</a>' +
-            '<a class="reply" title="Reply to sender" ' +
-              'href="javascript:replyTo(\'' + theID +
-              '\', \'@' + theScreenName +
-              '\')">@</a>' +
-            '</span>' +
-            '<div class="tweet_text">' + tweet_span_start +
-            htmlify(theText, theEntities) + tweet_span_end +
-            '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
-             '</div></li>');
-
-            // Mark if it's a favorite.
-            if (item.favorited) {
-              $('#msg-' + item.id_str + ' a.favorite').css('color', 'red');
-            }
-
-            // Mark if I've retweeted it.
-            //   if ($.inArray(item.id_str, RTID) > -1) {
-            //     $('#msg-' + item.id_str + ' a.retweet').css('color', 'red');
-            //   }
-
-            // Allow me to delete my tweets and distinguish them from others.
-            if (item.user.id == UID) {
-              $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
-              $('#msg-' + item.id_str + ' a.retweet').css("display", "none");
-              $('#msg-' + item.id_str).addClass('mine');
-            }
-            // else {
-            //   $('#msg-' + item.id + ' a.delete').css("display", "none");
-            //   $('#msg-' + item.id + ' a.reply').css("display", "inline");
-            // }
-
-            // Distinguish mentions of me.
-            if ("entities" in item && "user_mentions" in item.entities){
-              for (var i=0; i<item.entities.user_mentions.length; i++){
-                if (item.entities.user_mentions[i].id == UID) {
-                  $('#msg-' + item.id_str).addClass('tome');
-                  break;
-                }
+            var show = 1;
+            var mlen = MUTESTRINGS.length;
+            for (m=0; m<mlen; m++) {
+              mstring = MUTESTRINGS[m].toLowerCase();
+              if (theText.toLowerCase().indexOf(mstring) >= 0) {
+                show = 0;
               }
             }
+            if (show) {
+              if (theScreenName == 'DrSamuelJohnson') {
+                tweet_span_start = '<span class="content c18th">';
+                tweet_span_end = '</span>';
+              }
+              else {
+                tweet_span_start = '<span class="content">';
+                tweet_span_end = '</span>';
+              }
+              startDate = sdList[1] + ' ' + sdList[2] + ', ' + sdList[5];
+              list.append('<li id="msg-' + theID + '">' +
+              '<a href="' + thePhoto + '" title="' + theScreenName +
+                '\nFollowers: ' + commify(followerCount) +
+                '\nFollowing: ' + commify(friendCount) +
+                '\nFollowing Me: ' + isFollowing +
+                '\nTweets: ' + commify(tweetCount) +
+                '\nSince: ' + startDate +
+                '"><img class="profile_image" height="48" width="48" src="' +
+                theIcon +
+                '" alt="' + theName + '" /></a>' +
+              '<a class="user" href="https://twitter.com/' +
+                theScreenName + '" title="' + theScreenName +
+                '\nFollowers: ' + commify(followerCount) +
+                '\nFollowing: ' + commify(friendCount) +
+                '\nFollowing Me: ' + isFollowing +
+                '\nTweets: ' + commify(tweetCount) +
+                '\nSince: ' + startDate + '">' +
+              theName + '</a> ' +
+              '<a class="time" title="' + theTime + '" ' +
+                'href="https://twitter.com/' + theScreenName + '/statuses/' +
+                theID +'">' +
+                relative_time(theTime) + '</a> ' +
+              '<span class="buttons">' +
+              '<a class="delete" title="Delete" ' +
+                'href="javascript:deleteTweet(\'' + theID + '\')">&#9003;</a>' +
+              '<a class="retweet" title="Retweet" ' +
+                'href="javascript:retweet(\'' + theID + '\')">&#9850;</a>' +
+              '<a class="favorite" title="Toggle favorite status" '+
+                'href="javascript:toggleFavorite(\'' +
+                theID + '\')">&#10029;</a>' +
+              '<a class="reply" title="Block and report as spam" ' +
+                'href="javascript:reportSpam(\'' +  theScreenName +
+                '\', \'' + theID + '\')">&#8709;</a>' +
+              '<a class="reply" title="Reply to all" ' +
+                'href="javascript:replyTo(\'' + theID +
+                '\', \'' + replyAllHeader +
+                '\')">&#8704;</a>' +
+              '<a class="reply" title="Reply to sender" ' +
+                'href="javascript:replyTo(\'' + theID +
+                '\', \'@' + theScreenName +
+                '\')">@</a>' +
+              '</span>' +
+              '<div class="tweet_text">' + tweet_span_start +
+              htmlify(theText, theEntities) + tweet_span_end +
+              '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
+               '</div></li>');
 
+              // Mark if it's a favorite.
+              if (item.favorited) {
+                $('#msg-' + item.id_str + ' a.favorite').css('color', 'red');
+              }
+
+              // Mark if I've retweeted it.
+              //   if ($.inArray(item.id_str, RTID) > -1) {
+              //     $('#msg-' + item.id_str + ' a.retweet').css('color', 'red');
+              //   }
+
+              // Allow me to delete my tweets and distinguish them from others.
+              if (item.user.id == UID) {
+                $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
+                $('#msg-' + item.id_str + ' a.retweet').css("display", "none");
+                $('#msg-' + item.id_str).addClass('mine');
+              }
+              // else {
+              //   $('#msg-' + item.id + ' a.delete').css("display", "none");
+              //   $('#msg-' + item.id + ' a.reply').css("display", "inline");
+              // }
+
+              // Distinguish mentions of me.
+              if ("entities" in item && "user_mentions" in item.entities){
+                for (var i=0; i<item.entities.user_mentions.length; i++){
+                  if (item.entities.user_mentions[i].id == UID) {
+                    $('#msg-' + item.id_str).addClass('tome');
+                    break;
+                  }
+                }
+              }
+            } // if show
           }  // if
         }); // each
 
