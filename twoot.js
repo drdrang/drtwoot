@@ -18,7 +18,7 @@ var MSG_ID;
 // The twitter URLs for getting tweets and configuration info.
 var BASE_URL = {'home' : 'https://api.twitter.com/1.1/statuses/home_timeline.json',
                 'mentions': 'https://api.twitter.com/1.1/statuses/mentions_timeline.json'};
-var CONFIG_URL = 'http://api.twitter.com/1.1/help/configuration.json';
+var CONFIG_URL = 'https://api.twitter.com/1.1/help/configuration.json';
 // The local CGI URL.
 var CGI = 'http://localhost/cgi-bin/twitter.cgi';
 // A URL regex.
@@ -475,9 +475,9 @@ function charCountdown() {
 // set up basic stuff for first load
 $(document).ready(function(){
   // Get the shortened link lengths.
-  $.getJSON(CGI, {url:CONFIG_URL}, function(info) {
-//     SURL = info.short_url_length;
-//     SURLS = info.short_url_length_https;
+  $.getJSON(CGI, {url:CONFIG_URL}, function(config) {
+    SURL = config.short_url_length;
+    SURLS = config.short_url_length_https;
   });
 
   //get the messages
