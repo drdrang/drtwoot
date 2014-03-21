@@ -70,7 +70,7 @@ function htmlify(body, entities) {
   if (typeof media != 'undefined') {
     $.each(media, function(i, u) {
       if ((u.media_url != null) && (u.type == 'photo')) {
-        link = '<br /><a href="' + u.media_url + ':large">' + '<img src="' + u.media_url + ':thumb"></a><br />';
+        link = '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a><br />';
       }
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';

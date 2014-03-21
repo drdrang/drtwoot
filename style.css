@@ -42,6 +42,10 @@ img.profile_image {
 	margin: 3px auto 2px -54px; /* Negative margin places the profile image in the space created by the padding in .tweet_list li */
 }
 
+img.inline {
+  max-width: 95%;
+}
+
 a.user {
 	font-weight:bold;
 	font-size: 90%;
