@@ -44,6 +44,7 @@ img.profile_image {
 
 img.inline {
   max-width: 95%;
+  margin-top: .5em;
 }
 
 a.user {
