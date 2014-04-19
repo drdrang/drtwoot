@@ -362,8 +362,22 @@ function refreshMessages() {
 
 
 function deleteTweet(msg_id) {
-  $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/destroy/' + msg_id + '.json', id:msg_id});
-  $("#msg-" + msg_id).css('display', 'none');
+  // Stealing an idea from Twitteriffic, we're going to delete the tweet
+  // and put the original content in the status field for editing.
+  // Get the original content.
+  $.getJSON(CGI, {url:'https://api.twitter.com/1.1/statuses/show/' + msg_id + ".json"},
+    function(data){
+      orig_content = data.text;
+      // Delete it.
+      $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/destroy/' + msg_id + '.json', id:msg_id});
+      $("#msg-" + msg_id).css('display', 'none');
+      // Fill the status field with the original content.
+      $("#status").val(orig_content);
+      $("#status").focus();
+      $("#status").caret(orig_content.length, orig_content.length);
+      charCountdown();
+    }
+  );
   return;
 }
 
