@@ -53,7 +53,7 @@ a.user {
 	color: black;
 }
 
-a.reply, a.favorite, a.retweet, a.delete {
+a.reply, a.favorite, a.spam, a.retweet, a.edit, a.delete {
   font-weight: bold;
   text-decoration: none;
   color: black;
@@ -63,7 +63,7 @@ a.reply, a.favorite, a.retweet, a.delete {
   margin-right: -0.4em;
 }
 
-a.delete {
+a.delete, a.edit {
   display: none;
 }
 

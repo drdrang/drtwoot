@@ -256,12 +256,14 @@ $.fn.gettweets = function(){
               '<span class="buttons">' +
               '<a class="delete" title="Delete" ' +
                 'href="javascript:deleteTweet(\'' + theID + '\')">&#9003;</a>' +
+              '<a class="edit" title="Edit" ' +
+                'href="javascript:editTweet(\'' + theID + '\')">&#9997;</a>' +
               '<a class="retweet" title="Retweet" ' +
                 'href="javascript:retweet(\'' + theID + '\')">&#9850;</a>' +
               '<a class="favorite" title="Toggle favorite status" '+
                 'href="javascript:toggleFavorite(\'' +
                 theID + '\')">&#10029;</a>' +
-              '<a class="reply" title="Block and report as spam" ' +
+              '<a class="spam" title="Block and report as spam" ' +
                 'href="javascript:reportSpam(\'' +  theScreenName +
                 '\', \'' + theID + '\')">&#8709;</a>' +
               '<a class="reply" title="Reply to all" ' +
@@ -291,7 +293,10 @@ $.fn.gettweets = function(){
               // Allow me to delete my tweets and distinguish them from others.
               if (item.user.id == UID) {
                 $('#msg-' + item.id_str + ' a.delete').css("display", "inline");
+                $('#msg-' + item.id_str + ' a.edit').css("display", "inline");
                 $('#msg-' + item.id_str + ' a.retweet').css("display", "none");
+                $('#msg-' + item.id_str + ' a.spam').css("display", "none");
+                $('#msg-' + item.id_str + ' a.favorite').css("display", "none");
                 $('#msg-' + item.id_str).addClass('mine');
               }
               // else {
@@ -362,6 +367,12 @@ function refreshMessages() {
 
 
 function deleteTweet(msg_id) {
+  $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/destroy/' + msg_id + '.json', id:msg_id});
+  $("#msg-" + msg_id).css('display', 'none');
+  return;
+}
+
+function editTweet(msg_id) {
   // Stealing an idea from Twitteriffic, we're going to delete the tweet
   // and put the original content in the status field for editing.
   // Get the original content.
@@ -380,6 +391,7 @@ function deleteTweet(msg_id) {
   );
   return;
 }
+
 
 function reportSpam(screenName, msg_id) {
   $.post(CGI, {url:'https://api.twitter.com/1.1/report_spam.json',
