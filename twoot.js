@@ -372,13 +372,22 @@ function deleteTweet(msg_id) {
   return;
 }
 
+function undoShortening(text, links){
+  // Return the text of a tweet with the shortened URLs relengthened.
+  var lengthened = text;
+  $.each(links, function(i, link) {
+    lengthened = lengthened.replace(link.url, link.expanded_url);
+  });
+  return lengthened;
+}
+
 function editTweet(msg_id) {
   // Stealing an idea from Twitteriffic, we're going to delete the tweet
   // and put the original content in the status field for editing.
   // Get the original content.
   $.getJSON(CGI, {url:'https://api.twitter.com/1.1/statuses/show/' + msg_id + ".json"},
     function(data){
-      orig_content = data.text;
+      orig_content = undoShortening(data.text, data.entities.urls);
       // Delete it.
       $.post(CGI, {url:'https://api.twitter.com/1.1/statuses/destroy/' + msg_id + '.json', id:msg_id});
       $("#msg-" + msg_id).css('display', 'none');
