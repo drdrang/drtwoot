@@ -30,7 +30,7 @@ var SURLS = 23;
 // Unread tweet count;
 var UNREAD = 0;
 // List of strings to mute.
-var MUTESTRINGS = ['icymi', 'baconmethod'];
+var MUTESTRINGS = ['icymi', 'baconmethod', 'bacon method'];
 
 
 // Turn certain things into links.
