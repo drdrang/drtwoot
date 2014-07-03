@@ -81,17 +81,16 @@ function htmlify(body, entities, extentities) {
     $.each(media, function(i, u) {
       url = u.url;
       if ((u.media_url != null) && (u.type == 'photo')) {
-        link += '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a><br />';
+        link += '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a>';
       }
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
       }
     }) // each
+    link += '<br />';
     body = body.replace(url, link);
   } // if
 
-  // turn newlines into breaks (this is now done through CSS)
-  // body = body.replace(/\n/g, '<br />');
   return body;
 }
 
