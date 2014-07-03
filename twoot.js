@@ -34,11 +34,16 @@ var MUTESTRINGS = ['icymi', 'baconmethod', 'bacon method', 'tcg14'];
 
 
 // Turn certain things into links.
-function htmlify(body, entities) {
+function htmlify(body, entities, extentities) {
   urls = entities.urls;
   users = entities.user_mentions;
   hashtags = entities.hashtags;
-  media = entities.media;
+  if (typeof extentities != 'undefined') {
+    media = extentities.media;
+  }
+  else {
+    media = entities.media;
+  }
 
   // Handle links.
   $.each(urls, function(i, u) {
@@ -71,21 +76,25 @@ function htmlify(body, entities) {
   // Handle media. For some reason, media is undefined rather than an empty
   // list, so we have to check before trying to loop through.
   if (typeof media != 'undefined') {
+    link = '';
+    url = '';
     $.each(media, function(i, u) {
+      url = u.url;
       if ((u.media_url != null) && (u.type == 'photo')) {
-        link = '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a><br />';
+        link += '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a><br />';
       }
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
       }
-      body = body.replace(u.url, link);
     }) // each
+    body = body.replace(url, link);
   } // if
 
   // turn newlines into breaks (this is now done through CSS)
   // body = body.replace(/\n/g, '<br />');
   return body;
 }
+
 
 // Return a list of all the users mentioned.
 function mentioned(entities) {
@@ -174,6 +183,7 @@ $.fn.gettweets = function(){
               theText = item.text;
               theSource = item.source;
               theEntities = item.entities;
+              theExtEntities = item.extended_entities;
               notMe = mentioned(theEntities).filter(function(val){
                 return val != SNAME;
               });
@@ -202,6 +212,7 @@ $.fn.gettweets = function(){
               theText = item.retweeted_status.text;
               theSource = item.retweeted_status.source;
               theEntities = item.retweeted_status.entities;
+              theExtEntities = item.retweeted_status.extended_entities;
               notMe = mentioned(theEntities).filter(function(val){
                 return val != SNAME;
               });
@@ -276,7 +287,7 @@ $.fn.gettweets = function(){
                 '\')">@</a>' +
               '</span>' +
               '<div class="tweet_text">' + tweet_span_start +
-              htmlify(theText, theEntities) + tweet_span_end +
+              htmlify(theText, theEntities, theExtEntities) + tweet_span_end +
               '<span class="info">' + ' from ' + theSource + inReplyText + retweetText + '</span>' +
                '</div></li>');
 
