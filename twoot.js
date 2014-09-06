@@ -48,10 +48,18 @@ function htmlify(body, entities, extentities) {
   // Handle links.
   $.each(urls, function(i, u) {
     if (u.display_url != null) {
-      link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+      if (u.display_url.slice(0, 9) == 'instagram') {   // Instagram image
+        instaCode = u.display_url.slice(16);
+        instaInline = 'http://instagr.am/p/' + instaCode + 'media/?size=m';
+        instaURL = 'http://instagr.am/p/' + instaCode + 'media/?size=l';
+        link = '<br /><a href="' + instaURL + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
+      }
+      else {
+        link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+      }
     }
     else {
-      if (u.url.slice(0,3) == 'http') lnk = u.url;
+      if (u.url.slice(0,4) == 'http') lnk = u.url;
       else lnk = 'http://' + u.url;
       link = '<a href="' + lnk + '">' + u.url + '</a>';
     }
@@ -81,7 +89,7 @@ function htmlify(body, entities, extentities) {
     $.each(media, function(i, u) {
       url = u.url;
       if ((u.media_url != null) && (u.type == 'photo')) {
-        link += '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small"></a>';
+        link += '<br /><a href="' + u.media_url + ':large">' + '<img class="inline" src="' + u.media_url + ':small" /></a>';
       }
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
