@@ -47,13 +47,21 @@ function htmlify(body, entities, extentities) {
 
   // Handle links.
   $.each(urls, function(i, u) {
+    // Instagram image
     if (u.display_url != null) {
-      if (u.display_url.slice(0, 9) == 'instagram') {   // Instagram image
-        instaCode = u.display_url.slice(16);
+      if (u.expanded_url.slice(0, 23) == 'http://instagram.com/p/') {
+        instaCode = u.expanded_url.slice(23);
         instaInline = 'http://instagr.am/p/' + instaCode + 'media/?size=m';
         instaURL = 'http://instagr.am/p/' + instaCode + 'media/?size=l';
         link = '<br /><a href="' + instaURL + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
       }
+      // YouTube image
+      else if (u.expanded_url.slice(0,32) == 'https://www.youtube.com/watch?v=') {
+        youCode = u.expanded_url.slice(32);
+        link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '?rel=0" frameborder="0" allowfullscreen></iframe><br />';
+        // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+      }
+      // Regular link
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
       }
