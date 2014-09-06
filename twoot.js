@@ -52,8 +52,7 @@ function htmlify(body, entities, extentities) {
       if (u.expanded_url.slice(0, 23) == 'http://instagram.com/p/') {
         instaCode = u.expanded_url.slice(23);
         instaInline = 'http://instagr.am/p/' + instaCode + 'media/?size=m';
-        instaURL = 'http://instagr.am/p/' + instaCode + 'media/?size=l';
-        link = '<br /><a href="' + instaURL + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
+        link = '<br /><a href="' + u.expanded_url + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
       }
       // YouTube image
       else if (u.expanded_url.slice(0,32) == 'https://www.youtube.com/watch?v=') {
