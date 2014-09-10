@@ -108,6 +108,7 @@ input#send {
 
 input#image {
 	float: right;
+	margin-right: 1em;
 }
 
 input#status:focus, input#status:active, a:focus, a:active

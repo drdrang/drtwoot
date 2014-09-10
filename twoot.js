@@ -544,6 +544,16 @@ function charCountdown() {
   }
 }
 
+function makeImageCommand(status_text) {
+  if (status_text.indexOf("@") != -1 && MSG_ID) {
+    return 'tweet-image ' + MSG_ID + ' "' + smarten(status_text) + '" ';
+  }
+  else {
+    return 'tweet-image "' + smarten(status_text) + '" ';
+  }
+}
+
+
 // set up basic stuff for first load
 $(document).ready(function(){
   // Get the shortened link lengths.
@@ -568,6 +578,12 @@ $(document).ready(function(){
       setStatus($("#status").val());
       return false;
     }
+  });
+  
+  // Add event capture to create tweet-image command.
+  $("#image").click ( function(e) {
+    alert(makeImageCommand($("#status").val()));
+    return false;
   });
   
   // Manually refresh by typing Ctrl-R.
