@@ -30,7 +30,7 @@ var SURLS = 23;
 // Unread tweet count;
 var UNREAD = 0;
 // List of strings to mute.
-var MUTESTRINGS = ['icymi', 'baconmethod', 'bacon method', 'tcg14'];
+var MUTESTRINGS = ['icymi', 'baconmethod', 'bacon method'];
 
 
 // Turn certain things into links.
@@ -55,8 +55,9 @@ function htmlify(body, entities, extentities) {
         link = '<br /><a href="' + u.expanded_url + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
       }
       // YouTube image
-      else if (u.expanded_url.slice(0,32) == 'https://www.youtube.com/watch?v=') {
-        youCode = u.expanded_url.slice(32);
+      else if (/^https?:\/\/.*youtube.com\/watch\?v=/.test(u.expanded_url)) {
+        idx = u.expanded_url.lastIndexOf("watch?v=") + 8
+        youCode = u.expanded_url.slice(idx);
         link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '?rel=0" frameborder="0" allowfullscreen></iframe><br />';
         // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
       }
