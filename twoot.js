@@ -61,6 +61,14 @@ function htmlify(body, entities, extentities) {
         link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '?rel=0" frameborder="0" allowfullscreen></iframe><br />';
         // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
       }
+      // YouTube image
+      else if (/^https?:\/\/youtu.be\//.test(u.expanded_url)) {
+        idx = u.expanded_url.lastIndexOf(".be/") + 4
+        youCode = u.expanded_url.slice(idx);
+        alert(youCode);
+        link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '?rel=0" frameborder="0" allowfullscreen></iframe><br />';
+        // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+      }
       // Regular link
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
