@@ -382,10 +382,13 @@ function relative_time(time_value) {
   var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
   var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
   delta = delta + (relative_to.getTimezoneOffset() * 60);
+  var days = parseInt(delta / 86400);
+  delta -= days*86400;
   var hrs = parseInt(delta / 3600);
   delta -= hrs*3600;
   var mins = parseInt(delta / 60);
-  if (hrs > 0) return hrs.toString() + 'h ' + mins.toString() + 'm ago';
+  if (days > 2) return days.toString() + 'd ago';
+  else if (hrs > 0) return hrs.toString() + 'h ' + mins.toString() + 'm ago';
   else return  mins.toString() + 'm ago';
 };
 
