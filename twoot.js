@@ -601,6 +601,7 @@ $(document).ready(function(){
   // Add event capture to create tweet-image command.
   $("#image").click ( function(e) {
     alert(makeImageCommand($("#status").val()));
+    setStatus('');
     return false;
   });
   
