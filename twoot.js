@@ -55,26 +55,26 @@ function htmlify(body, entities, extentities) {
         link = '<br /><a href="' + u.expanded_url + '">' + '<img class="inline" src="' + instaInline + '" /></a><br />';
       }
       // Full YouTube video link
-      else if (/^https?:\/\/.*youtube.com\/watch\?v=/.test(u.expanded_url)) {
-        idx = u.expanded_url.lastIndexOf("watch?v=") + 8
-        youCode = u.expanded_url.slice(idx);
-        parts = youCode.split("&");
-        if (parts.length > 1) {
-          youCode = parts[0] + '?rel=0&' + parts.slice(1).join('&')
-        }
-        else {
-          youCode = parts[0] + '?rel=0'
-        }
-        link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '" frameborder="0" allowfullscreen></iframe><br />';
-        // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
-      }
-      // Shortened YouTube video link
-      else if (/^https?:\/\/youtu.be\//.test(u.expanded_url)) {
-        idx = u.expanded_url.lastIndexOf(".be/") + 4
-        youCode = u.expanded_url.slice(idx) + '?rel=0';
-        link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '" frameborder="0" allowfullscreen></iframe><br />';
-        // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
-      }
+//       else if (/^https?:\/\/.*youtube.com\/watch\?v=/.test(u.expanded_url)) {
+//         idx = u.expanded_url.lastIndexOf("watch?v=") + 8
+//         youCode = u.expanded_url.slice(idx);
+//         parts = youCode.split("&");
+//         if (parts.length > 1) {
+//           youCode = parts[0] + '?rel=0&' + parts.slice(1).join('&')
+//         }
+//         else {
+//           youCode = parts[0] + '?rel=0'
+//         }
+//         link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '" frameborder="0" allowfullscreen></iframe><br />';
+//         // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+//       }
+//       // Shortened YouTube video link
+//       else if (/^https?:\/\/youtu.be\//.test(u.expanded_url)) {
+//         idx = u.expanded_url.lastIndexOf(".be/") + 4
+//         youCode = u.expanded_url.slice(idx) + '?rel=0';
+//         link = '<br /><iframe class="inline" width="320" height="240" src="https://www.youtube.com/embed/' + youCode + '" frameborder="0" allowfullscreen></iframe><br />';
+//         // link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
+//       }
       // Regular link
       else {
         link = '<a href="' + u.expanded_url + '">' + u.display_url + '</a>';
